@@ -17,16 +17,11 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     //para activar el debug en consola
     // debugger;
-
-    //guardar la cadena del local storage (contiene la info del usuario)
-    const localData = this.auth.getUserData();
-
-    if (localData != null) {
       //convertimos la cadena en arreglo y lo guardamos en usuarioRegistrado
-      this.usuarioRegistrado = JSON.parse(localData);
+      this.usuarioRegistrado = this.auth.getUserData();
       //accedemos al indice 0 (por que solo es un registro) al indice email
       this.correo = this.usuarioRegistrado[0].email;
       this.rol=this.usuarioRegistrado[0].rol;
-    }
+    
   }
 }

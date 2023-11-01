@@ -4,6 +4,7 @@ import { LoginComponent } from './components/login/login.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { authGuard } from './guards/auth.guard';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+// import { hasRoleGuard } from './guards/has-role.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -12,8 +13,20 @@ const routes: Routes = [
   {
     path: 'admin',
     canActivate: [authGuard],
+    data:{
+      rol:'Administrador',
+    },
     loadChildren: () =>
       import('./modules/admin/admin.module').then((m) => m.AdminModule),
+  },
+  {
+    path:'recepcion',
+    canActivate:[authGuard],
+    data:{
+      rol:'Recepcionista',
+    },
+    loadChildren:()=>
+    import('./modules/recepcion/recepcion.module').then((m)=>m.RecepcionModule),
   },
   { path: '**', component: NotFoundComponent },
 ];

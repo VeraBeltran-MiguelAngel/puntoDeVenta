@@ -33,28 +33,29 @@ export class AuthService {
     localStorage.setItem('userData', userData);
   }
 
-  getUserData(): string | null {
-    return localStorage.getItem('userData');
+  //este metodo devuelve la info del usuario en un json ya no en una cadena
+  getUserData(): any | null {
+    const localData = localStorage.getItem('userData');
+    if (localData != null) {
+      return JSON.parse(localData);
+    }
+    return null;
+  }
+
+  getRol(): string {
+    this.usuarioRegistrado = this.getUserData();
+    this.rol = this.usuarioRegistrado[0].rol;
+    return this.rol;
   }
 
   isLoggedIn() {
     return this.getUserData() !== null;
   }
 
-
   logout() {
     localStorage.removeItem('userData');
     this.router.navigate(['login']);
   }
-
-  //login con token
-  // login({ email, password }: any): Observable<any> {
-  //   if (email === 'cliente@gmail.com' && password === 'cliente123') {
-  //     this.setToken('abcdefghijklmnopqrstuvwxyz');
-  //     return of({ name: 'Tarique Akhtar', email: 'cliente@gmail.com' });
-  //   }
-  //   return throwError(() => new Error('Error de autenticacion'));
-  // }
 
   login(credenciales: User): Observable<any> {
     return this.clienteHttp

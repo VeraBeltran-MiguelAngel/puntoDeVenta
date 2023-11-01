@@ -1,0 +1,21 @@
+<!--Toolbar-->
+<mat-toolbar>
+    <div class="grid_tool">
+        <div class="tool_logo">
+            <img class="logo_h" src="../../../../../assets/img/logo.jpeg">
+        </div>
+        <div class="tool_menu">
+            <button routerLink="./home" class="btn" mat-raised-button style="background: #FD9727; color: white;">
+                <p class="txt_btn_footer">Inicio</p></button>
+            <button routerLink="./listaMembresias" class="btn" mat-raised-button style="background: #FD9727; color: white;">
+                <p class="txt_btn_footer">vista1</p></button>
+             <button routerLink="./colaboradores" class="btn" mat-raised-button style="background: #FD9727; color: white;">
+                <p class="txt_btn_footer">vista2</p></button>
+            <!--<button routerLink="./perfil" class="btn" mat-raised-button style="background: #FD9727; color: white;">
+                <p class="txt_btn_footer">Perfil</p></button> -->
+            <button class="btn" mat-fab title="Cerrar sesión"  (click)="logout()">
+                <fa-icon [icon]="['fas', 'power-off']"></fa-icon>
+            </button>
+        </div>
+    </div>
+</mat-toolbar>

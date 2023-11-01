@@ -1,0 +1,89 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+
+/** PROPIEDADES HEADER ----- TOOLBAR ----------------------------- **/
+/**propiedades de logo toolbar**/
+.logo_h {
+    width: 50%;
+  }
+
+  /**propiedades grid padre toolbar**/
+.grid_tool {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+/**propiedades div img toolbar**/
+.tool_logo {
+    display: flex;
+    align-items: center;
+}
+
+/**propioedades toolbar**/
+mat-toolbar {
+    width: 100%;
+    height: 150px;
+    background: white;
+    border-bottom: #FD9727 solid;
+    border-width: 7px;
+}
+
+/**propiedades grid body padre**/
+.grid_body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+/**propiedades opciones - btn header**/
+/** grid -- opciones header **/
+.tool_menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Puedes ajustar la altura según tus necesidades */
+}
+
+/**propiedades botones  header - toolbar**/
+.btn {
+    margin: 10px;
+    width: 140px;
+    height: 45px;
+    border-radius: 15px;
+    background: #DF7E54;
+    color: black;
+}
+
+/**propiedades textos btn header - toolbar**/
+.txt_btn_footer {
+    font-size: larger;
+}
+
+/**propiedades botones toolbar - opciones **/
+.btn_int {
+    margin: 10px;
+}
+
+/** propiedades boton contendor de icono toolbar **/
+.btn_icon_user {
+    margin: 10px;
+    background: #434343; color: white;
+}
+
+/**propiedades menu usuario **/
+/**propiedades opciones span menu**/
+.data_user {
+    padding-left: 15px;
+}
+
+at-menu {
+    border-radius: 15px;
+}
+
+/**propiedades links externos**/
+.txt_ext_link {
+    text-decoration: none;
+    color: white;
+    font-size: larger;
+}
