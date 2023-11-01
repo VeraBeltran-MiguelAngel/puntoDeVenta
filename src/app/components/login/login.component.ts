@@ -29,9 +29,19 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    //esta parte evita que el usuario regrese al login sin desloguearse
+    //obtener el rol del usuario registrado
+    let rol = this.auth.getRol();
+
+    //esta parte evita que el usuario regrese al login sin desloguearse detectando su rol correspondiente
     if (this.auth.isLoggedIn()) {
-      this.router.navigate(['admin']);
+      switch (rol) {
+        case 'Administrador':
+          this.router.navigate(['/admin']);
+          break;
+        case 'Recepcionista':
+          this.router.navigate(['/recepcion']);
+          break;
+      }
     }
   }
 
