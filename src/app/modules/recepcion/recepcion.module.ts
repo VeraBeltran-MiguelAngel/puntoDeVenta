@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatToolbarModule } from '@angular/material/toolbar'; //para el menu de navegacion
-
 import { RecepcionRoutingModule } from './recepcion-routing.module';
 import { RecepDashboardComponent } from './components/recep-dashboard/recep-dashboard.component';
 import { HeaderComponent } from './components/header/header.component';
+
+//incluir librerias de material que necesitara el modulo recepcion
+import { RecepMaterialModule } from './recepMaterial';
 
 import {
   FaIconLibrary,
@@ -31,8 +32,8 @@ import { HomeComponent } from './components/home/home.component'; //librerias de
   imports: [
     CommonModule,
     RecepcionRoutingModule,
-    MatToolbarModule,//menu navegacion
-    FontAwesomeModule,//tipo de letra
+    FontAwesomeModule, //tipo de letra
+    RecepMaterialModule,
   ],
 })
 export class RecepcionModule {
