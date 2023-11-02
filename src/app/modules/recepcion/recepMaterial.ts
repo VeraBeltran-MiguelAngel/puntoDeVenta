@@ -7,13 +7,15 @@ import { MatToolbarModule } from '@angular/material/toolbar'; //para el menu de 
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatTableModule} from '@angular/material/table';
 import {MatInputModule} from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   exports: [
     MatToolbarModule, //menu navegacion
     MatFormFieldModule,
     MatTableModule,
-    MatInputModule
+    MatInputModule,
+    MatIconModule
   ],
 })
 export class RecepMaterialModule {}

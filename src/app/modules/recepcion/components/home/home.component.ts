@@ -118,6 +118,7 @@ export class HomeComponent implements OnInit {
     'tamaño',
     'descripcion',
     'precio',
+    'acciones'
   ];
   productData: Producto[]=[
     {
@@ -132,9 +133,9 @@ export class HomeComponent implements OnInit {
       id: 2,
       categoria: 'Bebidas',
       nombre:'Agua bonafont',
-      tamaño: '500 ml',
+      tamaño: '250 ml',
       descripcion: 'agua simple',
-      precio: 10,
+      precio: 5,
     },
     {
       id: 3,
