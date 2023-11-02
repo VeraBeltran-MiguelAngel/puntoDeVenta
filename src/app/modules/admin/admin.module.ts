@@ -5,19 +5,11 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatDialogModule } from '@angular/material/dialog';
-import {MatSlideToggleModule, _MatSlideToggleRequiredValidatorModule} from '@angular/material/slide-toggle';
-import { MatRadioModule } from '@angular/material/radio';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { MatCardModule } from '@angular/material/card';
-import { MatTableModule } from '@angular/material/table';
-import { ReactiveFormsModule,FormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSelectModule } from '@angular/material/select';
-import { MatInputModule } from '@angular/material/input';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+
+//agregar modulo material para las vistas del admin
+import { AdminMaterialModule } from './adminMaterial';
+
 import {
   FaIconLibrary,
   FontAwesomeModule,
@@ -60,22 +52,10 @@ import { MembresiasEditarComponent } from './components/membresias-editar/membre
   imports: [
     CommonModule,
     AdminRoutingModule,
-    MatToolbarModule,
     FontAwesomeModule,
-    MatDialogModule,
-    MatSlideToggleModule,
-    _MatSlideToggleRequiredValidatorModule,
-    MatRadioModule,
-    MatButtonToggleModule,
-    MatCardModule,
-    MatTableModule,
-    MatFormFieldModule,
-    MatSelectModule,
     ReactiveFormsModule,
     FormsModule,
-    MatInputModule,
-    MatIconModule,
-    MatButtonModule
+    AdminMaterialModule //aqui esta todo lo que se necesita de material
   ],
 })
 export class AdminModule {
