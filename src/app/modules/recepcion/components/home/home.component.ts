@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { Empleado } from '../models/empleado';
+import { Producto } from '../models/producto';
 
 @Component({
   selector: 'app-home',
@@ -8,15 +9,15 @@ import { Empleado } from '../models/empleado';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  displayedColumns: string[] = [
-    'id',
-    'firstname',
-    'lastname',
-    'email',
-    'gender',
-    'jobtitle',
-    'department',
-  ];
+  // displayedColumns: string[] = [
+  //   'id',
+  //   'firstname',
+  //   'lastname',
+  //   'email',
+  //   'gender',
+  //   'jobtitle',
+  //   'department',
+  // ];
   EmpData: Empleado[] = [
     {
       id: 1,
@@ -110,7 +111,58 @@ export class HomeComponent implements OnInit {
     },
   ];
 
-  dataSource = new MatTableDataSource(this.EmpData);
+  displayedColumns: string[] = [
+    'id',
+    'categoria',
+    'nombre',
+    'tamaño',
+    'descripcion',
+    'precio',
+  ];
+  productData: Producto[]=[
+    {
+      id: 1,
+      categoria: 'Bebidas',
+      nombre:'Agua ciel',
+      tamaño: '500 ml',
+      descripcion: 'agua simple',
+      precio: 9,
+    },
+    {
+      id: 2,
+      categoria: 'Bebidas',
+      nombre:'Agua bonafont',
+      tamaño: '500 ml',
+      descripcion: 'agua simple',
+      precio: 10,
+    },
+    {
+      id: 3,
+      categoria: 'Bebidas',
+      nombre:'Gatorade',
+      tamaño: '500 ml',
+      descripcion: 'bebida deportiva',
+      precio: 20,
+    },
+    {
+      id: 4,
+      categoria: 'Suplementos',
+      nombre:'Proteina marca tal',
+      tamaño: '500 gr',
+      descripcion: '30 scopes',
+      precio: 250,
+    },
+    {
+      id: 5,
+      categoria: 'Suplementos',
+      nombre:'Creatina marca tal',
+      tamaño: '500 gr',
+      descripcion: '30 scopes',
+      precio: 200,
+    }
+    
+  ];
+  dataSource = new MatTableDataSource(this.productData);
 
   ngOnInit(): void {
     throw new Error('Method not implemented.');
