@@ -5,4 +5,5 @@ export interface Producto {
   tamaño: string;
   descripcion: string;
   precio: number;
+  cantidad:number;
 }

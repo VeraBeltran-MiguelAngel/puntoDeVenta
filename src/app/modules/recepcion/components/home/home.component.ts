@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { Empleado } from '../models/empleado';
 import { Producto } from '../models/producto';
 
 @Component({
@@ -9,107 +8,9 @@ import { Producto } from '../models/producto';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  // displayedColumns: string[] = [
-  //   'id',
-  //   'firstname',
-  //   'lastname',
-  //   'email',
-  //   'gender',
-  //   'jobtitle',
-  //   'department',
-  // ];
-  EmpData: Empleado[] = [
-    {
-      id: 1,
-      firstname: 'Mellie',
-      lastname: 'Gabbott',
-      email: 'mgabbott0@indiatimes.com',
-      gender: 'Female',
-      department: 'Support',
-      jobtitle: 'Support Analyst',
-    },
-    {
-      id: 2,
-      firstname: 'Yehudi',
-      lastname: 'Ainsby',
-      email: 'yainsby1@w3.org',
-      gender: 'Female',
-      department: 'Support',
-      jobtitle: 'Support Analyst',
-    },
-    {
-      id: 3,
-      firstname: 'Noellyn',
-      lastname: 'Primett',
-      email: 'nprimett2@ning.com',
-      gender: 'Female',
-      department: 'Human Resources',
-      jobtitle: 'Project Manager',
-    },
-    {
-      id: 4,
-      firstname: 'Stefanie',
-      lastname: 'Yurenin',
-      email: 'syurenin3@boston.com',
-      gender: 'Female',
-      department: 'Marketing',
-      jobtitle: 'Senior officer',
-    },
-    {
-      id: 5,
-      firstname: 'Stormi',
-      lastname: "O'Lunny",
-      email: 'solunny4@patch.com',
-      gender: 'Female',
-      department: 'Engineering',
-      jobtitle: 'Software Engineer',
-    },
-    {
-      id: 6,
-      firstname: 'Keelia',
-      lastname: 'Giraudy',
-      email: 'kgiraudy5@nba.com',
-      gender: 'Male',
-      department: 'Marketing',
-      jobtitle: 'Senior officer',
-    },
-    {
-      id: 7,
-      firstname: 'Ikey',
-      lastname: 'Laight',
-      email: 'ilaight6@wiley.com',
-      gender: 'Male',
-      department: 'Support',
-      jobtitle: 'Support Analyst',
-    },
-    {
-      id: 8,
-      firstname: 'Adrianna',
-      lastname: 'Ruddom',
-      email: 'aruddom7@seattletimes.com',
-      gender: 'Male',
-      department: 'Marketing',
-      jobtitle: 'Senior officer',
-    },
-    {
-      id: 9,
-      firstname: 'Dionysus',
-      lastname: 'McCory',
-      email: 'dmccory8@ox.ac.uk',
-      gender: 'Male',
-      department: 'Engineering',
-      jobtitle: 'Software Engineer',
-    },
-    {
-      id: 10,
-      firstname: 'Claybourne',
-      lastname: 'Shellard',
-      email: 'cshellard9@rediff.com',
-      gender: 'Male',
-      department: 'Engineering',
-      jobtitle: 'Software Engineer',
-    },
-  ];
+
+  selectedProducts: Producto[] = [];
+  totalAPagar: number = 0;
 
   displayedColumns: string[] = [
     'id',
@@ -118,6 +19,7 @@ export class HomeComponent implements OnInit {
     'tamaño',
     'descripcion',
     'precio',
+    'cantidad',
     'acciones'
   ];
   productData: Producto[]=[
@@ -127,7 +29,8 @@ export class HomeComponent implements OnInit {
       nombre:'Agua ciel',
       tamaño: '500 ml',
       descripcion: 'agua simple',
-      precio: 9,
+      precio: 9.5,
+      cantidad:0
     },
     {
       id: 2,
@@ -135,7 +38,8 @@ export class HomeComponent implements OnInit {
       nombre:'Agua bonafont',
       tamaño: '250 ml',
       descripcion: 'agua simple',
-      precio: 5,
+      precio: 5.8,
+      cantidad:0
     },
     {
       id: 3,
@@ -143,7 +47,8 @@ export class HomeComponent implements OnInit {
       nombre:'Gatorade',
       tamaño: '500 ml',
       descripcion: 'bebida deportiva',
-      precio: 20,
+      precio: 20.5,
+      cantidad:0
     },
     {
       id: 4,
@@ -151,7 +56,8 @@ export class HomeComponent implements OnInit {
       nombre:'Proteina marca tal',
       tamaño: '500 gr',
       descripcion: '30 scopes',
-      precio: 250,
+      precio: 250.5,
+      cantidad:0
     },
     {
       id: 5,
@@ -159,18 +65,38 @@ export class HomeComponent implements OnInit {
       nombre:'Creatina marca tal',
       tamaño: '500 gr',
       descripcion: '30 scopes',
-      precio: 200,
+      precio: 200.8,
+      cantidad:0
     }
     
   ];
   dataSource = new MatTableDataSource(this.productData);
 
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+    
   }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
+
+  agregaraBalance(producto: Producto) {
+    const productoExistente = this.selectedProducts.find((p) => p.id === producto.id);
+  
+    if (productoExistente) {
+      productoExistente.cantidad += producto.cantidad;
+    } else {
+      this.selectedProducts.push({ ...producto });
+    }
+  
+    // Recalcular el total a pagar
+    this.totalAPagar = this.selectedProducts.reduce((total, p) => total + p.precio * p.cantidad, 0);
+  
+    // Reiniciar la cantidad del producto
+    producto.cantidad = 0;
+  }
+  
+
+
 }

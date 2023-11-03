@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RecepcionRoutingModule } from './recepcion-routing.module';
 import { RecepDashboardComponent } from './components/recep-dashboard/recep-dashboard.component';
 import { HeaderComponent } from './components/header/header.component';
+import { FormsModule } from '@angular/forms';
 
 //incluir librerias de material que necesitara el modulo recepcion
 import { RecepMaterialModule } from './recepMaterial';
@@ -34,6 +35,7 @@ import { HomeComponent } from './components/home/home.component'; //librerias de
     RecepcionRoutingModule,
     FontAwesomeModule, //tipo de letra
     RecepMaterialModule,
+    FormsModule
   ],
 })
 export class RecepcionModule {
