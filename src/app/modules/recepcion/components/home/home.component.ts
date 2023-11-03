@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { Producto } from '../models/producto';
+import { ProductosService } from 'src/app/service/productos.service';
 
 @Component({
   selector: 'app-home',
@@ -10,7 +11,9 @@ import { Producto } from '../models/producto';
 export class HomeComponent implements OnInit {
   selectedProducts: Producto[] = []; //lista de productos seleccionados
   totalAPagar: number = 0;
+  dineroRecibido : number =0;
 
+  //titulos de columnas de la tabla 
   displayedColumns: string[] = [
     'id',
     'categoria',
@@ -21,56 +24,19 @@ export class HomeComponent implements OnInit {
     'cantidad',
     'acciones',
   ];
-  productData: Producto[] = [
-    {
-      id: 1,
-      categoria: 'Bebidas',
-      nombre: 'Agua ciel',
-      tamaño: '500 ml',
-      descripcion: 'agua simple',
-      precio: 9.5,
-      cantidad: 0,
-    },
-    {
-      id: 2,
-      categoria: 'Bebidas',
-      nombre: 'Agua bonafont',
-      tamaño: '250 ml',
-      descripcion: 'agua simple',
-      precio: 5.8,
-      cantidad: 0,
-    },
-    {
-      id: 3,
-      categoria: 'Bebidas',
-      nombre: 'Gatorade',
-      tamaño: '500 ml',
-      descripcion: 'bebida deportiva',
-      precio: 20.5,
-      cantidad: 0,
-    },
-    {
-      id: 4,
-      categoria: 'Suplementos',
-      nombre: 'Proteina marca tal',
-      tamaño: '500 gr',
-      descripcion: '30 scopes',
-      precio: 250.5,
-      cantidad: 0,
-    },
-    {
-      id: 5,
-      categoria: 'Suplementos',
-      nombre: 'Creatina marca tal',
-      tamaño: '500 gr',
-      descripcion: '30 scopes',
-      precio: 200.8,
-      cantidad: 0,
-    },
-  ];
-  dataSource = new MatTableDataSource(this.productData);
+  productData: Producto[] = [];
 
-  ngOnInit(): void {}
+  dataSource: any;
+
+  constructor(private productoService: ProductosService) {}
+
+  ngOnInit(): void {
+    this.productoService.obternerProductos().subscribe((respuesta) => {
+      // console.log(respuesta);
+      this.productData = respuesta;
+      this.dataSource = new MatTableDataSource(this.productData);
+    });
+  }
 
   /**
    * metodo para filtrar la informacion que escribe el usaurio
@@ -82,7 +48,7 @@ export class HomeComponent implements OnInit {
 
   /**
    * Metodo para ir agregando productos a la lista de productos seleccionados
-   * @param producto 
+   * @param producto
    */
   agregaraBalance(producto: Producto) {
     /**
@@ -94,7 +60,7 @@ export class HomeComponent implements OnInit {
     );
 
     /**
-     * Si se encuentra un producto existente con el mismo id, significa que el producto ya ha sido agregado 
+     * Si se encuentra un producto existente con el mismo id, significa que el producto ya ha sido agregado
      * al carrito. En este caso, el código aumenta la cantidad del producto existente en la lista selectedProducts
      *  al agregar la cantidad del nuevo producto (producto.cantidad) a la cantidad existente del producto.
      */

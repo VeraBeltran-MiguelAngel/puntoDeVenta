@@ -20,11 +20,13 @@
       </ng-container>
       <ng-container *ngIf="column === 'cantidad'">
         <mat-form-field>
-          <input matInput [(ngModel)]="prod.cantidad" type="number" min="0">
+          <input matInput [(ngModel)]="prod.cantidad" type="number" min="0" />
         </mat-form-field>
       </ng-container>
       <ng-container *ngIf="column === 'acciones'">
-        <mat-icon class="add-box-icon" (click)="agregaraBalance(prod)">add_box</mat-icon>
+        <mat-icon class="add-box-icon" (click)="agregaraBalance(prod)"
+          >add_box</mat-icon
+        >
       </ng-container>
     </td>
   </ng-container>
@@ -32,14 +34,26 @@
   <tr mat-row *matRowDef="let productofila; columns: displayedColumns"></tr>
 </table>
 
-
 <div class="resumen">
   <h1>Resumen de Compra</h1>
   <ul>
     <li *ngFor="let selectedProduct of selectedProducts">
-      {{ selectedProduct.nombre }} x {{ selectedProduct.cantidad }} - ${{ selectedProduct.precio * selectedProduct.cantidad }}
+      {{ selectedProduct.nombre }} x {{ selectedProduct.cantidad }} - ${{
+        selectedProduct.precio * selectedProduct.cantidad
+      }}
     </li>
   </ul>
   <h2>Total a Pagar: ${{ totalAPagar }}</h2>
+  <mat-form-field>
+    <mat-label>Dinero recibido</mat-label>
+    <input
+      matInput
+      [(ngModel)]="dineroRecibido"
+      placeholder="Ingresa cantidad"
+      #input
+      type="number"
+      min="0"
+    />
+  </mat-form-field>
+  <h2>Cambio: ${{ dineroRecibido - totalAPagar }}</h2>
 </div>
-
