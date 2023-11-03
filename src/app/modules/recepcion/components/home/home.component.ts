@@ -11,9 +11,9 @@ import { ProductosService } from 'src/app/service/productos.service';
 export class HomeComponent implements OnInit {
   selectedProducts: Producto[] = []; //lista de productos seleccionados
   totalAPagar: number = 0;
-  dineroRecibido : number =0;
+  dineroRecibido: number = 0;
 
-  //titulos de columnas de la tabla 
+  //titulos de columnas de la tabla
   displayedColumns: string[] = [
     'id',
     'categoria',
@@ -78,5 +78,36 @@ export class HomeComponent implements OnInit {
 
     // Reiniciar la cantidad del producto
     producto.cantidad = 0;
+  }
+
+  imprimirResumen() {
+    const ventanaImpresion = window.open('', '_blank');
+    if (ventanaImpresion) {
+      ventanaImpresion.document.open();
+      ventanaImpresion.document.write(`
+      <html>
+      <head>
+        <title>Lista de Artículos</title>
+      </head>
+      <body>
+        <h1>Ticket</h1>
+        <ul>
+          ${this.selectedProducts
+            .map(
+              (producto) => `
+            <li>${producto.nombre} x ${producto.cantidad} - $${
+                producto.precio * producto.cantidad
+              }</li>
+          `
+            )
+            .join('')}
+        </ul>
+      </body>
+      </html>
+    `);
+      ventanaImpresion.document.close();
+      ventanaImpresion.print();
+      ventanaImpresion.close();
+    }
   }
 }
