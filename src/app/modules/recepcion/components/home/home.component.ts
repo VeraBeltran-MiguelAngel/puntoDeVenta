@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table'; //para controlar los datos del api y ponerlos en una tabla
+import { MatPaginator } from '@angular/material/paginator'; //para paginacion en la tabla
 import { Producto } from '../models/producto';
 import { ProductosService } from 'src/app/service/productos.service';
 
@@ -27,6 +28,8 @@ export class HomeComponent implements OnInit {
   productData: Producto[] = [];
 
   dataSource: any;
+
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
   constructor(private productoService: ProductosService) {}
 

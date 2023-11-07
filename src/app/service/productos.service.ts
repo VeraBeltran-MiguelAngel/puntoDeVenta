@@ -8,7 +8,8 @@ import { Producto } from '../modules/recepcion/components/models/producto';
 })
 export class ProductosService {
 
-  API: string = 'https://apimocha.com/productosgym/listar'
+  // API: string = 'https://apimocha.com/productosgym/listar'
+  API: string = 'http://localhost/productos/productos.php'
   constructor(private clienteHttp:HttpClient) {
   }
 
