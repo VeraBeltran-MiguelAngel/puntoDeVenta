@@ -1,3 +1,6 @@
+/**
+ * esta interfaz representa los productos que estan a la venta
+ */
 export interface Producto {
   id: number;
   categoria: string;

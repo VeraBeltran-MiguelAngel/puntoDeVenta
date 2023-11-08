@@ -1,23 +1,8 @@
 <?php
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Headers: access");
-header("Access-Control-Allow-Methods: GET,POST");
-header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
-    header("Access-Control-Allow-Origin: *");
-    header("Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE, PATCH");
-    header("Access-Control-Allow-Headers: Content-Type");
-    exit;
-}
-
-// Conecta a la base de datos  con usuario, contraseña y nombre de la BD
-$servidor = "localhost:3306";
-$usuario = "olympus";
-$contrasenia = "wLbLYCRckNzK2yk0";
-$nombreBaseDatos = "olympus";
-$conexionBD = new mysqli($servidor, $usuario, $contrasenia, $nombreBaseDatos);
+// Incluye el archivo de conexión (dentro del server el archivo productos.php 
+//debe salir dos carpetas afuera para llegar a la carpeta conPrincipal)
+require('../../conPrincipal/index.php');
 
 // Consulta todos los registros de la tabla productos
 $consultaProductos = "SELECT p.idProducto as 'id', c.nombre as 'categoria', p.nombre, p.tamaño, p.descripcion, p.precio, p.cantidad

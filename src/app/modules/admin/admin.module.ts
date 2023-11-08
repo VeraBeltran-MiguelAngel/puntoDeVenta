@@ -29,12 +29,9 @@ import {
 } from '@fortawesome/free-regular-svg-icons';
 import { faPowerOff } from '@fortawesome/free-solid-svg-icons';
 import { HomeComponent } from './components/home/home.component';
-import { MembresiasComponent } from './components/membresias/membresias.component';
-import { ColaboradoresComponent } from './components/colaboradores/colaboradores.component';
-import { MensajeEmergentesComponent } from './components/mensaje-emergentes/mensaje-emergentes.component';
-import { MembresiasListaComponent } from './components/membresias-lista/membresias-lista.component';
-import { MensajeEliminarComponent } from './components/mensaje-eliminar/mensaje-eliminar.component';
-import { MembresiasEditarComponent } from './components/membresias-editar/membresias-editar.component';
+import { CategoriasComponent } from './components/categorias/categorias.component';
+import { ProductosComponent } from './components/productos/productos.component';
+
 
 @NgModule({
   declarations: [
@@ -42,12 +39,8 @@ import { MembresiasEditarComponent } from './components/membresias-editar/membre
     HeaderComponent,
     FooterComponent,
     HomeComponent,
-    MembresiasComponent,
-    ColaboradoresComponent,
-    MensajeEmergentesComponent,
-    MembresiasListaComponent,
-    MensajeEliminarComponent,
-    MembresiasEditarComponent,
+    CategoriasComponent,
+    ProductosComponent,
   ],
   imports: [
     CommonModule,

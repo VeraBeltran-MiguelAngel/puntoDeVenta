@@ -2,10 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
 import { HomeComponent } from './components/home/home.component';
-import { MembresiasComponent } from './components/membresias/membresias.component';
-import { ColaboradoresComponent } from './components/colaboradores/colaboradores.component';
-import { MembresiasListaComponent } from './components/membresias-lista/membresias-lista.component';
-import { MembresiasEditarComponent } from './components/membresias-editar/membresias-editar.component';
+import { CategoriasComponent } from './components/categorias/categorias.component';
+import { ProductosComponent } from './components/productos/productos.component';
 
 const routes: Routes = [
   {
@@ -13,10 +11,8 @@ const routes: Routes = [
     component: AdminDashboardComponent,
     children: [
       { path: 'home', component: HomeComponent },
-      { path: 'membresias', component: MembresiasComponent },
-      { path: 'colaboradores', component: ColaboradoresComponent },
-      { path: 'listaMembresias', component: MembresiasListaComponent},
-      { path: 'editarMembresias/:id', component: MembresiasEditarComponent},
+      { path: 'categorias', component: CategoriasComponent },
+      { path: 'productos', component:  ProductosComponent},
       { path: '', redirectTo: '/admin/home', pathMatch: 'full' },
     ],
   },
