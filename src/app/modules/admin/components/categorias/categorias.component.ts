@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table'; //para controlar los datos del api y ponerlos en una tabla
 import { MatPaginator } from '@angular/material/paginator'; //para paginacion en la tabla
+import { CategoriasService } from 'src/app/service/categorias.service';
+import { Categorias } from 'src/app/modules/recepcion/components/models/categorias';
 
 @Component({
   selector: 'app-categorias',
@@ -18,9 +20,18 @@ export class CategoriasComponent implements OnInit{
     'acciones',
   ];
 
+  categoryData: Categorias[]= [];
   dataSource: any; // instancia para matTableDatasource
+
+  constructor(private categoriaService: CategoriasService){}
    ngOnInit(): void {
-     throw new Error('Method not implemented.');
+
+    this.categoriaService.obternerCategorias().subscribe((respuesta)=>{
+       console.log(respuesta);
+      this.categoryData = respuesta;
+      this.dataSource = new MatTableDataSource(this.categoryData);
+    });
+     
    }
 
    /**
