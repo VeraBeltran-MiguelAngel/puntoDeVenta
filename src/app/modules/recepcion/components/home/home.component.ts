@@ -38,6 +38,7 @@ export class HomeComponent implements OnInit {
       // console.log(respuesta);
       this.productData = respuesta;
       this.dataSource = new MatTableDataSource(this.productData);
+      this.dataSource.paginator = this.paginator;
     });
   }
 
