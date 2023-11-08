@@ -25,10 +25,11 @@ export class HomeComponent implements OnInit {
     'cantidad',
     'acciones',
   ];
-  productData: Producto[] = [];
+  productData: Producto[] = []; //para guardar la respuesta del api en un arreglo
 
-  dataSource: any;
+  dataSource: any; // instancia para matTableDatasource
 
+  //paginator es una variable de la clase MatPaginator
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
   constructor(private productoService: ProductosService) {}
@@ -106,6 +107,10 @@ export class HomeComponent implements OnInit {
             )
             .join('')}
         </ul>
+        <h4>Total a Pagar: ${this.totalAPagar}</h4>
+        <h4>Dinero recibido: ${this.dineroRecibido}</h4>
+        <h4>Cambio: ${this.dineroRecibido - this.totalAPagar}</h4>
+
       </body>
       </html>
     `);
