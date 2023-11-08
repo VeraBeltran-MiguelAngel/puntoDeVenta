@@ -13,11 +13,11 @@ import { MatIconModule } from '@angular/material/icon';
 @NgModule({
   exports: [
     MatToolbarModule, //menu navegacion
-    MatFormFieldModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatInputModule,
-    MatIconModule
+    MatFormFieldModule,//para campos de formulario
+    MatTableModule,//para tablas
+    MatPaginatorModule,//paginacion de tabla
+    MatInputModule,//input box de material
+    MatIconModule//iconos
   ],
 })
 export class RecepMaterialModule {}
