@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ListaProductos } from '../models/listaProductos';
 import { ProductosService } from 'src/app/service/productos.service';
+import { MatTableDataSource } from '@angular/material/table'; 
+import { MatPaginator } from '@angular/material/paginator'; //para paginacion en la tabla
 
 @Component({
   selector: 'app-productos',
@@ -22,8 +24,19 @@ export class ProductosComponent implements OnInit {
   listProductData: ListaProductos[] = [];
   dataSource: any; // instancia para matTableDatasource
 
+    //paginator es una variable de la clase MatPaginator
+    @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+
   constructor(private productoService: ProductosService) {}
-  ngOnInit(): void {}
+  ngOnInit(): void {
+
+    this.productoService.getProductosAdmin().subscribe((respuesta)=>{
+      console.log(respuesta);
+      this.listProductData=respuesta;
+      this.dataSource= new MatTableDataSource(this.listProductData);
+      this.dataSource.paginator = this.paginator;
+    });
+  }
 
   /**
    * metodo para filtrar la informacion que escribe el usaurio

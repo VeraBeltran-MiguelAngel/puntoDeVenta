@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Proveedores } from '../models/proveedores';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator'; //para paginacion en la tabla
 import { ProveedoresService } from 'src/app/service/proveedores.service';
 
 @Component({
@@ -22,6 +23,8 @@ export class ProveedoresComponent implements OnInit {
 
   listProveedorData: Proveedores[] = [];
   dataSource: any; // instancia para matTableDatasource
+  //paginator es una variable de la clase MatPaginator
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   constructor(private proveedorService: ProveedoresService) {}
 
   ngOnInit(): void {
@@ -29,6 +32,7 @@ export class ProveedoresComponent implements OnInit {
       console.log(respuesta);
       this.listProveedorData = respuesta;
       this.dataSource = new MatTableDataSource(this.listProveedorData);
+      this.dataSource.paginator = this.paginator;
     });
   }
 

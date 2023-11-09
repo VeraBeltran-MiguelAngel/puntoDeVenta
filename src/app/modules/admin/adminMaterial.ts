@@ -5,6 +5,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
@@ -17,14 +18,15 @@ import {
 
 @NgModule({
   exports: [
-    MatToolbarModule,
-    MatDialogModule,
+    MatToolbarModule, //barra de navegacion
+    MatDialogModule, // dialogos emergentes
     MatSlideToggleModule,
     _MatSlideToggleRequiredValidatorModule,
-    MatRadioModule,
+    MatRadioModule,//radio botones
     MatButtonToggleModule,
     MatCardModule,
     MatTableModule,
+    MatPaginatorModule,
     MatFormFieldModule,
     MatSelectModule,
     MatInputModule,
