@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table'; //para controlar los datos del api y ponerlos en una tabla
 import { MatPaginator } from '@angular/material/paginator'; //para paginacion en la tabla
 import { CategoriasService } from 'src/app/service/categorias.service';
-import { Categorias } from 'src/app/modules/recepcion/components/models/categorias';
+import { Categorias } from '../models/categorias';
+
 
 @Component({
   selector: 'app-categorias',
@@ -12,7 +13,7 @@ import { Categorias } from 'src/app/modules/recepcion/components/models/categori
 export class CategoriasComponent implements OnInit{
    //titulos de columnas de la tabla
    displayedColumns: string[] = [
-    'id',
+    'idCategoria',
     'nombre',
     'descripcion',
     'estatus',
