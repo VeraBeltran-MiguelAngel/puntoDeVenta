@@ -9,7 +9,7 @@ import { Producto } from '../modules/recepcion/components/models/producto';
 export class ProductosService {
   // API: string = 'https://apimocha.com/productosgym/listar'
   // API: string = 'http://localhost/productos/productos.php'
-  API: string = 'https://olympus.arvispace.com/puntoDeVenta/conf/productos.php';
+  API: string = 'https://olympus.arvispace.com/puntoDeVenta/conf/productos.php/';
   constructor(private clienteHttp: HttpClient) {}
 
   /**
@@ -17,6 +17,13 @@ export class ProductosService {
    * @returns
    */
   obternerProductos(): Observable<Producto[]> {
-    return this.clienteHttp.get<Producto[]>(this.API);
+    return this.clienteHttp.get<Producto[]>(this.API+ '?listaProductosRecepcion');
+  }
+  
+  /**
+   * Metodo pra listar los productos del admin
+   */
+  getProductosAdmin():Observable<any>{
+    return this.clienteHttp.get(this.API+ '?listaProductosRecepcion');
   }
 }
