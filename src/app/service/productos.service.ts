@@ -4,17 +4,19 @@ import { Observable } from 'rxjs';
 import { Producto } from '../modules/recepcion/components/models/producto';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProductosService {
-
   // API: string = 'https://apimocha.com/productosgym/listar'
   // API: string = 'http://localhost/productos/productos.php'
-  API: string = 'https://olympus.arvispace.com/puntoDeVenta/conf/productos.php'
-  constructor(private clienteHttp:HttpClient) {
-  }
+  API: string = 'https://olympus.arvispace.com/puntoDeVenta/conf/productos.php';
+  constructor(private clienteHttp: HttpClient) {}
 
-  obternerProductos(): Observable<Producto[]>{
-    return this.clienteHttp.get<Producto[]>(this.API)
+  /**
+   * este metodo se utiliza para mostrar los productos a la venta (incluye la columna cantidad que solo es de apoyo)
+   * @returns
+   */
+  obternerProductos(): Observable<Producto[]> {
+    return this.clienteHttp.get<Producto[]>(this.API);
   }
 }
