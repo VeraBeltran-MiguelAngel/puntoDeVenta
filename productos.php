@@ -56,7 +56,6 @@ if (isset($_GET["listaProductosAdmin"])) {
         foreach ($productosAdmin as &$producto) {
             $producto['idProducto'] = (int)$producto['idProducto'];
             $producto['precio de venta'] = (float)$producto['precio de venta'];
-            $producto['estatus'] = (int)$producto['estatus'];
         }
         echo json_encode($productosAdmin);
         exit();

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { Producto } from '../modules/recepcion/components/models/producto';
 import { ListaProductos } from '../modules/admin/components/models/listaProductos';
 
@@ -28,6 +28,24 @@ export class ProductosService {
    * Metodo pra listar los productos del admin
    */
   getProductosAdmin(): Observable<ListaProductos[]> {
-    return this.clienteHttp.get<ListaProductos[]>(this.API + '?listaProductosAdmin');
+    return this.clienteHttp
+      .get<ListaProductos[]>(this.API + '?listaProductosAdmin')
+      .pipe(
+        map(
+          (respuesta) => {
+            let varArrayProductos = respuesta as ListaProductos[];
+            return varArrayProductos.map((respuesta: ListaProductos) => {
+              respuesta.estatus =
+                respuesta.estatus === '1' ? 'Activado' : 'Desactivado';
+              return respuesta;
+            });
+          }
+
+          // respuesta.map((response) => ({
+          //   ...response,
+          //   estatus: response.estatus === '1' ? 'Activado' : 'Desactivado',
+          // }))
+        )
+      );
   }
 }

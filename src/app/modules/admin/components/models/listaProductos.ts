@@ -7,6 +7,6 @@ export interface ListaProductos{
     tamaño:string;
     descripcion:string;
     precio:number;
-    estatus:number;
+    estatus:string;
     categoria:string;
 }
