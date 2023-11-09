@@ -4,6 +4,7 @@ import { AdminDashboardComponent } from './components/admin-dashboard/admin-dash
 import { HomeComponent } from './components/home/home.component';
 import { CategoriasComponent } from './components/categorias/categorias.component';
 import { ProductosComponent } from './components/productos/productos.component';
+import { ProveedoresComponent } from './components/proveedores/proveedores.component';
 
 const routes: Routes = [
   {
@@ -12,7 +13,8 @@ const routes: Routes = [
     children: [
       { path: 'home', component: HomeComponent },
       { path: 'categorias', component: CategoriasComponent },
-      { path: 'productos', component:  ProductosComponent},
+      { path: 'productos', component: ProductosComponent },
+      { path: 'proveedores', component: ProveedoresComponent },
       { path: '', redirectTo: '/admin/home', pathMatch: 'full' },
     ],
   },

@@ -31,6 +31,7 @@ import { faPowerOff } from '@fortawesome/free-solid-svg-icons';
 import { HomeComponent } from './components/home/home.component';
 import { CategoriasComponent } from './components/categorias/categorias.component';
 import { ProductosComponent } from './components/productos/productos.component';
+import { ProveedoresComponent } from './components/proveedores/proveedores.component';
 
 
 @NgModule({
@@ -41,6 +42,7 @@ import { ProductosComponent } from './components/productos/productos.component';
     HomeComponent,
     CategoriasComponent,
     ProductosComponent,
+    ProveedoresComponent,
   ],
   imports: [
     CommonModule,
