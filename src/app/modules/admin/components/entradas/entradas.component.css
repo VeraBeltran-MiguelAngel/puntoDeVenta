@@ -1,0 +1,66 @@
+
+
+/**propiedades por inputs **/
+.inputs_properties {
+    width: 300px;
+    padding: 10px;
+    display: inline-block;
+}
+
+/**propiedades titulo pagina**/
+.title_page {
+    margin-left: 17%;
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
+
+/**propiedades contendor margen**/
+.content_margin {
+    width: 80%;
+    margin: auto;
+}
+
+/**propiedades contenedor formulario**/
+.form_data {
+    margin: auto;
+    text-align: center;
+    padding-bottom: 15px;
+}
+
+/**propiedades btn cancelar**/
+#btn_canelar {
+    width: 290px;
+    height: 45px;
+    margin: 10px 7px;
+    font-size: larger;
+}
+
+/**propiedades btn aceptar-guardar**/
+#btn_guardar {
+    width: 290px;
+    height: 45px;
+    margin: 10px 7px;
+    background: #FD9727; 
+    color: white;
+    font-size: larger;
+}
+
+/**propiedades body **/
+.body {
+    margin: 0;
+    position: relative;
+    padding-bottom: 180px;
+    min-height: 100vh;
+}
+
+/**propiedades mensajes de patrones **/
+/**contenedor de mensajes de error patrones**/
+.content_msg_pattern {
+    width: 300px;
+    border: #FD9727 solid;
+}
+
+.txt_msg {
+    font-size: x-small;
+    font-weight: bold;
+}

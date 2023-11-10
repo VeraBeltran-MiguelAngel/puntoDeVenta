@@ -1,1 +1,54 @@
-<p>entradas works!</p>
+<div class="container mt-4">
+  <h2 class="mb-3">Registra la entrada de un producto</h2>
+  <div class="form_data">
+    <form [formGroup]="form" (ngSubmit)="registrar()">
+      <mat-form-field appearance="outline" class="inputs_properties">
+        <mat-label>Id Gimnasio</mat-label>
+        <input
+          type="text"
+          matInput
+          placeholder="Id gimnasio"
+          autocomplete="off"
+          formControlName="nombre"
+          id="nombre"
+          [errorStateMatcher]="matcher"
+        />
+        <mat-error
+          *ngIf="
+            form.get('nombre')?.hasError('pattern') &&
+            !form.get('nombre')?.hasError('required')
+          "
+        >
+          <strong class="txt_msg">**Formato no valido, (solo letras)</strong>
+        </mat-error>
+        <mat-error *ngIf="form.get('nombre')?.hasError('required')"
+          ><strong class="txt_msg">**Campo requerido</strong></mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="inputs_properties">
+        <mat-label>Id Producto</mat-label>
+        <input
+          type="text"
+          matInput
+          placeholder="Id producto"
+          autocomplete="off"
+          formControlName="apPaterno"
+          id="apPaterno"
+          [errorStateMatcher]="matcher"
+        />
+        <mat-error
+          *ngIf="
+            form.get('apPaterno')?.hasError('pattern') &&
+            !form.get('apPaterno')?.hasError('required')
+          "
+        >
+          <strong class="txt_msg">**Numeros no permitidos</strong>
+        </mat-error>
+        <mat-error *ngIf="form.get('apPaterno')?.hasError('required')"
+          ><strong class="txt_msg">**Campo requerido</strong></mat-error
+        >
+      </mat-form-field>
+    </form>
+  </div>
+</div>
