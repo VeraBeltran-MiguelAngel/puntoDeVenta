@@ -32,6 +32,7 @@ import { HomeComponent } from './components/home/home.component';
 import { CategoriasComponent } from './components/categorias/categorias.component';
 import { ProductosComponent } from './components/productos/productos.component';
 import { ProveedoresComponent } from './components/proveedores/proveedores.component';
+import { EntradasComponent } from './components/entradas/entradas.component';
 
 
 @NgModule({
@@ -43,6 +44,7 @@ import { ProveedoresComponent } from './components/proveedores/proveedores.compo
     CategoriasComponent,
     ProductosComponent,
     ProveedoresComponent,
+    EntradasComponent,
   ],
   imports: [
     CommonModule,
