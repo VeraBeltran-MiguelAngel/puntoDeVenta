@@ -53,7 +53,7 @@ export class AuthService {
 
   getUbicacion(): string {
     this.usuarioRegistrado = this.getUserData();
-    this.ubicacion = this.usuarioRegistrado[0].idGym;
+    this.ubicacion = this.usuarioRegistrado[0].nombreGym;
     return this.ubicacion;
   }
 

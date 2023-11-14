@@ -96,36 +96,7 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  // onSubmit(): void {
-  //   console.log('Hiciste clic en enviar');
-  //   console.log(this.loginForm.value);
-  //   if (this.loginForm.valid) {
-  //     this.auth.login(this.loginForm.value).subscribe({
-  //       next: (respuesta) => {
-  //         console.log("llego");
-  //         if (respuesta[0].rol === 'Administrador') {
-  //           this.toastr.success('Bienvenido administrador', '', {
-  //             positionClass: 'toast-bottom-left',
-  //           });
-  //           console.log(respuesta);
-  //           // Guardamos el registro del usuario en el local storage (en formato cadena)
-  //           this.auth.setUserData(JSON.stringify(respuesta));
-  //           this.router.navigate(['/admin']);
-  //         } else {
-  //           console.log(respuesta);
-  //           this.toastr.error('Tu cuenta no tiene permisos suficientes', 'Error', {
-  //             positionClass: 'toast-bottom-left',
-  //           });
-  //         }
-  //       },
-  //       error: (paramError) => {
-  //         this.toastr.error(paramError, 'Error', {
-  //           positionClass: 'toast-bottom-left',
-  //         });
-  //       },
-  //     });
-  //   }
-  // }
+
 
   getErrorMessage() {
     const usernameControl = this.loginForm.get('username');

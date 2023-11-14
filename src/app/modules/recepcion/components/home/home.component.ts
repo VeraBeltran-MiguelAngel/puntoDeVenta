@@ -3,6 +3,7 @@ import { MatTableDataSource } from '@angular/material/table'; //para controlar l
 import { MatPaginator } from '@angular/material/paginator'; //para paginacion en la tabla
 import { Producto } from '../models/producto';
 import { ProductosService } from 'src/app/service/productos.service';
+import { AuthService } from 'src/app/service/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -13,6 +14,7 @@ export class HomeComponent implements OnInit {
   selectedProducts: Producto[] = []; //lista de productos seleccionados
   totalAPagar: number = 0;
   dineroRecibido: number = 0;
+  ubicacion :string;
 
   //titulos de columnas de la tabla
   displayedColumns: string[] = [
@@ -32,7 +34,7 @@ export class HomeComponent implements OnInit {
   //paginator es una variable de la clase MatPaginator
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
-  constructor(private productoService: ProductosService) {}
+  constructor(private productoService: ProductosService, private auth: AuthService) {}
 
   ngOnInit(): void {
     this.productoService.obternerProductos().subscribe((respuesta) => {
@@ -41,6 +43,8 @@ export class HomeComponent implements OnInit {
       this.dataSource = new MatTableDataSource(this.productData);
       this.dataSource.paginator = this.paginator;
     });
+
+    this.ubicacion=this.auth.getUbicacion();
   }
 
   /**
