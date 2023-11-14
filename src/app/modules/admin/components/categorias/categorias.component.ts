@@ -16,8 +16,7 @@ export class CategoriasComponent implements OnInit {
     'nombre',
     'descripcion',
     'estatus',
-    'fechaCreacion',
-    'acciones',
+    'fechaCreacion'
   ];
 
   categoryData: Categorias[] = [];

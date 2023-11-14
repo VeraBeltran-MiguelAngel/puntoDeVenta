@@ -17,8 +17,7 @@ export class ProveedoresComponent implements OnInit {
     'apellido paterno',
     'apellido materno',
     'razon social',
-    'telefono',
-    'acciones',
+    'telefono'
   ];
 
   listProveedorData: Proveedores[] = [];

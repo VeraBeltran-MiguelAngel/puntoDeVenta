@@ -18,7 +18,7 @@ export class ProductosComponent implements OnInit {
     'descripcion',
     'precio de venta',
     'estatus',
-    'categoria',
+    'categoria'
   ];
 
   listProductData: ListaProductos[] = [];

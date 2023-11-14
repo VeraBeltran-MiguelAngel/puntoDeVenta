@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       this.auth.login(this.loginForm.value).subscribe({
         next: (respuesta) => {
-          console.log('llego');
+          console.log('llego respuesta del api');
           const rol = respuesta[0].rol;
           let messageExito = '';
           let messageError = '';

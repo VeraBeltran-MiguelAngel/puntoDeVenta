@@ -13,8 +13,9 @@ import { ToastrService } from 'ngx-toastr';
   providedIn: 'root',
 })
 export class AuthService {
+  // API: string = 'http://localhost/login/loginRole.php/';
   //variable que guarda el endpoint en el srver API: string = 'conf/';
-  API: string = 'https://olympus.arvispace.com/panelAdmin/conf/loginRole.php/';
+  API: string = 'https://olympus.arvispace.com/puntoDeVenta/conf/loginRolev2.php/';
   //para guardar los headers que manda el API
   httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 
@@ -22,6 +23,8 @@ export class AuthService {
   usuarioRegistrado: any[] = [];
   //para guardar el rol del usuario
   rol: string;
+  //para guardar la ubicacion del usario
+  ubicacion: string;
 
   constructor(
     private router: Router,
@@ -46,6 +49,12 @@ export class AuthService {
     this.usuarioRegistrado = this.getUserData();
     this.rol = this.usuarioRegistrado[0].rol;
     return this.rol;
+  }
+
+  getUbicacion(): string {
+    this.usuarioRegistrado = this.getUserData();
+    this.ubicacion = this.usuarioRegistrado[0].idGym;
+    return this.ubicacion;
   }
 
   isLoggedIn() {

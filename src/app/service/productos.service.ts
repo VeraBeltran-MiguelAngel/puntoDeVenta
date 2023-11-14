@@ -3,21 +3,33 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { Producto } from '../modules/recepcion/components/models/producto';
 import { ListaProductos } from '../modules/admin/components/models/listaProductos';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductosService {
   // API: string = 'https://apimocha.com/productosgym/listar'
-  // API: string = 'http://localhost/productos/productos.php'
+  // API: string = 'http://localhost/login/productos.php/';
   API: string =
-    'https://olympus.arvispace.com/puntoDeVenta/conf/productos.php/';
-  constructor(private clienteHttp: HttpClient) {}
+    'https://olympus.arvispace.com/puntoDeVenta/conf/productosv2.php/';
+  constructor(private clienteHttp: HttpClient, private auth: AuthService) {}
 
   /**
    * este metodo se utiliza para mostrar los productos a la venta (incluye la columna cantidad que solo es de apoyo)
    * @returns
    */
+  // obternerProductos(): Observable<Producto[]> {
+  //   const gimnasioId = this.auth.getUbicacion();
+
+  //   if (!gimnasioId) {
+  //     throw new Error('idGym no encontrado en localStorage');
+  //   }
+  //   return this.clienteHttp.get<Producto[]>(
+  //     `${this.API}?listaProductosRecepcion&gimnasioId=${gimnasioId}`
+  //   );
+  // }
+
   obternerProductos(): Observable<Producto[]> {
     return this.clienteHttp.get<Producto[]>(
       this.API + '?listaProductosRecepcion'
