@@ -11,6 +11,7 @@ export class HomeComponent implements OnInit {
   usuarioRegistrado: any[] = [];
   correo: string;
   rol: string;
+  ubicacion :string;
 
   constructor(private auth: AuthService) {}
 
@@ -22,6 +23,7 @@ export class HomeComponent implements OnInit {
       //accedemos al indice 0 (por que solo es un registro) al indice email
       this.correo = this.usuarioRegistrado[0].email;
       this.rol=this.usuarioRegistrado[0].rol;
+      this.ubicacion=this.auth.getUbicacion();
     
   }
 }
