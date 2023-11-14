@@ -62,7 +62,13 @@ export class EntradasComponent {
       idProveedor: ['', Validators.compose([Validators.required])],
       idUsuario: [this.idUsuario],
       fechaEntrada: [''],
-      cantidad: ['', Validators.compose([Validators.required])],
+      cantidad: [
+        '',
+        Validators.compose([
+          Validators.required,
+          Validators.pattern(/^[0-9]+$/), //solo numeros enteros
+        ]),
+      ],
       precioCompra: [
         '',
         Validators.compose([

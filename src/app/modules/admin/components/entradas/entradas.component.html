@@ -86,6 +86,14 @@
           id="cantidad"
           [errorStateMatcher]="matcher"
         />
+        <mat-error
+        *ngIf="
+          form.get('cantidad')?.hasError('pattern') &&
+          !form.get('cantidad')?.hasError('required')
+        "
+      >
+        <strong class="txt_msg">**Solo se admiten numeros enteros</strong>
+      </mat-error>
         <mat-error *ngIf="form.get('cantidad')?.hasError('required')"
           ><strong class="txt_msg">**Campo requerido</strong></mat-error
         >
