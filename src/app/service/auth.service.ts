@@ -25,6 +25,10 @@ export class AuthService {
   rol: string;
   //para guardar la ubicacion del usario
   ubicacion: string;
+  //idgym
+  idGym:number;
+  //id usuario
+  idUsuario:number;
 
   constructor(
     private router: Router,
@@ -55,6 +59,18 @@ export class AuthService {
     this.usuarioRegistrado = this.getUserData();
     this.ubicacion = this.usuarioRegistrado[0].nombreGym;
     return this.ubicacion;
+  }
+
+  getIdGym():number{
+    this.usuarioRegistrado = this.getUserData();
+    this.idGym=this.usuarioRegistrado[0].idGym;
+    return this.idGym;
+  }
+
+  getIdUsuario():number{
+    this.usuarioRegistrado = this.getUserData();
+    this.idUsuario = this.usuarioRegistrado[0].idUsuarios;
+    return this.idUsuario;
   }
 
   isLoggedIn() {

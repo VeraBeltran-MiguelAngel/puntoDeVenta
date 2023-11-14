@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit {
       this.usuarioRegistrado = this.auth.getUserData();
       //accedemos al indice 0 (por que solo es un registro) al indice email
       this.correo = this.usuarioRegistrado[0].email;
-      this.rol=this.usuarioRegistrado[0].rol;
+      this.rol=this.auth.getRol();
       this.ubicacion=this.auth.getUbicacion();
     
   }
