@@ -19,7 +19,7 @@ if (isset($_GET["listaProductosRecepcion"])) {
         echo json_encode(["message" => "No se pudo obtener el gimnasioId"]);
         exit;
     } else {
-        echo $_SESSION['gimnasioId'];
+        // echo $_SESSION['gimnasioId'];
         switch ($gimnasioId) {
             case 1:
                 $consultaProductos = "SELECT * FROM vistaproductosenventagim1recep";
@@ -43,7 +43,7 @@ if (isset($_GET["listaProductosRecepcion"])) {
                     $producto['cantidad'] = (int)$producto['cantidad'];
                 }
 
-                echo json_encode($productos);
+                echo json_encode($productos, JSON_UNESCAPED_UNICODE);
             } else {
                 echo json_encode([["success" => 0]]);
             }
@@ -73,7 +73,7 @@ if (isset($_GET["listaProductosAdmin"])) {
             $producto['idProducto'] = (int)$producto['idProducto'];
             $producto['precio de venta'] = (float)$producto['precio de venta'];
         }
-        echo json_encode($productosAdmin);
+        echo json_encode($productosAdmin, JSON_UNESCAPED_UNICODE);
         exit();
     } else {
         echo json_encode(["success" => 0]);
