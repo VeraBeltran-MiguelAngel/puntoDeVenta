@@ -126,7 +126,7 @@
           ><strong class="txt_msg">**Campo requerido</strong></mat-error
         >
       </mat-form-field>
-      <button mat-raised-button id="btn_canelar" color="warn">Cancelar</button>
+      <button mat-raised-button id="btn_canelar" color="warn" (click)="limpiarFormulario()">Cancelar</button>
       <button type="submit" id="btn_guardar" mat-raised-button>
         Guardar registro
       </button>

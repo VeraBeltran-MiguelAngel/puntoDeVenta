@@ -8,7 +8,7 @@ if (isset($_GET["resgistraEntrada"])) {
     $data = json_decode(file_get_contents("php://input"));
 
     $idGym = $data->idGym;
-    $idProductos = $data->idProducto;
+    $idProducto = $data->idProducto;
     $idProveedor = $data->idProveedor;
     $idUsuario = $data->idUsuario;
     $fechaEntrada = $data->fechaEntrada;
@@ -31,10 +31,10 @@ if (isset($_GET["resgistraEntrada"])) {
 
     // Verificar si la consulta se ejecutó correctamente
     if ($result) {
-        echo json_encode(["success" => 1]);
+        echo json_encode(["success" => true, "message" => "Entrada registrada correctamente"]);
     } else {
-        // Manejo de errores
-        echo json_encode(["algo salio mal" => 0, "error" => mysqli_error($conexionBD)]);
+        http_response_code(500);  // Código de estado HTTP para "Error interno del servidor"
+        echo json_encode(["success" => false, "message" => "Error al registrar la entrada, valida que los datos ingresados sean correctos"]);
     }
 
     // Cerrar la consulta preparada

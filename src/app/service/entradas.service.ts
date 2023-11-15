@@ -17,8 +17,8 @@ export class EntradasService {
    */
   agregarEntradaProducto(
     datosEntradaProducto: EntradaProducto
-  ): Observable<EntradaProducto[]> {
-    return this.clienteHttp.post<EntradaProducto[]>(
+  ): Observable<any> {
+    return this.clienteHttp.post(
       this.API + '?resgistraEntrada',
       datosEntradaProducto
     );

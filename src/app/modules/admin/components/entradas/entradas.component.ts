@@ -86,8 +86,42 @@ export class EntradasComponent {
     const fechaActual = new Date();
     return this.datePipe.transform(fechaActual, 'yyyy-MM-dd') || '';
   }
-  registrar() {
+
+  // Función para limpiar el formulario
+  limpiarFormulario(): void {
+    this.form.reset();
+  }
+  
+  registrar(): any {
     console.log(this.form.value);
-    this.entrada.agregarEntradaProducto(this.form.value).subscribe();
+    if (this.form.valid) {
+      this.entrada.agregarEntradaProducto(this.form.value).subscribe({
+        next: (respuesta) => {
+          console.log(respuesta);
+
+          if (respuesta.success) {
+            this.toastr.success(respuesta.message, 'Exito', {
+              positionClass: 'toast-bottom-left',
+            });
+            this.limpiarFormulario();
+          } else {
+            this.toastr.error(respuesta.message, 'Error', {
+              positionClass: 'toast-bottom-left',
+            });
+          }
+        },
+        error: (paramError) => {
+          console.error(paramError); // Muestra el error del api en la consola para diagnóstico
+          //accedemos al atributo error y al key
+          this.toastr.error(paramError.error.message, 'Error', {
+            positionClass: 'toast-bottom-left',
+          });
+        },
+      });
+    } else {
+      this.toastr.error('Completa el formulario', 'Error', {
+        positionClass: 'toast-bottom-left',
+      });
+    }
   }
 }
