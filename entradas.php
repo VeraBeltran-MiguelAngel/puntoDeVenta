@@ -8,7 +8,7 @@ if (isset($_GET["resgistraEntrada"])) {
     $data = json_decode(file_get_contents("php://input"));
 
     $idGym = $data->idGym;
-    $idProductos = $data->idProductos;
+    $idProductos = $data->idProducto;
     $idProveedor = $data->idProveedor;
     $idUsuario = $data->idUsuario;
     $fechaEntrada = $data->fechaEntrada;
@@ -24,7 +24,7 @@ if (isset($_GET["resgistraEntrada"])) {
     $stmt = mysqli_prepare($conexionBD, $insertEntrada);
 
     // Vincular parámetros
-    mysqli_stmt_bind_param($stmt, "iiissid", $idGym, $idProductos, $idProveedor, $idUsuario, $fechaEntrada, $cantidad, $precioCompra);
+    mysqli_stmt_bind_param($stmt, "iiissid", $idGym, $idProducto, $idProveedor, $idUsuario, $fechaEntrada, $cantidad, $precioCompra);
 
     // Ejecutar la consulta
     $result = mysqli_stmt_execute($stmt);
