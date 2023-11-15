@@ -12,6 +12,7 @@ import { ErrorStateMatcher } from '@angular/material/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/service/auth.service';
+import { EntradasService } from 'src/app/service/entradas.service';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(
@@ -43,25 +44,27 @@ export class EntradasComponent {
   ubicacion: string; //nombre del gym
   id: number; // id gym
   idUsuario: number;
-  monto: number | null = null;
+  fechaRegistro: string; //fecha de ingreso del producto
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private auth: AuthService,
     private toastr: ToastrService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private entrada: EntradasService
   ) {
     this.ubicacion = this.auth.getUbicacion();
     this.id = this.auth.getIdGym();
     this.idUsuario = this.auth.getIdUsuario();
+    this.fechaRegistro = this.obtenerFechaActual();
 
     this.form = this.fb.group({
       idGym: [this.id],
       idProducto: ['', Validators.compose([Validators.required])],
       idProveedor: ['', Validators.compose([Validators.required])],
       idUsuario: [this.idUsuario],
-      fechaEntrada: [''],
+      fechaEntrada: [this.fechaRegistro],
       cantidad: [
         '',
         Validators.compose([
@@ -83,5 +86,8 @@ export class EntradasComponent {
     const fechaActual = new Date();
     return this.datePipe.transform(fechaActual, 'yyyy-MM-dd') || '';
   }
-  registrar() {}
+  registrar() {
+    console.log(this.form.value);
+    this.entrada.agregarEntradaProducto(this.form.value).subscribe();
+  }
 }
