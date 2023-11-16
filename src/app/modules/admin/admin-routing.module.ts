@@ -6,6 +6,7 @@ import { CategoriasComponent } from './components/categorias/categorias.componen
 import { ProductosComponent } from './components/productos/productos.component';
 import { ProveedoresComponent } from './components/proveedores/proveedores.component';
 import { EntradasComponent } from './components/entradas/entradas.component';
+import { InventarioComponent } from './components/inventario/inventario.component';
 
 const routes: Routes = [
   {
@@ -17,6 +18,7 @@ const routes: Routes = [
       { path: 'productos', component: ProductosComponent },
       { path: 'proveedores', component: ProveedoresComponent },
       { path: 'entradas', component: EntradasComponent },
+      {path: 'inventario', component:InventarioComponent},
       { path: '', redirectTo: '/admin/home', pathMatch: 'full' },
     ],
   },

@@ -4,6 +4,7 @@ import { Observable, map } from 'rxjs';
 import { Producto } from '../modules/recepcion/components/models/producto';
 import { ListaProductos } from '../modules/admin/components/models/listaProductos';
 import { AuthService } from './auth.service';
+import { Inventario } from '../modules/admin/components/models/inventario';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +18,7 @@ export class ProductosService {
 
   /**
    * este metodo se utiliza para mostrar los productos a la venta (incluye la columna cantidad que solo es de apoyo)
+   * para el recepcionista
    * @returns
    */
   obternerProductos(): Observable<Producto[]> {
@@ -26,7 +28,7 @@ export class ProductosService {
   }
 
   /**
-   * Metodo pra listar los productos del admin
+   * Metodo pra listar los productos de la franquicia para  el admin
    */
   getProductosAdmin(): Observable<ListaProductos[]> {
     return this.clienteHttp
@@ -48,5 +50,14 @@ export class ProductosService {
           // }))
         )
       );
+  }
+
+
+/**
+ * Metodo para listar los productos del inventario
+ * @returns 
+ */
+  obternerInventario(): Observable<Inventario[]> {
+    return this.clienteHttp.get<Inventario[]>(this.API + '?listaInventario');
   }
 }

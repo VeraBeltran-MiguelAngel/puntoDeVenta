@@ -33,6 +33,7 @@ import { CategoriasComponent } from './components/categorias/categorias.componen
 import { ProductosComponent } from './components/productos/productos.component';
 import { ProveedoresComponent } from './components/proveedores/proveedores.component';
 import { EntradasComponent } from './components/entradas/entradas.component';
+import { InventarioComponent } from './components/inventario/inventario.component';
 
 
 @NgModule({
@@ -45,6 +46,7 @@ import { EntradasComponent } from './components/entradas/entradas.component';
     ProductosComponent,
     ProveedoresComponent,
     EntradasComponent,
+    InventarioComponent,
   ],
   imports: [
     CommonModule,
