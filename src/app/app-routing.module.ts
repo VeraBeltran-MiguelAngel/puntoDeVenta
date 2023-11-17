@@ -12,27 +12,29 @@ const routes: Routes = [
   { path: 'forgot-password', component: ForgotPasswordComponent },
   {
     path: 'admin',
-    canActivate: [authGuard,hasRoleGuard],
-    data:{
-      rol:'Administrador',
+    canActivate: [authGuard, hasRoleGuard],
+    data: {
+      rol: 'Administrador',
     },
     loadChildren: () =>
       import('./modules/admin/admin.module').then((m) => m.AdminModule),
   },
   {
-    path:'recepcion',
-    canActivate:[authGuard,hasRoleGuard],
-    data:{
-      rol:'Recepcionista',
+    path: 'recepcion',
+    canActivate: [authGuard, hasRoleGuard],
+    data: {
+      rol: 'Recepcionista',
     },
-    loadChildren:()=>
-    import('./modules/recepcion/recepcion.module').then((m)=>m.RecepcionModule),
+    loadChildren: () =>
+      import('./modules/recepcion/recepcion.module').then(
+        (m) => m.RecepcionModule
+      ),
   },
   { path: '**', component: NotFoundComponent },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { useHash: true })], //sin useHash no sirve la navegacion por ruta
   exports: [RouterModule],
 })
 export class AppRoutingModule {}
