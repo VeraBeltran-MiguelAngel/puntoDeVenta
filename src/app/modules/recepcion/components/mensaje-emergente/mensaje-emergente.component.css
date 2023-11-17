@@ -1,0 +1,8 @@
+.button-pay{
+    width: 100px;
+    height: 40px;
+    font-weight: bold;
+    /*margin-left: 5px;*/
+    border-radius: 15px;
+    background-color: #F9A640;
+}

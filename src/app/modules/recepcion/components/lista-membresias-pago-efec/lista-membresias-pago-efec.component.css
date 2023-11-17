@@ -1,0 +1,23 @@
+.grid-menu{
+    display: grid;
+    grid-template-columns: 85%;
+}
+
+.full-width {
+    font-size: 14px;
+    width: 100%;
+}
+
+table {
+    width: 100%;
+}
+
+.button-pay{
+    width: 100px;
+    height: 40px;
+    font-weight: bold;
+    margin-left: 5px;
+    border-radius: 15px;
+    background-color: #F9A640;
+}
+
