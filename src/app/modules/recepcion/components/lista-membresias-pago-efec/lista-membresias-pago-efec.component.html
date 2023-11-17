@@ -1,0 +1,99 @@
+<br>
+<h1>Pago de membresia en efectivo</h1>
+<div class="grid-menu" style=" justify-content: center;">
+    <mat-tab-group>
+        <!-- APARTADO 1, LISTADO TOTAL DE CLIENTES CON UNA MEMBRESIA ACTIVA -->
+        <mat-tab label="Clientes activos"> 
+            <br>
+            <h2>Lista de clientes con status activo</h2>
+            <mat-form-field class="full-width">
+                <mat-label>Buscar</mat-label>
+                <input matInput (keyup)="applyFilterActivos($event)"placeholder="Buscar" #input/>
+            </mat-form-field>
+            <table mat-table [dataSource]="dataSourceActivos" class="mat-elevation-z8">
+                <ng-container [matColumnDef]="column" *ngFor="let column of displayedColumnsActivos">
+                  <th mat-header-cell *matHeaderCellDef>{{ column }}</th>
+                  <td mat-cell *matCellDef="let prod">
+                    <ng-container *ngIf="column === 'ID'">
+                        {{ prod.ID }}
+                      </ng-container>
+                      <ng-container *ngIf="column === 'Nombre'">
+                        {{ prod.Nombre }}
+                      </ng-container>
+                      <ng-container *ngIf="column === 'Sucursal'">
+                        {{ prod.Sucursal }}
+                      </ng-container>
+                      <ng-container *ngIf="column === 'Membresia'">
+                        {{ prod.Membresia }}
+                      </ng-container>
+                      <ng-container *ngIf="column === 'Info_Membresia'">
+                        {{ prod.Info_Membresia }}
+                      </ng-container>
+                      <ng-container *ngIf="column === 'Fecha_Inicio'">
+                        {{ prod.Fecha_Inicio }}
+                      </ng-container>
+                      <ng-container *ngIf="column === 'Fecha_Fin'">
+                        {{ prod.Fecha_Fin }}
+                      </ng-container>
+                      <ng-container *ngIf="column === 'Status'">
+                        {{ prod.Status }}
+                      </ng-container>
+                  </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumnsActivos"></tr>
+                <tr mat-row *matRowDef="let productofila; columns: displayedColumnsActivos"></tr>
+              </table>
+              <mat-paginator #paginatorActivos [pageSizeOptions]="[5, 10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+        </mat-tab>
+        <!-- APARTADO 2, REENOVACION DE MEMBRESIA SOLICITADO DESDE SUCURSAL -->
+        <mat-tab label="Reenovacion de membresia"> 
+            Reenovacion de membresia
+        </mat-tab>
+        <!-- APARTADO 3, PAGO DE MEMBRESIA ONLINE-->
+        <mat-tab label="Pago membresia cliente online"> 
+            <br>
+            <h2>Pago de membresia en linea cliente nuevo</h2>
+            <mat-form-field class="full-width">
+                <mat-label>Buscar</mat-label>
+                <input matInput (keyup)="applyFilter($event)"placeholder="Buscar" #input/>
+            </mat-form-field>
+
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+                <ng-container [matColumnDef]="column" *ngFor="let column of displayedColumns">
+                  <th mat-header-cell *matHeaderCellDef>{{ column }}</th>
+                  <td mat-cell *matCellDef="let prod">
+                    <ng-container *ngIf="column === 'ID'">
+                        {{ prod.ID }}
+                    </ng-container>
+                    <ng-container *ngIf="column === 'Nombre'">
+                        {{ prod.Nombre }}
+                    </ng-container>
+                    <ng-container *ngIf="column === 'Sucursal'">
+                        {{ prod.Sucursal }}
+                    </ng-container>
+                    <ng-container *ngIf="column === 'Membresia'">
+                        {{ prod.Membresia }}
+                    </ng-container>
+                    <ng-container *ngIf="column === 'Precio'">
+                        ${{ prod.Precio }}
+                    </ng-container>
+                    <ng-container *ngIf="column === 'Status'">
+                        {{ prod.Status }}
+                    </ng-container>
+                    <ng-container *ngIf="column === 'Dinero recibido'">
+                        <mat-form-field>
+                          <input matInput [(ngModel)]="prod.dineroRecibido" type="number" min="0" placeholder="0"/> 
+                        </mat-form-field>
+                    </ng-container>
+                    <ng-container *ngIf="column === 'Pagar'">
+                        <button mat-raised-button (click)="realizarCalculo(prod)" class="button-pay">Pagar</button> 
+                    </ng-container>
+                  </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let productofila; columns: displayedColumns"></tr>
+            </table>
+            <mat-paginator #paginatorPagoOnline [pageSizeOptions]="[5, 10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+        </mat-tab>
+    </mat-tab-group>
+</div>

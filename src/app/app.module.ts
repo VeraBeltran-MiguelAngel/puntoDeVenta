@@ -32,7 +32,7 @@ import { MaterialModule } from './material-module';
     FormsModule,
     HttpClientModule,
     NgIf,
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot({positionClass:'toast-bottom-left'}),
     FontAwesomeModule, // ToastrModule added
     MaterialModule
   ],
