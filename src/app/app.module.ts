@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
@@ -21,6 +22,7 @@ import { MaterialModule } from './material-module';
     LoginComponent,
     ForgotPasswordComponent,
     NotFoundComponent,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,
