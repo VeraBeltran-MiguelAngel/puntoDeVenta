@@ -23,7 +23,7 @@ if (isset($_GET["resgistraEntrada"])) {
     // Preparar la consulta
     $stmt = mysqli_prepare($conexionBD, $insertEntrada);
 
-    // Vincular parámetros
+    // Vincular parámetros (especificar tipo de dato integer =i)
     mysqli_stmt_bind_param($stmt, "iiissid", $idGym, $idProducto, $idProveedor, $idUsuario, $fechaEntrada, $cantidad, $precioCompra);
 
     // Ejecutar la consulta
