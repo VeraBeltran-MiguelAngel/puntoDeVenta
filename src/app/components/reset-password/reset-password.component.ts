@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router,ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -10,14 +10,15 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./reset-password.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ResetPasswordComponent {
+export class ResetPasswordComponent implements OnInit{
   hide = true;
   resetForm: FormGroup;
 
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private route: ActivatedRoute // Agregar ActivatedRoute al constructor
   ) {
     this.resetForm = this.fb.group({
       nuevaPassword: [
@@ -29,6 +30,17 @@ export class ResetPasswordComponent {
         Validators.compose([Validators.required, Validators.minLength(8)]),
       ],
     });
+  }
+  ngOnInit(): void {
+    // Verificar los parámetros 'id' y 'token' en la URL al inicializar el componente
+    const idParam = this.route.snapshot.queryParamMap.get('id');
+    const tokenParam = this.route.snapshot.queryParamMap.get('token');
+
+    if (!idParam || !tokenParam) {
+      // Redirigir al componente 'app-not-found' si falta alguno de los parámetros
+      this.router.navigate(['/app-not-found']);
+    }
+   
   }
 
   onSubmit(): void {
