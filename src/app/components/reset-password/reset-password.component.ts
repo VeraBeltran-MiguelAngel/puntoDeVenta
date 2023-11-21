@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router,ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { ResetPasswordService } from 'src/app/service/resetPassword.service';
 
 @Component({
   selector: 'app-reset-password',
@@ -10,7 +11,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./reset-password.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ResetPasswordComponent implements OnInit{
+export class ResetPasswordComponent implements OnInit {
   hide = true;
   resetForm: FormGroup;
 
@@ -18,6 +19,7 @@ export class ResetPasswordComponent implements OnInit{
     private router: Router,
     private fb: FormBuilder,
     private toastr: ToastrService,
+    private passwordReset: ResetPasswordService,
     private route: ActivatedRoute // Agregar ActivatedRoute al constructor
   ) {
     this.resetForm = this.fb.group({
@@ -39,18 +41,50 @@ export class ResetPasswordComponent implements OnInit{
     if (!idParam || !tokenParam) {
       // Redirigir al componente 'app-not-found' si falta alguno de los parámetros
       this.router.navigate(['/app-not-found']);
+      return;
+    } else {
+      // Enviar los parámetros al servicio para la interacción con la API
+      this.passwordReset.validaToken(idParam, tokenParam).subscribe({
+        next: (respuesta) => {
+          console.log('llego respuest del api');
+          console.log(respuesta);
+          if (respuesta.success) {
+            this.toastr.success(respuesta.message, 'Exito', {
+              positionClass: 'toast-bottom-left',
+            });
+          } else {
+            this.toastr.error(respuesta.message, 'Error', {
+              positionClass: 'toast-bottom-left',
+            });
+
+            // Redirigir al componente 'app-not-found' en caso de error
+            this.router.navigate(['/app-not-found']);
+          }
+        },
+        error: (paramError) => {
+          this.toastr.error(paramError.error.message, 'Error', {
+            positionClass: 'toast-bottom-left',
+          });
+
+          // Redirigir al componente 'app-not-found' en caso de error
+          this.router.navigate(['/app-not-found']);
+        },
+      });
     }
-   
   }
 
+  /**
+   * Si esta correcto el link se procede a verificar que coincidan las contraseñas para 
+   * poder actualizar 
+   */
   onSubmit(): void {
     console.log('Hiciste clic en enviar');
     console.log(this.resetForm.value);
-    
+
     if (this.resetForm.valid) {
       const nuevaPassword = this.resetForm.get('nuevaPassword')?.value;
       const confirmaPassword = this.resetForm.get('confirmaPassword')?.value;
-  
+
       if (nuevaPassword && confirmaPassword) {
         if (confirmaPassword !== nuevaPassword) {
           this.toastr.error('Las contraseñas no coinciden', 'Error', {
@@ -62,5 +96,4 @@ export class ResetPasswordComponent implements OnInit{
       }
     }
   }
-  
 }

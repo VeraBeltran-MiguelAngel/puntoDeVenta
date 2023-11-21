@@ -6,8 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ResetPasswordService {
-
-API :string ='http://localhost/EnviarMail/nuevaContra.php/';
+  API: string = 'http://localhost/EnviarMail/nuevaContra.php/';
   // API: string ='https://olympus.arvispace.com/puntoDeVenta/conf/nuevaContra.php/';
   //para guardar los headers que manda el API
   httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
@@ -16,12 +15,21 @@ API :string ='http://localhost/EnviarMail/nuevaContra.php/';
 
   /**
    * Metodo para enviar mail con link de reset password
-   * @param email 
-   * @returns 
+   * @param email
+   * @returns
    */
   enviarMail(email: string): Observable<any> {
     return this.clienteHttp.post(this.API + '?solicitaNuevaPass', email, {
       headers: this.httpHeaders,
     });
+  }
+
+  validaToken(id: string, token: string): Observable<any> {
+    return this.clienteHttp.post(
+      this.API + '?consultaToken' + '&id=' + id + '&token=' + token,
+      {
+        headers: this.httpHeaders,
+      }
+    );
   }
 }

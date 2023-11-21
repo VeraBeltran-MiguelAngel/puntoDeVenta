@@ -7,14 +7,18 @@ import { MatToolbarModule } from '@angular/material/toolbar'; //para el menu de 
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatTableModule} from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTabsModule } from '@angular/material/tabs';
 import {MatInputModule} from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material/dialog';//dialogos emergentes
 
 @NgModule({
   exports: [
     MatToolbarModule, //menu navegacion
     MatFormFieldModule,//para campos de formulario
     MatTableModule,//para tablas
+    MatTabsModule, // tabs de material (pestañas)
+    MatDialogModule, 
     MatPaginatorModule,//paginacion de tabla
     MatInputModule,//input box de material
     MatIconModule//iconos

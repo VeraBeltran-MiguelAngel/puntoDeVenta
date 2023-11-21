@@ -28,11 +28,8 @@ import {
 import { faPowerOff } from '@fortawesome/free-solid-svg-icons';
 import { HomeComponent } from './components/home/home.component';
 import { ListaMembresiasPagoEfecComponent } from './components/lista-membresias-pago-efec/lista-membresias-pago-efec.component'; //librerias de iconos
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule } from '@angular/material/paginator';
 import { MensajeEmergenteComponent } from './components/mensaje-emergente/mensaje-emergente.component';
-import { MatDialogModule } from '@angular/material/dialog';
+
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
@@ -43,10 +40,6 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     FontAwesomeModule, //tipo de letra
     RecepMaterialModule,
     FormsModule,
-    MatTabsModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatDialogModule,
     FlexLayoutModule,
   ],
 })
