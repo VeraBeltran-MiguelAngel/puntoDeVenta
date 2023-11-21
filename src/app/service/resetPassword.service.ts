@@ -24,9 +24,32 @@ export class ResetPasswordService {
     });
   }
 
+  /**
+   * Metodo para verificar que el link tenga los valores correctos
+   * @param id id usuario
+   * @param token token generado al solicitar cambio de contraseña
+   * @returns
+   */
   validaToken(id: string, token: string): Observable<any> {
     return this.clienteHttp.post(
       this.API + '?consultaToken' + '&id=' + id + '&token=' + token,
+      {
+        headers: this.httpHeaders,
+      }
+    );
+  }
+
+  /**
+   * Actualizar contraseña 
+   * @param id 
+   * @param token 
+   * @param nuevaPass 
+   * @returns 
+   */
+  actualizaPassword(id: string, token: string, nuevaPass: string) : Observable<any> {
+    return this.clienteHttp.post(
+      this.API + '?actualizarPass' + '&id=' + id + '&token=' + token,
+      nuevaPass,
       {
         headers: this.httpHeaders,
       }

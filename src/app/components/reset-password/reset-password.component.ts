@@ -33,6 +33,11 @@ export class ResetPasswordComponent implements OnInit {
       ],
     });
   }
+
+  /**
+   * Al iniciar el componente validar que el link este correcto de lo contrario no puede ver este recurso
+   * @returns 
+   */
   ngOnInit(): void {
     // Verificar los parámetros 'id' y 'token' en la URL al inicializar el componente
     const idParam = this.route.snapshot.queryParamMap.get('id');
@@ -74,8 +79,8 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   /**
-   * Si esta correcto el link se procede a verificar que coincidan las contraseñas para 
-   * poder actualizar 
+   * Si esta correcto el link se procede a verificar que coincidan las contraseñas para
+   * poder actualizar
    */
   onSubmit(): void {
     console.log('Hiciste clic en enviar');
@@ -92,6 +97,38 @@ export class ResetPasswordComponent implements OnInit {
           });
           //si no coinciden limpiar formulario
           this.resetForm.reset();
+        } else {
+          //cuando las contraseñas coinciden actualizar el password (obtener id y token de la url)
+          const idParam = this.route.snapshot.queryParamMap.get('id');
+          const tokenParam = this.route.snapshot.queryParamMap.get('token');
+          //si los valores del url tienen algun valor  se suscribe al servicio
+          if (idParam && tokenParam) {
+            this.passwordReset
+              .actualizaPassword(idParam, tokenParam, this.resetForm.value)
+              .subscribe({
+                next: (respuesta) => {
+                  console.log('llego respuesta del api');
+                  console.log(respuesta);
+                  if (respuesta.success) {
+                    this.toastr.success(respuesta.message, 'Exito', {
+                      positionClass: 'toast-bottom-left',
+                    });
+
+                    // Redirigir al componente 'login'al finalizar la actualizacion
+                    this.router.navigate(['/login']);
+                  } else {
+                    this.toastr.error(respuesta.message, 'Error', {
+                      positionClass: 'toast-bottom-left',
+                    });
+                  }
+                },
+                error: (paramError) => {
+                  this.toastr.error(paramError.error.message, 'Error', {
+                    positionClass: 'toast-bottom-left',
+                  });
+                },
+              });
+          }
         }
       }
     }
