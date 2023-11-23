@@ -43,7 +43,7 @@ if (isset($_GET["listaProductosRecepcion"])) {
                     $producto['cantidad'] = (int)$producto['cantidad'];
                 }
 
-                echo json_encode($productos, JSON_UNESCAPED_UNICODE);// evita errores de ñ o acentos
+                echo json_encode($productos, JSON_UNESCAPED_UNICODE); // evita errores de ñ o acentos
             } else {
                 echo json_encode([["success" => 0]]);
             }
@@ -115,7 +115,7 @@ if (isset($_GET["listaInventario"])) {
                     $producto['cantidad disponible'] = (int)$producto['cantidad disponible'];
                 }
 
-                echo json_encode($productos, JSON_UNESCAPED_UNICODE);// evita errores de ñ o acentos
+                echo json_encode($productos, JSON_UNESCAPED_UNICODE); // evita errores de ñ o acentos
             } else {
                 echo json_encode([["success" => 0]]);
             }
@@ -123,5 +123,24 @@ if (isset($_GET["listaInventario"])) {
             // Manejo de errores
             echo "Error en la consulta: " . mysqli_error($conexionBD);
         }
+    }
+}
+
+
+if (isset($_GET["inventarioGlobal"])) {
+
+    $inventarioGlobal = "SELECT * FROM vistaInventarioGlobal";
+
+
+    $sqlData = mysqli_query($conexionBD, $inventarioGlobal);
+
+
+    if (mysqli_num_rows($sqlData) > 0) {
+        $inventario = mysqli_fetch_all($sqlData, MYSQLI_ASSOC);
+
+        echo json_encode($inventario);
+        exit();
+    } else {
+        echo json_encode(["success" => 0]);
     }
 }

@@ -54,10 +54,14 @@ export class ProductosService {
 
 
 /**
- * Metodo para listar los productos del inventario
+ * Metodo para listar los productos del inventario dependiendo de la sucursal
  * @returns 
  */
   obternerInventario(): Observable<Inventario[]> {
     return this.clienteHttp.get<Inventario[]>(this.API + '?listaInventario');
+  }
+
+  inventarioGlobal():Observable<any>{
+    return this.clienteHttp.get(this.API + '?inventarioGlobal');
   }
 }

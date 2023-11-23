@@ -29,11 +29,19 @@ import { faPowerOff } from '@fortawesome/free-solid-svg-icons';
 import { HomeComponent } from './components/home/home.component';
 import { ListaMembresiasPagoEfecComponent } from './components/lista-membresias-pago-efec/lista-membresias-pago-efec.component'; //librerias de iconos
 import { MensajeEmergenteComponent } from './components/mensaje-emergente/mensaje-emergente.component';
+import { InventariosComponent } from './components/inventarios/inventarios.component';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
-  declarations: [RecepDashboardComponent, HeaderComponent, HomeComponent, ListaMembresiasPagoEfecComponent, MensajeEmergenteComponent],
+  declarations: [
+    RecepDashboardComponent,
+    HeaderComponent,
+    HomeComponent,
+    ListaMembresiasPagoEfecComponent,
+    InventariosComponent,
+    MensajeEmergenteComponent,
+  ],
   imports: [
     CommonModule,
     RecepcionRoutingModule,
