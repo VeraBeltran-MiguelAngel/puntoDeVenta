@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common'; //para obtener fecha del sistema
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -9,10 +9,10 @@ import {
   Validators,
 } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
-import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/service/auth.service';
 import { EntradasService } from 'src/app/service/entradas.service';
+import { ProveedoresService } from 'src/app/service/proveedores.service';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(
@@ -37,7 +37,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   styleUrls: ['./entradas.component.css'],
   providers: [DatePipe],
 })
-export class EntradasComponent {
+export class EntradasComponent implements OnInit {
   hide = true;
   form: FormGroup;
   matcher = new MyErrorStateMatcher();
@@ -45,14 +45,21 @@ export class EntradasComponent {
   id: number; // id gym
   idUsuario: number;
   fechaRegistro: string; //fecha de ingreso del producto
+  //Variables para guardar las lista de productos
+  listaProductos: any;
+  idProducto: number;
+
+  //guardar lista proveedores y id
+  listaProveedores: any;
+  idProveedor: number;
 
   constructor(
     private fb: FormBuilder,
-    private router: Router,
     private auth: AuthService,
     private toastr: ToastrService,
     private datePipe: DatePipe,
-    private entrada: EntradasService
+    private entrada: EntradasService,
+    private proveedor: ProveedoresService
   ) {
     this.ubicacion = this.auth.getUbicacion();
     this.id = this.auth.getIdGym();
@@ -82,6 +89,59 @@ export class EntradasComponent {
     });
   }
 
+  /**
+   * Llenar los mat select
+   */
+  ngOnInit(): void {
+    //Traer la lista de productos para mat select
+    this.entrada.listaProductos().subscribe({
+      next: (resultData) => {
+        console.log(resultData);
+        this.listaProductos = resultData;
+      },
+      error: (error) => {
+        console.error(error);
+      },
+    });
+
+    //lista de proveedores mat select
+    this.proveedor.listaProveedores().subscribe({
+      next: (resulData) => {
+        console.log(resulData);
+        // Transformar los nombres de propiedades para poder mostrar en mat select (no acepta espacios)
+        this.listaProveedores = resulData.map(
+          (proveedor: { [x: string]: any }) => {
+            return {
+              ...proveedor,
+              nombreEmpresa: proveedor['razon social'],
+            };
+          }
+        );
+      },
+      error: (error) => {
+        console.error(error);
+      },
+    });
+  }
+
+  /**
+   * Metodo que se invoca cada que selecionas una opcion del select
+   * @param event
+   */
+  infoProducto(event: number) {
+    console.log('Opción seleccionada:', event);
+    this.idProducto = event;
+  }
+
+  /**
+   * Metodo que se invoca cada que selecionas una opcion del select
+   * @param event
+   */
+  infoProveedor(event: number) {
+    console.log('Opción seleccionada proveedor:', event);
+    this.idProveedor = event;
+  }
+
   obtenerFechaActual(): string {
     const fechaActual = new Date();
     return this.datePipe.transform(fechaActual, 'yyyy-MM-dd') || '';
@@ -91,7 +151,7 @@ export class EntradasComponent {
   limpiarFormulario(): void {
     this.form.reset();
   }
-  
+
   registrar(): any {
     console.log(this.form.value);
     if (this.form.valid) {

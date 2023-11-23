@@ -3,136 +3,149 @@
     Registra la entrada de un producto para la sucursal: {{ ubicacion }}
   </h2>
   <div class="content_margin">
-  <div class="form_data">
-    <form [formGroup]="form" (ngSubmit)="registrar()">
-      <mat-form-field appearance="outline" class="inputs_properties">
-        <mat-label>Clave gimnasio</mat-label>
-        <input
-          id="idGym"
-          type="text"
-          matInput
-          value="{{ id }}"
-          [disabled]="true"
-          autocomplete="off"
-        />
-      </mat-form-field>
+    <div class="form_data">
+      <form [formGroup]="form" (ngSubmit)="registrar()">
+        <mat-form-field appearance="outline" class="inputs_properties">
+          <mat-label>Clave gimnasio</mat-label>
+          <input
+            id="idGym"
+            type="text"
+            matInput
+            value="{{ id }}"
+            [disabled]="true"
+            autocomplete="off"
+          />
+        </mat-form-field>
 
-      <mat-form-field appearance="outline" class="inputs_properties">
-        <mat-label>Id Producto</mat-label>
-        <input
-          type="number"
-          min="0"
-          matInput
-          placeholder="Id producto"
-          autocomplete="off"
-          formControlName="idProducto"
-          id="idProducto"
-          [errorStateMatcher]="matcher"
-        />
-        <mat-error *ngIf="form.get('idProducto')?.hasError('required')"
-          ><strong class="txt_msg">**Campo requerido</strong></mat-error
+        <mat-form-field appearance="outline" class="inputs_properties">
+          <mat-label>Productos</mat-label>
+          <mat-select
+            id="idProducto"
+            name="idProducto"
+            formControlName="idProducto"
+            (ngModelChange)="infoProducto(showProduct.value)"
+            #showProduct
+          >
+            <mat-option
+              *ngFor="let item of listaProductos"
+              [value]="item.idProducto"
+              >{{ item.nombre }}</mat-option
+            >
+          </mat-select>
+
+          <mat-error *ngIf="form.get('idProducto')?.hasError('required')"
+            ><strong class="txt_msg">**Campo requerido</strong></mat-error
+          >
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="inputs_properties">
+          <mat-label>Proveedores</mat-label>
+          <mat-select
+            id="idProveedor"
+            name="idProveedor"
+            formControlName="idProveedor"
+            (ngModelChange)="infoProveedor(showProveedor.value)"
+            #showProveedor
+          >
+            <mat-option
+              *ngFor="let item of listaProveedores"
+              [value]="item.idProveedor"
+              >{{ item.nombreEmpresa }}</mat-option
+            >
+          </mat-select>
+
+          <mat-error *ngIf="form.get('idProveedor')?.hasError('required')"
+            ><strong class="txt_msg">**Campo requerido</strong></mat-error
+          >
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="inputs_properties">
+          <mat-label>Clave usuario autenticado</mat-label>
+          <input
+            id="idUsuario"
+            type="text"
+            matInput
+            value="{{ idUsuario }}"
+            [disabled]="true"
+            autocomplete="off"
+          />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="inputs_properties">
+          <mat-label>Fecha de ingreso del producto</mat-label>
+          <input
+            id="fechaEntrada"
+            type="text"
+            matInput
+            [value]="fechaRegistro"
+            [disabled]="true"
+            autocomplete="off"
+          />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="inputs_properties">
+          <mat-label>Cantidad de producto a ingresar</mat-label>
+          <input
+            type="number"
+            min="0"
+            matInput
+            placeholder="Cantidad de producto"
+            autocomplete="off"
+            formControlName="cantidad"
+            id="cantidad"
+            [errorStateMatcher]="matcher"
+          />
+          <mat-error
+            *ngIf="
+              form.get('cantidad')?.hasError('pattern') &&
+              !form.get('cantidad')?.hasError('required')
+            "
+          >
+            <strong class="txt_msg">**Solo se admiten numeros enteros</strong>
+          </mat-error>
+          <mat-error *ngIf="form.get('cantidad')?.hasError('required')"
+            ><strong class="txt_msg">**Campo requerido</strong></mat-error
+          >
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="inputs_properties">
+          <mat-label>Precio de compra</mat-label>
+          <input
+            matInput
+            placeholder="$"
+            type="number"
+            min="0"
+            step="0.01"
+            autocomplete="off"
+            formControlName="precioCompra"
+            id="precioCompra"
+            [errorStateMatcher]="matcher"
+          />
+
+          <mat-error
+            *ngIf="
+              form.get('precioCompra')?.hasError('pattern') &&
+              !form.get('precioCompra')?.hasError('required')
+            "
+          >
+            <strong class="txt_msg">**Solo se admiten dos decimales</strong>
+          </mat-error>
+          <mat-error *ngIf="form.get('precioCompra')?.hasError('required')"
+            ><strong class="txt_msg">**Campo requerido</strong></mat-error
+          >
+        </mat-form-field>
+        <button
+          mat-raised-button
+          id="btn_canelar"
+          color="warn"
+          (click)="limpiarFormulario()"
         >
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="inputs_properties">
-        <mat-label>Id Proveedor</mat-label>
-        <input
-          type="number"
-          min="0"
-          matInput
-          placeholder="Id proveedor"
-          autocomplete="off"
-          formControlName="idProveedor"
-          id="idProveedor"
-          [errorStateMatcher]="matcher"
-        />
-        <mat-error *ngIf="form.get('idProveedor')?.hasError('required')"
-          ><strong class="txt_msg">**Campo requerido</strong></mat-error
-        >
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="inputs_properties">
-        <mat-label>Clave usuario autenticado</mat-label>
-        <input
-          id="idUsuario"
-          type="text"
-          matInput
-          value="{{ idUsuario }}"
-          [disabled]="true"
-          autocomplete="off"
-        />
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="inputs_properties">
-        <mat-label>Fecha de ingreso del producto</mat-label>
-        <input
-          id="fechaEntrada"
-          type="text"
-          matInput
-          [value]="fechaRegistro"
-          [disabled]="true"
-          autocomplete="off"
-        />
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="inputs_properties">
-        <mat-label>Cantidad de producto a ingresar</mat-label>
-        <input
-          type="number"
-          min="0"
-          matInput
-          placeholder="Cantidad de producto"
-          autocomplete="off"
-          formControlName="cantidad"
-          id="cantidad"
-          [errorStateMatcher]="matcher"
-        />
-        <mat-error
-          *ngIf="
-            form.get('cantidad')?.hasError('pattern') &&
-            !form.get('cantidad')?.hasError('required')
-          "
-        >
-          <strong class="txt_msg">**Solo se admiten numeros enteros</strong>
-        </mat-error>
-        <mat-error *ngIf="form.get('cantidad')?.hasError('required')"
-          ><strong class="txt_msg">**Campo requerido</strong></mat-error
-        >
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="inputs_properties">
-        <mat-label>Precio de compra</mat-label>
-        <input
-          matInput
-          placeholder="$"
-          type="number"
-          min="0"
-          step="0.01"
-          autocomplete="off"
-          formControlName="precioCompra"
-          id="precioCompra"
-          [errorStateMatcher]="matcher"
-        />
-
-        <mat-error
-          *ngIf="
-            form.get('precioCompra')?.hasError('pattern') &&
-            !form.get('precioCompra')?.hasError('required')
-          "
-        >
-          <strong class="txt_msg">**Solo se admiten dos decimales</strong>
-        </mat-error>
-        <mat-error *ngIf="form.get('precioCompra')?.hasError('required')"
-          ><strong class="txt_msg">**Campo requerido</strong></mat-error
-        >
-      </mat-form-field>
-      <button mat-raised-button id="btn_canelar" color="warn" (click)="limpiarFormulario()">Cancelar</button>
-      <button type="submit" id="btn_guardar" mat-raised-button>
-        Guardar registro
-      </button>
-    </form>
+          Cancelar
+        </button>
+        <button type="submit" id="btn_guardar" mat-raised-button>
+          Guardar registro
+        </button>
+      </form>
+    </div>
   </div>
-
-</div>
-
 </div>

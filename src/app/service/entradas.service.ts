@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { EntradaProducto } from '../modules/admin/components/models/entradas';
+import { ListaProductos } from '../modules/admin/components/models/listaProductos';
 
 @Injectable({
   providedIn: 'root',
@@ -23,4 +24,10 @@ export class EntradasService {
       datosEntradaProducto
     );
   }
+
+
+  listaProductos(): Observable<ListaProductos> {
+    return this.clienteHttp.get<ListaProductos>(this.API + '?listaProductos');
+  }
+
 }
