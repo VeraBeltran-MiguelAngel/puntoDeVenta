@@ -32,3 +32,11 @@ table {
   padding: 10px;
   display: inline-block;
 }
+
+/**propiedades del resumen de los productos seleccionados para la transferencia **/
+.resumen {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-top: 20px;
+  background-color: #f9f9f9;
+}
