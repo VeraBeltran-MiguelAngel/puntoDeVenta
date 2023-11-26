@@ -4,6 +4,7 @@ import { RecepDashboardComponent } from './components/recep-dashboard/recep-dash
 import { HomeComponent } from './components/home/home.component';
 import { ListaMembresiasPagoEfecComponent } from './components/lista-membresias-pago-efec/lista-membresias-pago-efec.component';
 import { InventariosComponent } from './components/inventarios/inventarios.component';
+import { TransferenciasComponent } from './components/transferencias/transferencias.component';
 
 const routes: Routes = [
   {
@@ -15,6 +16,7 @@ const routes: Routes = [
       //Componente lista mebresias
       { path: 'listaMembresias', component: ListaMembresiasPagoEfecComponent },
       { path: 'inventarios', component: InventariosComponent },
+      { path: 'transferencias', component: TransferenciasComponent },
     ],
   },
 ];

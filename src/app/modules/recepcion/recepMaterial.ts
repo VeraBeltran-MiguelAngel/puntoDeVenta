@@ -10,7 +10,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTabsModule } from '@angular/material/tabs';
 import {MatInputModule} from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
-import { MatDialogModule } from '@angular/material/dialog';//dialogos emergentes
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   exports: [
@@ -18,10 +19,11 @@ import { MatDialogModule } from '@angular/material/dialog';//dialogos emergentes
     MatFormFieldModule,//para campos de formulario
     MatTableModule,//para tablas
     MatTabsModule, // tabs de material (pestañas)
-    MatDialogModule, 
+    MatDialogModule, //dialogos emergentes
     MatPaginatorModule,//paginacion de tabla
     MatInputModule,//input box de material
-    MatIconModule//iconos
+    MatIconModule,//iconos
+    MatSelectModule //listas desplegables
   ],
 })
 export class RecepMaterialModule {}

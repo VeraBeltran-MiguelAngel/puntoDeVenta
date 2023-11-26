@@ -1,0 +1,34 @@
+.grid-menu{
+  display: grid;
+  grid-template-columns: 85%;
+}
+
+.full-width {
+  font-size: 14px;
+  width: 100%;
+}
+
+table {
+  width: 100%;
+}
+
+/**propiedades contenedor formulario**/
+.form_data {
+  margin: auto;
+  text-align: left;
+  padding-bottom: 15px;
+}
+
+/**propiedades contendor margen**/
+.content_margin {
+  width: 100%;
+  margin: auto;
+  background-color: aqua;
+}
+
+/**propiedades por inputs **/
+.inputs_properties {
+  width: 300px;
+  padding: 10px;
+  display: inline-block;
+}

@@ -1,0 +1,77 @@
+<br />
+<h1>Aqui podras transferir productos a otra sucursal</h1>
+
+<div class="grid-menu" style="justify-content: center">
+  <mat-tab-group>
+    <mat-tab label="Registro de transferencias">
+      <div class="datos">
+        <h2>Datos de la transferencia</h2>
+
+        <h3>Sucursal origen: {{ ubicacion }}</h3>
+        <div class="content_margin">
+          <div class="form_data">
+            <form [formGroup]="form" (ngSubmit)="registrar()">
+                <mat-form-field appearance="outline" class="inputs_properties">
+                    <mat-label>Sucursal destino</mat-label>
+                    <mat-select
+                      id="idGimnasio"
+                      name="idGimnasio"
+                      formControlName="idGimnasio"
+                      (ngModelChange)="infoGym(showGym.value)"
+                      #showGym
+                    >
+                      <mat-option
+                        *ngFor="let item of listaGym"
+                        [value]="item.idGimnasio"
+                        >{{ item.nombreGym }}</mat-option
+                      >
+                    </mat-select>
+          
+                    <mat-error *ngIf="form.get('idGimnasio')?.hasError('required')"
+                      ><strong class="txt_msg">**Campo requerido</strong></mat-error
+                    >
+                  </mat-form-field>
+                  <br>
+                  <h3>Buscar productos</h3>
+                
+                  <mat-form-field class="full-width">
+                    <mat-label>Filtro</mat-label>
+                    <input
+                      matInput
+                      (keyup)="applyFilter($event)"
+                      placeholder="Busca por columnas"
+                      #input
+                    />
+                  </mat-form-field>
+            </form>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+    <mat-tab label="Listado de transferencias">
+      <div class="datos">
+        <p><strong>Nombre del país:</strong>Chile</p>
+        <p>
+          <img src="assets/imagenes/chile.png" />
+        </p>
+        <h3>Datos generales.</h3>
+        <p>
+          Chile es un país de América ubicado en el extremo sudoeste de América
+          del Sur. Su nombre oficial es República de Chile y su capital es la
+          ciudad de Santiago. Primer país sudamericano en ingresar a la
+          Organización para la Cooperación y el Desarrollo Económicos, Chile es
+          una de las economías de América Latina que más ha crecido desde
+          mediados de la década de 1980.
+        </p>
+        <p>
+          Antes del descubrimiento de América, las tierras situadas al sur del
+          desierto de Atacama ya se llamaban Chili en la tradición indígena. Una
+          vez instalados en Nueva Castilla y Nueva Toledo, los conquistadores
+          españoles siguieron llamando de esa forma a la región del sur, a veces
+          también conocida como «valle de Chile», nombre que se extendió
+          posteriormente a todo el actual país.
+        </p>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>
