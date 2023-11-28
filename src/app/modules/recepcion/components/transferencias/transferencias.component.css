@@ -23,7 +23,7 @@ table {
 .content_margin {
   width: 100%;
   margin: auto;
-  background-color: aqua;
+  /* background-color: aqua; */
 }
 
 /**propiedades por inputs **/
@@ -39,4 +39,14 @@ table {
   padding: 10px;
   margin-top: 20px;
   background-color: #f9f9f9;
+}
+
+/**propiedades btn aceptar-guardar**/
+#btn_guardar {
+  width: 290px;
+  height: 45px;
+  margin: 10px 7px;
+  background: #FD9727; 
+  color: white;
+  font-size: larger;
 }

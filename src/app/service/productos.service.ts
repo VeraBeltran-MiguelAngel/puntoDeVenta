@@ -11,7 +11,7 @@ import { Inventario } from '../modules/admin/components/models/inventario';
 })
 export class ProductosService {
   // API: string = 'https://apimocha.com/productosgym/listar'
-  // API: string = 'http://localhost/login/productos.php/';
+  // API: string = 'http://localhost/productos/productosv2.php/';
   API: string =
     'https://olympus.arvispace.com/puntoDeVenta/conf/productosv2.php/';
   constructor(private clienteHttp: HttpClient, private auth: AuthService) {}
@@ -52,16 +52,15 @@ export class ProductosService {
       );
   }
 
-
-/**
- * Metodo para listar los productos del inventario dependiendo de la sucursal
- * @returns 
- */
+  /**
+   * Metodo para listar los productos del inventario dependiendo de la sucursal
+   * @returns
+   */
   obternerInventario(): Observable<Inventario[]> {
     return this.clienteHttp.get<Inventario[]>(this.API + '?listaInventario');
   }
 
-  inventarioGlobal():Observable<any>{
+  inventarioGlobal(): Observable<any> {
     return this.clienteHttp.get(this.API + '?inventarioGlobal');
   }
 }

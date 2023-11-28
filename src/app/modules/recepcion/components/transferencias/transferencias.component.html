@@ -11,76 +11,130 @@
         <div class="content_margin">
           <div class="form_data">
             <form [formGroup]="form" (ngSubmit)="registrar()">
-                <mat-form-field appearance="outline" class="inputs_properties">
-                    <mat-label>Sucursal destino</mat-label>
-                    <mat-select
-                      id="idGimnasio"
-                      name="idGimnasio"
-                      formControlName="idGimnasio"
-                      (ngModelChange)="infoGym(showGym.value)"
-                      #showGym
-                    >
-                      <mat-option
-                        *ngFor="let item of listaGym"
-                        [value]="item.idGimnasio"
-                        >{{ item.nombreGym }}</mat-option
-                      >
-                    </mat-select>
-          
-                    <mat-error *ngIf="form.get('idGimnasio')?.hasError('required')"
-                      ><strong class="txt_msg">**Campo requerido</strong></mat-error
-                    >
-                  </mat-form-field>
-                  <br>
-                  <h3>Buscar productos</h3>
-                
-                  <mat-form-field class="full-width">
-                    <mat-label>Filtro</mat-label>
-                    <input
-                      matInput
-                      (keyup)="applyFilter($event)"
-                      placeholder="Busca por columnas"
-                      #input
-                    />
-                  </mat-form-field>
+              <mat-form-field appearance="outline" class="inputs_properties">
+                <mat-label>Clave gimnasio origen</mat-label>
+                <input
+                  id="idGym"
+                  type="text"
+                  matInput
+                  value="{{ idGymOrigen }}"
+                  [disabled]="true"
+                  autocomplete="off"
+                />
+              </mat-form-field>
 
+              <mat-form-field appearance="outline" class="inputs_properties">
+                <mat-label>Sucursal destino</mat-label>
+                <mat-select
+                  id="idGimnasio"
+                  name="idGimnasio"
+                  formControlName="idGimnasio"
+                  (ngModelChange)="infoGym(showGym.value)"
+                  #showGym
+                >
+                  <mat-option
+                    *ngFor="let item of listaGym"
+                    [value]="item.idGimnasio"
+                  >{{ item.nombreGym }}</mat-option>
+                </mat-select>
+              
+                <mat-error *ngIf="form.get('idGimnasio')?.hasError('required') || form.get('idGimnasio')?.hasError('noProductsAdded')">
+                  <strong class="txt_msg">**Campo requerido y se debe agregar al menos un producto.</strong>
+                </mat-error>
 
-                  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-                    <ng-container [matColumnDef]="column" *ngFor="let column of displayedColumns">
-                      <th mat-header-cell *matHeaderCellDef>{{ column }}</th>
-                      <td mat-cell *matCellDef="let prod">
-                        <ng-container *ngIf="column !== 'cantidad'">
-                          {{ prod[column] }}
-                        </ng-container>
-                        <ng-container *ngIf="column === 'cantidad'">
-                          <mat-form-field>
-                            <input matInput [(ngModel)]="prod.cantidad" type="number" min="0" />
-                          </mat-form-field>
-                        </ng-container>
-                        <ng-container *ngIf="column === 'acciones'">
-                          <mat-icon class="add-box-icon" (click)="agregaraTransferencia(prod)"
-                            >add_box</mat-icon
-                          >
-                        </ng-container>
-                      </td>
-                    </ng-container>
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                    <tr mat-row *matRowDef="let productofila; columns: displayedColumns"></tr>
-                  </table>
-                  <mat-paginator [pageSizeOptions]="[5, 10, 15, 20]" showFirstLastButtons></mat-paginator>
+              </mat-form-field>
+              
 
-                  <div class="resumen">
-                    <h1>Resumen de productos a transferir</h1>
-                    <ul>
-                      <li *ngFor="let selectedProduct of selectedProducts">
-                        {{ selectedProduct.nombre }} x {{ selectedProduct.cantidad }} - ${{
-                          selectedProduct.precio * selectedProduct.cantidad
-                        }}
-                      </li>
-                    </ul>
-          
-                  </div>
+              <mat-form-field appearance="outline" class="inputs_properties">
+                <mat-label>Clave usuario autenticado</mat-label>
+                <input
+                  id="idUsuario"
+                  type="text"
+                  matInput
+                  value="{{ idUsuario }}"
+                  [disabled]="true"
+                  autocomplete="off"
+                />
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="inputs_properties">
+                <mat-label>Fecha de envio</mat-label>
+                <input
+                  id="fechaEntrada"
+                  type="text"
+                  matInput
+                  [value]="fechaEnvio"
+                  [disabled]="true"
+                  autocomplete="off"
+                />
+              </mat-form-field>
+              <button type="submit" id="btn_guardar" mat-raised-button>
+                Registrar
+              </button>
             </form>
+
+            <br />
+            <h3>Buscar productos</h3>
+
+            <mat-form-field class="full-width">
+              <mat-label>Filtro</mat-label>
+              <input
+                matInput
+                (keyup)="applyFilter($event)"
+                placeholder="Busca por columnas"
+                #input
+              />
+            </mat-form-field>
+
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+              <ng-container
+                [matColumnDef]="column"
+                *ngFor="let column of displayedColumns"
+              >
+                <th mat-header-cell *matHeaderCellDef>{{ column }}</th>
+                <td mat-cell *matCellDef="let prod">
+                  <ng-container *ngIf="column !== 'cantidad'">
+                    {{ prod[column] }}
+                  </ng-container>
+                  <ng-container *ngIf="column === 'cantidad'">
+                    <mat-form-field>
+                      <input
+                        matInput
+                        [(ngModel)]="prod.cantidad"
+                        type="number"
+                        min="0"
+                      />
+                    </mat-form-field>
+                  </ng-container>
+                  <ng-container *ngIf="column === 'acciones'">
+                    <mat-icon
+                      class="add-box-icon"
+                      (click)="agregaraTransferencia(prod)"
+                      >add_box</mat-icon
+                    >
+                  </ng-container>
+                </td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr
+                mat-row
+                *matRowDef="let productofila; columns: displayedColumns"
+              ></tr>
+            </table>
+            <mat-paginator
+              [pageSizeOptions]="[5, 10, 15, 20]"
+              showFirstLastButtons
+            ></mat-paginator>
+
+            <div class="resumen">
+              <h1>Resumen de productos a transferir</h1>
+              <ul>
+                <li *ngFor="let selectedProduct of selectedProducts">
+                  Prodcuto: {{ selectedProduct.nombre }} *
+                  Cantidad: {{ selectedProduct.cantidad }} 
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
