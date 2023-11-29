@@ -42,3 +42,40 @@ if (isset($_GET["resgistraEntrada"])) {
 
     exit();
 }
+
+
+
+if (isset($_GET["listaProductos"])) {
+    $stmt = mysqli_prepare($conexionBD, "SELECT idProducto, nombre FROM producto");
+
+    if ($stmt) {
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_store_result($stmt);
+
+        if (mysqli_stmt_num_rows($stmt) > 0) {
+            mysqli_stmt_bind_result($stmt, $idProducto, $nombre);
+            $lisProductos = array();
+            // Realiza casting explícito a enteros
+            while (mysqli_stmt_fetch($stmt)) {
+                $lisProductos[] = array(
+                    'idProducto' => (int)$idProducto,
+                    'nombre' => $nombre
+                );
+            }
+
+            echo json_encode($lisProductos);
+            exit();
+        } else {
+            $errorMessage = "No se encontraron productos";
+        }
+
+        mysqli_stmt_close($stmt);
+    } else {
+        $errorMessage = "Error en la consulta preparada";
+    }
+
+    if (isset($errorMessage)) {
+        http_response_code(500);
+        echo json_encode(["success" => false, "message" => $errorMessage]);
+    }
+}

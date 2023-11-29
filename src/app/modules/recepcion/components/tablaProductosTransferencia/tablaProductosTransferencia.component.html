@@ -1,0 +1,49 @@
+<h1 mat-dialog-title>Selecciona los productos a transferir y que cantidad</h1>
+
+<div mat-dialog-content>
+  <mat-form-field class="full-width">
+    <mat-label>Filtro</mat-label>
+    <input
+      matInput
+      (keyup)="applyFilter($event)"
+      placeholder="Busca por columnas"
+      #input
+    />
+  </mat-form-field>
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <ng-container
+      [matColumnDef]="column"
+      *ngFor="let column of displayedColumns"
+    >
+      <th mat-header-cell *matHeaderCellDef>{{ column }}</th>
+      <td mat-cell *matCellDef="let prod">
+        <ng-container *ngIf="column !== 'cantidad'">
+          {{ prod[column] }}
+        </ng-container>
+        <ng-container *ngIf="column === 'cantidad'">
+          <mat-form-field>
+            <input matInput [(ngModel)]="prod.cantidad" type="number" min="0" />
+          </mat-form-field>
+        </ng-container>
+        <ng-container *ngIf="column === 'acciones'">
+          <mat-icon class="add-box-icon" (click)="agregaraTransferencia(prod)"
+            >add_box</mat-icon
+          >
+        </ng-container>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let productofila; columns: displayedColumns"></tr>
+  </table>
+  <mat-paginator
+    [pageSizeOptions]="[5, 10, 15, 20]"
+    showFirstLastButtons
+  ></mat-paginator>
+</div>
+
+<div mat-dialog-actions fxLayoutAlign="left left">
+  <button class="btn" mat-fab title="Cerrar " (click)="cerrarVentana()">
+    <fa-icon [icon]="faClose"></fa-icon>
+    <span>Cerrar</span>
+  </button>
+</div>

@@ -12,7 +12,19 @@ export class ProveedoresService {
 
   constructor(private clienteHttp: HttpClient) {}
 
+  /**
+   * Metodo para poblar la tabla global de proveedores
+   * @returns 
+   */
   obtenerProveedores(): Observable<Proveedores[]> {
     return this.clienteHttp.get<Proveedores[]>(this.API);
+  }
+
+  /**
+   * Metodo usado para poblar el mat select
+   * @returns 
+   */
+  listaProveedores():Observable<any>{
+    return this.clienteHttp.get(this.API);
   }
 }

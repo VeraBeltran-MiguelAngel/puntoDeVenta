@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RecepcionRoutingModule } from './recepcion-routing.module';
 import { RecepDashboardComponent } from './components/recep-dashboard/recep-dashboard.component';
 import { HeaderComponent } from './components/header/header.component';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 //incluir librerias de material que necesitara el modulo recepcion
 import { RecepMaterialModule } from './recepMaterial';
@@ -25,33 +25,39 @@ import {
   faCircleUser,
   faCreditCard,
 } from '@fortawesome/free-regular-svg-icons'; //librerias de iconos
-import { faPowerOff } from '@fortawesome/free-solid-svg-icons';
+import { faPowerOff, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { HomeComponent } from './components/home/home.component';
 import { ListaMembresiasPagoEfecComponent } from './components/lista-membresias-pago-efec/lista-membresias-pago-efec.component'; //librerias de iconos
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule } from '@angular/material/paginator';
 import { MensajeEmergenteComponent } from './components/mensaje-emergente/mensaje-emergente.component';
-import { MatDialogModule } from '@angular/material/dialog';
+import { InventariosComponent } from './components/inventarios/inventarios.component';
+import { TransferenciasComponent } from './components/transferencias/transferencias.component';
+import { TablaProductosTransferenciaComponent } from './components/tablaProductosTransferencia/tablaProductosTransferencia.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormPagoEmergenteComponent } from './components/form-pago-emergente/form-pago-emergente.component';
-import { MatSelectModule } from '@angular/material/select';
+import { TablaEmergenteService } from 'src/app/service/tablaEmergente.service';
 
 @NgModule({
-  declarations: [RecepDashboardComponent, HeaderComponent, HomeComponent, ListaMembresiasPagoEfecComponent, MensajeEmergenteComponent, FormPagoEmergenteComponent],
+  declarations: [
+    RecepDashboardComponent,
+    HeaderComponent,
+    HomeComponent,
+    ListaMembresiasPagoEfecComponent,
+    InventariosComponent,
+    TransferenciasComponent,
+    TablaProductosTransferenciaComponent,
+    MensajeEmergenteComponent,
+    FormPagoEmergenteComponent
+  ],
   imports: [
     CommonModule,
     RecepcionRoutingModule,
     FontAwesomeModule, //tipo de letra
     RecepMaterialModule,
     FormsModule,
-    MatTabsModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatDialogModule,
+    ReactiveFormsModule,
     FlexLayoutModule,
-    MatSelectModule,
   ],
+  providers: [TablaEmergenteService], //*si no colocas el servicio no se mostrara la tabla emergente ni el resto de contenido todo estara en blanco
 })
 export class RecepcionModule {
   //librerias de iconos
@@ -66,7 +72,8 @@ export class RecepcionModule {
       faPaypal,
       faXTwitter,
       faCheckCircle,
-      faPowerOff
+      faPowerOff,
+      faSearch
     );
   }
 }
