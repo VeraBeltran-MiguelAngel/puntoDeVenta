@@ -35,15 +35,22 @@
                   <mat-option
                     *ngFor="let item of listaGym"
                     [value]="item.idGimnasio"
-                  >{{ item.nombreGym }}</mat-option>
+                    >{{ item.nombreGym }}</mat-option
+                  >
                 </mat-select>
-              
-                <mat-error *ngIf="form.get('idGimnasio')?.hasError('required') || form.get('idGimnasio')?.hasError('noProductsAdded')">
-                  <strong class="txt_msg">**Campo requerido y se debe agregar al menos un producto.</strong>
-                </mat-error>
 
+                <mat-error
+                  *ngIf="
+                    form.get('idGimnasio')?.hasError('required') ||
+                    form.get('idGimnasio')?.hasError('noProductsAdded')
+                  "
+                >
+                  <strong class="txt_msg"
+                    >**Campo requerido y se debe agregar al menos un
+                    producto.</strong
+                  >
+                </mat-error>
               </mat-form-field>
-              
 
               <mat-form-field appearance="outline" class="inputs_properties">
                 <mat-label>Clave usuario autenticado</mat-label>
@@ -68,6 +75,16 @@
                   autocomplete="off"
                 />
               </mat-form-field>
+              <button
+                class="btn"
+                mat-fab
+                title="Buscar productos"
+                (click)="abrirVentana()"
+              >
+              <fa-icon [icon]="faSearch"></fa-icon>
+                <span>Buscar productos a transferir</span>
+              </button>
+
               <button type="submit" id="btn_guardar" mat-raised-button>
                 Registrar
               </button>
@@ -130,8 +147,8 @@
               <h1>Resumen de productos a transferir</h1>
               <ul>
                 <li *ngFor="let selectedProduct of selectedProducts">
-                  Prodcuto: {{ selectedProduct.nombre }} *
-                  Cantidad: {{ selectedProduct.cantidad }} 
+                  Prodcuto: {{ selectedProduct.nombre }} * Cantidad:
+                  {{ selectedProduct.cantidad }}
                 </li>
               </ul>
             </div>

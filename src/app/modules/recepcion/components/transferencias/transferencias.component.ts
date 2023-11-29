@@ -21,6 +21,8 @@ import { ProductosService } from 'src/app/service/productos.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { DatePipe } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
+import { TablaEmergenteService } from 'src/app/service/tablaEmergente.service';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(
@@ -50,6 +52,7 @@ export class TransferenciasComponent implements OnInit {
   idUsuario: number;
   fechaEnvio: string; //fecha de envio de la trasnferencia
   form: FormGroup;
+  faSearch = faSearch; //icono de busqueda
   /**
    * * esta lista debe ser de tipo any por que tiene keys personalizados y para compararlos
    * * ya no puede seguir al tipo de dato Inventario
@@ -82,7 +85,9 @@ export class TransferenciasComponent implements OnInit {
     private gym: GimnasioService,
     private datePipe: DatePipe,
     private productoService: ProductosService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private tablaEmergente : TablaEmergenteService
+   
   ) {
     this.idGymOrigen = this.auth.getIdGym();
     this.idUsuario = this.auth.getIdUsuario();
@@ -131,6 +136,12 @@ export class TransferenciasComponent implements OnInit {
       console.log('Inventario de productos con cantidad disponible', respuesta);
       this.listInventarioData = respuesta;
     });
+  }
+
+
+  abrirVentana() {
+    this.tablaEmergente.abrirVentanaEmergente();
+
   }
 
   registrar(): any {

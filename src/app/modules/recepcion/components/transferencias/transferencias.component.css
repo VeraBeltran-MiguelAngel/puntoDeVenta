@@ -50,3 +50,20 @@ table {
   color: white;
   font-size: larger;
 }
+
+/**propiedades botones  header - toolbar**/
+.btn {
+  margin: 10px;
+  width: auto; /* Ancho automático para ajustarse al contenido */
+  height: 45px;
+  border-radius: 15px;
+  background: #df7e54;
+  color: black;
+  display: flex; /* Usa un modelo de caja flexible para alinear elementos internos */
+  align-items: center; /* Alinea los elementos verticalmente al centro */
+  padding: 0 15px; /* Agrega relleno horizontal para espacio interno */
+}
+
+.btn fa-icon {
+  margin-right: 8px; /* Ajusta el espacio entre el ícono y el texto */
+}
