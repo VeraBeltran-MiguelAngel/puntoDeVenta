@@ -33,6 +33,7 @@ import { InventariosComponent } from './components/inventarios/inventarios.compo
 import { TransferenciasComponent } from './components/transferencias/transferencias.component';
 import { TablaProductosTransferenciaComponent } from './components/tablaProductosTransferencia/tablaProductosTransferencia.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { FormPagoEmergenteComponent } from './components/form-pago-emergente/form-pago-emergente.component';
 import { TablaEmergenteService } from 'src/app/service/tablaEmergente.service';
 
 @NgModule({
@@ -45,6 +46,7 @@ import { TablaEmergenteService } from 'src/app/service/tablaEmergente.service';
     TransferenciasComponent,
     TablaProductosTransferenciaComponent,
     MensajeEmergenteComponent,
+    FormPagoEmergenteComponent
   ],
   imports: [
     CommonModule,
