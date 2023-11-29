@@ -17,7 +17,7 @@ import { ToastrService } from 'ngx-toastr';
 import { TablaEmergenteService } from 'src/app/service/tablaEmergente.service';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { TransferirProductoService } from 'src/app/service/transferirProducto.service';
-
+import {v4 as uuid} from 'uuid';
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(
     control: FormControl | null,
@@ -40,6 +40,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 })
 export class TransferenciasComponent implements OnInit {
   ubicacion: string; //nombre del gym
+  folioTransferencia: string;
   idGymOrigen: number;
   idGimnasio: number; //id del gimnasio de destino
   listaGym: any;
@@ -70,6 +71,8 @@ export class TransferenciasComponent implements OnInit {
     this.idUsuario = this.auth.getIdUsuario();
     this.fechaEnvio = this.obtenerFechaActual();
     this.ubicacion = this.auth.getUbicacion();
+    this.folioTransferencia = uuid();
+
 
     // formulario
     this.form = this.fb.group({

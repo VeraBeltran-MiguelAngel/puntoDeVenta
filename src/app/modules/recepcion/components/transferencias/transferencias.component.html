@@ -12,6 +12,17 @@
           <div class="form_data">
             <form [formGroup]="form" (ngSubmit)="registrar()">
               <mat-form-field appearance="outline" class="inputs_properties">
+                <mat-label>Folio de transferencia</mat-label>
+                <input
+                  id="idUsuario"
+                  type="text"
+                  matInput
+                  value="{{folioTransferencia}}"
+                  [disabled]="true"
+                  autocomplete="off"
+                />
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="inputs_properties">
                 <mat-label>Clave gimnasio origen</mat-label>
                 <input
                   id="idGym"
