@@ -8,16 +8,22 @@ import { Producto } from '../modules/recepcion/components/models/producto';
   providedIn: 'root',
 })
 export class TransferirProductoService {
-  API: string = 'http://localhost/productos/transferirProductos.php/';
+  API: string = 'http://localhost/productos/transferirProdcutos.php';
 
   //para guardar los headers que manda el API
   httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 
   constructor(private clienteHttp: HttpClient) {}
 
+  /**
+   * Metodo para enviar los productos
+   * @param transferencia  valores para tabla transferencia (formulario)
+   * @param productosParaTransferir  arreglo de productos para la tabla detalle
+   * @returns
+   */
   transferirProductos(
     transferencia: Transferencia,
-    productosParaTransferir: Producto
+    productosParaTransferir: Producto[]
   ): Observable<any> {
     return this.clienteHttp.post(
       this.API + '?transferirPro',

@@ -1,10 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table'; //para controlar los datos del api y ponerlos en una tabla
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/service/auth.service';
 import {
   FormBuilder,
@@ -18,11 +12,11 @@ import { ErrorStateMatcher } from '@angular/material/core';
 import { GimnasioService } from 'src/app/service/gimnasio.service';
 import { Producto } from '../models/producto';
 import { ProductosService } from 'src/app/service/productos.service';
-import { MatPaginator } from '@angular/material/paginator';
 import { DatePipe } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import { TablaEmergenteService } from 'src/app/service/tablaEmergente.service';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { TransferirProductoService } from 'src/app/service/transferirProducto.service';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(
@@ -60,7 +54,6 @@ export class TransferenciasComponent implements OnInit {
    */
   listInventarioData: any[] = [];
   selectedProducts: Producto[] = []; //lista de productos seleccionados para trasnferir (desde tabla emergente)
-  existenProductosSeleccionados: boolean;
   productData: Producto[] = []; //para guardar la respuesta del api en un arreglo
 
   constructor(
@@ -70,12 +63,15 @@ export class TransferenciasComponent implements OnInit {
     private datePipe: DatePipe,
     private productoService: ProductosService,
     private toastr: ToastrService,
-    private tablaEmergente: TablaEmergenteService
+    private tablaEmergente: TablaEmergenteService,
+    private transferencia: TransferirProductoService
   ) {
     this.idGymOrigen = this.auth.getIdGym();
     this.idUsuario = this.auth.getIdUsuario();
     this.fechaEnvio = this.obtenerFechaActual();
     this.ubicacion = this.auth.getUbicacion();
+
+    // formulario
     this.form = this.fb.group({
       idGymOrigen: [this.idGymOrigen],
       idGimnasio: ['', Validators.compose([Validators.required])],
@@ -120,18 +116,19 @@ export class TransferenciasComponent implements OnInit {
   abrirVentana() {
     this.tablaEmergente.abrirVentanaEmergente();
   }
+  // Función para limpiar el formulario
+  limpiarFormulario(): void {
+    this.form.reset();
+  }
 
   registrar(): any {
     // Verificar si no se han agregado productos
     if (this.selectedProducts.length === 0) {
-      this.existenProductosSeleccionados = false;
       this.toastr.error(
         'Debes agregar almenos un producto para hacer una transferencia',
         'No hay productos para transferir'
       );
       return;
-    } else {
-      this.existenProductosSeleccionados = true;
     }
 
     // Validar que la cantidad del producto sea mayor a 0
@@ -188,6 +185,36 @@ export class TransferenciasComponent implements OnInit {
       // Mostrar mensaje
       this.toastr.error(errorMessage, 'Error en la cantidad del producto');
       return;
+    }
+
+    if (this.form.valid) {
+      console.log('formulario valido:', this.form.value);
+      console.log('productos validos', this.selectedProducts);
+      this.transferencia
+        .transferirProductos(this.form.value, this.selectedProducts)
+        .subscribe({
+          next: (respuesta) => {
+            console.log(respuesta);
+
+            if (respuesta.success) {
+              this.toastr.success(respuesta.message, 'Exito', {
+                positionClass: 'toast-bottom-left',
+              });
+              this.limpiarFormulario();
+            } else {
+              this.toastr.error(respuesta.message, 'Error', {
+                positionClass: 'toast-bottom-left',
+              });
+            }
+          },
+          error: (paramError) => {
+            console.error(paramError); // Muestra el error del api en la consola para diagnóstico
+            //accedemos al atributo error y al key
+            this.toastr.error(paramError.error.message, 'Error', {
+              positionClass: 'toast-bottom-left',
+            });
+          },
+        });
     }
   }
 

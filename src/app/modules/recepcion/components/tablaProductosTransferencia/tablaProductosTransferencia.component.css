@@ -24,7 +24,7 @@
   margin-right: 8px; /* Ajusta el espacio entre el ícono y el texto */
 }
 
-* Add these styles for scrolling */
+/**Add these styles for scrolling */
 .mat-dialog-content {
   max-height: 400px; /* Set the maximum height for the dialog content */
   overflow-y: auto; /* Enable vertical scrolling if content exceeds the maximum height */
