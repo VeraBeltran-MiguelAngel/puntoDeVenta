@@ -1,0 +1,54 @@
+
+<h1 mat-dialog-title>Actualizar Membresia</h1>
+<div mat-dialog-content>
+    <form>
+        <div class="grid">
+            <div class="column">
+                <mat-form-field>
+                    <mat-label>Nombre</mat-label>
+                    <input matInput [value]="data.nombre" [disabled]='true'>
+                </mat-form-field>
+            </div>
+            <div class="column">
+                <mat-form-field>
+                    <mat-label>Sucursal</mat-label>
+                    <input matInput [value]="data.sucursal" [disabled]='true'>
+                </mat-form-field>
+            </div>
+            <div class="column">
+                <mat-form-field>
+                    <label for="membresiaSelect">Membresía</label>
+                    <mat-select id="membresiaSelect" name="membresiaSelect" [(ngModel)]="membresiaSeleccionada" (ngModelChange)="onMembresiaChange()">
+                        <mat-option *ngFor="let membresia of membresias" [value]="membresia.IDmembresia">
+                        {{ membresia.Membresia }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="column">
+                <mat-form-field>
+                    <mat-label>Precio</mat-label>
+                    <input matInput [value]="this.precio" [disabled]='true'>
+                </mat-form-field>
+            </div>
+            <div class="column">
+                <mat-form-field>
+                    <mat-label>Duración</mat-label>
+                    <input matInput [value]="this.duracion" [disabled]='true'>
+                </mat-form-field>
+            </div>
+            <div class="column">
+                <mat-form-field>
+                    <mat-label>Dinero recibido</mat-label>
+                    <input matInput [(ngModel)]="this.moneyRecibido" [ngModelOptions]="{standalone: true}" type="number" min="0" placeholder="0">  <!--revisar el ngModel  [(ngModel)]="updMem.moneyRecibido"-->
+                </mat-form-field>
+            </div>
+            <div class="column" mat-dialog-actions fxLayoutAlign="center center">
+                <button class="button-pay" mat-button (click)="successDialog()" >Pagar</button>
+            </div>
+            <div class="column" mat-dialog-actions fxLayoutAlign="center center">
+                <button class="button-cancel" mat-button (click)="cancelDialogo()" >Cerrar</button>
+            </div>
+        </div>
+      </form>
+</div>

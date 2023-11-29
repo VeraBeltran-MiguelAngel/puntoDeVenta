@@ -34,9 +34,11 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MensajeEmergenteComponent } from './components/mensaje-emergente/mensaje-emergente.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { FormPagoEmergenteComponent } from './components/form-pago-emergente/form-pago-emergente.component';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
-  declarations: [RecepDashboardComponent, HeaderComponent, HomeComponent, ListaMembresiasPagoEfecComponent, MensajeEmergenteComponent],
+  declarations: [RecepDashboardComponent, HeaderComponent, HomeComponent, ListaMembresiasPagoEfecComponent, MensajeEmergenteComponent, FormPagoEmergenteComponent],
   imports: [
     CommonModule,
     RecepcionRoutingModule,
@@ -48,6 +50,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatPaginatorModule,
     MatDialogModule,
     FlexLayoutModule,
+    MatSelectModule,
   ],
 })
 export class RecepcionModule {

@@ -1,6 +1,6 @@
 .grid-menu{
     display: grid;
-    grid-template-columns: 85%;
+    grid-template-columns: 90%;
 }
 
 .full-width {
@@ -19,5 +19,16 @@ table {
     margin-left: 5px;
     border-radius: 15px;
     background-color: #F9A640;
+}
+
+.button-icon{
+    background-color: #ffffff;
+    color: #F9A640;
+    border: #ffffff;
+
+}
+
+.icon-size{
+    font-size: 27px;
 }
 
