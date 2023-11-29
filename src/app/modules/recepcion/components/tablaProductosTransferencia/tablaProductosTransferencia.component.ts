@@ -11,6 +11,7 @@ import { ProductosService } from 'src/app/service/productos.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'tabla-productos-transferencia',
@@ -40,10 +41,17 @@ export class TablaProductosTransferenciaComponent implements OnInit {
 
   constructor(
     private productoService: ProductosService,
+    private toastr: ToastrService,
     public dialogRef: MatDialogRef<TablaProductosTransferenciaComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
   ngOnInit(): void {
+      //obtener los productos seleccionados previamente 
+    this.productoService.getProductosSeleccionados().subscribe((productos) => {
+      this.selectedProducts = [...productos]; // Crear una copia de la lista
+      console.log('selectedProductsPrevios:', this.selectedProducts);
+    });
+
     //llenar la tabla de productos
     this.productoService.obternerProductos().subscribe((respuesta) => {
       // console.log(respuesta);
@@ -86,12 +94,21 @@ export class TablaProductosTransferenciaComponent implements OnInit {
      */
     if (productoExistente) {
       productoExistente.cantidad += producto.cantidad;
+      this.toastr.success('Cantidad actualizada', 'Producto agregado previamente', {
+        positionClass: 'toast-bottom-left',
+      });
     } else {
       this.selectedProducts.push({ ...producto });
+      this.toastr.success('Nuevo producto agregado', '', {
+        positionClass: 'toast-bottom-left',
+      });
     }
 
-    console.log(this.selectedProducts);
+    console.log('lista de productos seleccionados', this.selectedProducts);
     // Reiniciar la cantidad del producto
     producto.cantidad = 0;
+
+    // Actualizar datos en el servicio
+    this.productoService.setProductosSeleccionados(this.selectedProducts);
   }
 }

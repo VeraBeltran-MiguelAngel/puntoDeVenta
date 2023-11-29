@@ -59,25 +59,9 @@ export class TransferenciasComponent implements OnInit {
    * esta lista mustra la cantidad disponible de los productos
    */
   listInventarioData: any[] = [];
-  selectedProducts: Producto[] = []; //lista de productos seleccionados para trasnferir
-
-  //titulos de columnas de la tabla
-  displayedColumns: string[] = [
-    'id',
-    'categoria',
-    'nombre',
-    'tamaño',
-    'descripcion',
-    'precio',
-    'cantidad',
-    'acciones',
-  ];
-
+  selectedProducts: Producto[] = []; //lista de productos seleccionados para trasnferir (desde tabla emergente)
+  existenProductosSeleccionados: boolean;
   productData: Producto[] = []; //para guardar la respuesta del api en un arreglo
-  dataSource: any; // instancia para matTableDatasource
-
-  //paginator es una variable de la clase MatPaginator
-  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
   constructor(
     private auth: AuthService,
@@ -86,13 +70,12 @@ export class TransferenciasComponent implements OnInit {
     private datePipe: DatePipe,
     private productoService: ProductosService,
     private toastr: ToastrService,
-    private tablaEmergente : TablaEmergenteService
-   
+    private tablaEmergente: TablaEmergenteService
   ) {
     this.idGymOrigen = this.auth.getIdGym();
     this.idUsuario = this.auth.getIdUsuario();
     this.fechaEnvio = this.obtenerFechaActual();
-
+    this.ubicacion = this.auth.getUbicacion();
     this.form = this.fb.group({
       idGymOrigen: [this.idGymOrigen],
       idGimnasio: ['', Validators.compose([Validators.required])],
@@ -102,7 +85,11 @@ export class TransferenciasComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.ubicacion = this.auth.getUbicacion();
+    //obtener los productos seleccionados de la tabla emergente
+    this.productoService.getProductosSeleccionados().subscribe((productos) => {
+      this.selectedProducts = [...productos]; // Crear una copia de la lista
+      console.log('prodcutosSeleccionados:', this.selectedProducts);
+    });
 
     //Traer la lista de gimnasios exepto el idGym que pertenece el usuario logueado
     this.gym.gimnasiosLista().subscribe({
@@ -123,14 +110,6 @@ export class TransferenciasComponent implements OnInit {
       },
     });
 
-    //llenar la tabla de productos
-    this.productoService.obternerProductos().subscribe((respuesta) => {
-      // console.log(respuesta);
-      this.productData = respuesta;
-      this.dataSource = new MatTableDataSource(this.productData);
-      this.dataSource.paginator = this.paginator;
-    });
-
     //traer las cantidades disponibles del inventario
     this.productoService.obternerInventario().subscribe((respuesta) => {
       console.log('Inventario de productos con cantidad disponible', respuesta);
@@ -138,25 +117,21 @@ export class TransferenciasComponent implements OnInit {
     });
   }
 
-
   abrirVentana() {
     this.tablaEmergente.abrirVentanaEmergente();
-
   }
 
   registrar(): any {
-    console.log('selectedProducts:', this.selectedProducts);
-
     // Verificar si no se han agregado productos
     if (this.selectedProducts.length === 0) {
-      // Marcar el control correspondiente como inválido
-      const idGymDestino = this.form.get('idGimnasio');
-      if (idGymDestino) {
-        //agregar el error al control del formulario
-        idGymDestino.setErrors({ noProductsAdded: true });
-      }
-      // Salir de la función
+      this.existenProductosSeleccionados = false;
+      this.toastr.error(
+        'Debes agregar almenos un producto para hacer una transferencia',
+        'No hay productos para transferir'
+      );
       return;
+    } else {
+      this.existenProductosSeleccionados = true;
     }
 
     // Validar que la cantidad del producto sea mayor a 0
@@ -228,43 +203,5 @@ export class TransferenciasComponent implements OnInit {
   infoGym(event: number) {
     console.log('Opción seleccionada:', event);
     this.idGimnasio = event;
-  }
-
-  /**
-   * metodo para filtrar la informacion que escribe el usaurio
-   */
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
-
-  /**
-   * Metodo para ir agregando productos a la lista de productos seleccionados
-   * para transferirlos a otra sucursal
-   * @param producto
-   */
-  agregaraTransferencia(producto: Producto) {
-    /**
-     * el método busca si el producto que se está intentando agregar
-     * existe en la lista de productos seleccionados
-     */
-    const productoExistente = this.selectedProducts.find(
-      (p) => p.id === producto.id
-    );
-
-    /**
-     * Si se encuentra un producto existente con el mismo id, significa que el producto ya ha sido agregado
-     * al carrito. En este caso, el código aumenta la cantidad del producto existente en la lista selectedProducts
-     *  al agregar la cantidad del nuevo producto (producto.cantidad) a la cantidad existente del producto.
-     */
-    if (productoExistente) {
-      productoExistente.cantidad += producto.cantidad;
-    } else {
-      this.selectedProducts.push({ ...producto });
-    }
-
-    console.log(this.selectedProducts);
-    // Reiniciar la cantidad del producto
-    producto.cantidad = 0;
   }
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, map } from 'rxjs';
+import { BehaviorSubject, Observable, map } from 'rxjs';
 import { Producto } from '../modules/recepcion/components/models/producto';
 import { ListaProductos } from '../modules/admin/components/models/listaProductos';
 import { AuthService } from './auth.service';
@@ -10,6 +10,9 @@ import { Inventario } from '../modules/admin/components/models/inventario';
   providedIn: 'root',
 })
 export class ProductosService {
+  //nos ayudara a compartir la lista de productos de la tabla emergente a otros componentes
+  private productosSeleccionados = new BehaviorSubject<Producto[]>([]);
+  
   // API: string = 'https://apimocha.com/productosgym/listar'
   API: string = 'http://localhost/productos/productosv2.php/';
   // API: string =
@@ -63,4 +66,15 @@ export class ProductosService {
   inventarioGlobal(): Observable<any> {
     return this.clienteHttp.get(this.API + '?inventarioGlobal');
   }
+
+
+  getProductosSeleccionados() {
+    return this.productosSeleccionados.asObservable();
+  }
+
+  setProductosSeleccionados(productos: Producto[]) {
+     // Crear una copia de la lista
+    this.productosSeleccionados.next([...productos]);
+  }
+
 }
