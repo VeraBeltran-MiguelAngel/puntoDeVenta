@@ -4,6 +4,8 @@ import { RecepcionRoutingModule } from './recepcion-routing.module';
 import { RecepDashboardComponent } from './components/recep-dashboard/recep-dashboard.component';
 import { HeaderComponent } from './components/header/header.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 //incluir librerias de material que necesitara el modulo recepcion
 import { RecepMaterialModule } from './recepMaterial';
@@ -33,8 +35,11 @@ import { InventariosComponent } from './components/inventarios/inventarios.compo
 import { TransferenciasComponent } from './components/transferencias/transferencias.component';
 import { TablaProductosTransferenciaComponent } from './components/tablaProductosTransferencia/tablaProductosTransferencia.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MensajeListaComponent } from './components/ListaClientes/mensaje-cargando.component';
+import { MensajeEliminarComponent } from './components/mensaje-eliminar/mensaje-eliminar.component';
 import { FormPagoEmergenteComponent } from './components/form-pago-emergente/form-pago-emergente.component';
 import { TablaEmergenteService } from 'src/app/service/tablaEmergente.service';
+
 
 @NgModule({
   declarations: [
@@ -46,6 +51,8 @@ import { TablaEmergenteService } from 'src/app/service/tablaEmergente.service';
     TransferenciasComponent,
     TablaProductosTransferenciaComponent,
     MensajeEmergenteComponent,
+    MensajeListaComponent,
+    MensajeEliminarComponent
     FormPagoEmergenteComponent
   ],
   imports: [
@@ -56,6 +63,8 @@ import { TablaEmergenteService } from 'src/app/service/tablaEmergente.service';
     FormsModule,
     ReactiveFormsModule,
     FlexLayoutModule,
+    MatFormFieldModule,
+    MatInputModule,
   ],
   providers: [TablaEmergenteService], //*si no colocas el servicio no se mostrara la tabla emergente ni el resto de contenido todo estara en blanco
 })
