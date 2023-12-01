@@ -1,0 +1,28 @@
+.button-pay{
+    width: 100px;
+    height: 40px;
+    font-weight: bold;
+    /*margin-left: 5px;*/
+    border-radius: 15px;
+    background-color: #F9A640;
+}
+
+.button-cancel{
+    width: 100px;
+    height: 40px;
+    font-weight: bold;
+    /*margin-left: 5px;*/
+    border-radius: 15px;
+    color: #ffffff;
+    background-color: #ff0000;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);  /* Dos columnas con el mismo ancho */
+    gap: 20px;  /* Espacio entre las columnas */
+}
+  
+.column {
+    width: 100%;  /* Opcional: Asegura que cada columna ocupe todo el ancho disponible */
+}

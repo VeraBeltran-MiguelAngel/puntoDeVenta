@@ -27,15 +27,19 @@ import {
   faCircleUser,
   faCreditCard,
 } from '@fortawesome/free-regular-svg-icons'; //librerias de iconos
-import { faPowerOff } from '@fortawesome/free-solid-svg-icons';
+import { faPowerOff, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { HomeComponent } from './components/home/home.component';
 import { ListaMembresiasPagoEfecComponent } from './components/lista-membresias-pago-efec/lista-membresias-pago-efec.component'; //librerias de iconos
 import { MensajeEmergenteComponent } from './components/mensaje-emergente/mensaje-emergente.component';
 import { InventariosComponent } from './components/inventarios/inventarios.component';
 import { TransferenciasComponent } from './components/transferencias/transferencias.component';
+import { TablaProductosTransferenciaComponent } from './components/tablaProductosTransferencia/tablaProductosTransferencia.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MensajeListaComponent } from './components/ListaClientes/mensaje-cargando.component';
 import { MensajeEliminarComponent } from './components/mensaje-eliminar/mensaje-eliminar.component';
+import { FormPagoEmergenteComponent } from './components/form-pago-emergente/form-pago-emergente.component';
+import { TablaEmergenteService } from 'src/app/service/tablaEmergente.service';
+
 
 @NgModule({
   declarations: [
@@ -45,9 +49,11 @@ import { MensajeEliminarComponent } from './components/mensaje-eliminar/mensaje-
     ListaMembresiasPagoEfecComponent,
     InventariosComponent,
     TransferenciasComponent,
+    TablaProductosTransferenciaComponent,
     MensajeEmergenteComponent,
     MensajeListaComponent,
     MensajeEliminarComponent
+    FormPagoEmergenteComponent
   ],
   imports: [
     CommonModule,
@@ -59,8 +65,8 @@ import { MensajeEliminarComponent } from './components/mensaje-eliminar/mensaje-
     FlexLayoutModule,
     MatFormFieldModule,
     MatInputModule,
-    
   ],
+  providers: [TablaEmergenteService], //*si no colocas el servicio no se mostrara la tabla emergente ni el resto de contenido todo estara en blanco
 })
 export class RecepcionModule {
   //librerias de iconos
@@ -75,7 +81,8 @@ export class RecepcionModule {
       faPaypal,
       faXTwitter,
       faCheckCircle,
-      faPowerOff
+      faPowerOff,
+      faSearch
     );
   }
 }

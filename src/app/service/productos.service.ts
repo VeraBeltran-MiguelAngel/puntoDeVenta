@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, map } from 'rxjs';
+import { BehaviorSubject, Observable, map } from 'rxjs';
 import { Producto } from '../modules/recepcion/components/models/producto';
 import { ListaProductos } from '../modules/admin/components/models/listaProductos';
 import { AuthService } from './auth.service';
@@ -10,10 +10,18 @@ import { Inventario } from '../modules/admin/components/models/inventario';
   providedIn: 'root',
 })
 export class ProductosService {
+  //nos ayudara a compartir la lista de productos de la tabla emergente a otros componentes
+  private productosSeleccionados = new BehaviorSubject<Producto[]>([]);
+  
   // API: string = 'https://apimocha.com/productosgym/listar'
   API: string = 'https://olympus.arvispace.com/puntoDeVenta/conf/productosv2.php/';
  // API: string ='http://localhost/plan/productosv2.php/';
     //'https://olympus.arvispace.com/puntoDeVenta/conf/productosv2.php/';
+
+ // API: string = 'http://localhost/productos/productosv2.php/';
+  // API: string =
+  //   'https://olympus.arvispace.com/puntoDeVenta/conf/productosv2.php/';
+
   constructor(private clienteHttp: HttpClient, private auth: AuthService) {}
 
   /**
@@ -52,16 +60,26 @@ export class ProductosService {
       );
   }
 
-
-/**
- * Metodo para listar los productos del inventario dependiendo de la sucursal
- * @returns 
- */
+  /**
+   * Metodo para listar los productos del inventario dependiendo de la sucursal
+   * @returns
+   */
   obternerInventario(): Observable<Inventario[]> {
     return this.clienteHttp.get<Inventario[]>(this.API + '?listaInventario');
   }
 
-  inventarioGlobal():Observable<any>{
+  inventarioGlobal(): Observable<any> {
     return this.clienteHttp.get(this.API + '?inventarioGlobal');
   }
+
+
+  getProductosSeleccionados() {
+    return this.productosSeleccionados.asObservable();
+  }
+
+  setProductosSeleccionados(productos: Producto[]) {
+     // Crear una copia de la lista
+    this.productosSeleccionados.next([...productos]);
+  }
+
 }
