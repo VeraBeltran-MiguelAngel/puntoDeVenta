@@ -11,9 +11,9 @@ import { Inventario } from '../modules/admin/components/models/inventario';
 })
 export class ProductosService {
   // API: string = 'https://apimocha.com/productosgym/listar'
-  // API: string = 'http://localhost/login/productos.php/';
-  API: string =
-    'https://olympus.arvispace.com/puntoDeVenta/conf/productosv2.php/';
+  API: string = 'https://olympus.arvispace.com/puntoDeVenta/conf/productosv2.php/';
+ // API: string ='http://localhost/plan/productosv2.php/';
+    //'https://olympus.arvispace.com/puntoDeVenta/conf/productosv2.php/';
   constructor(private clienteHttp: HttpClient, private auth: AuthService) {}
 
   /**

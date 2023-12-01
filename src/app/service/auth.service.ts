@@ -40,6 +40,14 @@ export class AuthService {
     localStorage.setItem('userData', userData);
   }
 
+  getUltimoIdInsertado(): number | null {
+    const lastInsertedIdString = localStorage.getItem('lastInsertedId');
+    if (lastInsertedIdString) {
+      return parseInt(lastInsertedIdString, 10);
+    }
+    return null;
+  }
+
   //este metodo devuelve la info del usuario en un json ya no en una cadena
   getUserData(): any | null {
     const localData = localStorage.getItem('userData');

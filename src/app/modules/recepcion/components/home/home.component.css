@@ -7,10 +7,247 @@ table {
     width: 100%;
 }
 
+
+
+  /* Estilos para el contenedor principal */
 .resumen {
-    border: 1px solid #ddd;
-    padding: 10px;
-    margin-top: 20px;
+    font-family: 'Arial', sans-serif;
+    margin: 20px auto;
+    padding: 20px;
+    width: 100%;
+    
     background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
   
+  /* Estilos para el título principal */
+  .resumen h1 {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  /* Estilos para la lista de productos */
+  .resumen ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  /* Estilos para cada elemento de la lista de productos */
+  .resumen li {
+    margin-bottom: 10px;
+    color: #555;
+    font-size: 16px;
+  }
+  
+  /* Estilos para la sección del total */
+  .resumen .total {
+    margin-top: 30px;
+  }
+  
+  /* Estilos para los elementos de total */
+  .resumen h2 {
+    margin: 10px 0;
+    font-size: 20px;
+    font-weight: bold;
+  }
+  
+  /* Estilos para el campo de dinero recibido */
+  .resumen mat-form-field {
+    width: 100%;
+  }
+  
+  /* Estilos para el botón */
+  .resumen button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  /* Estilos para el botón al pasar el mouse por encima */
+  .resumen button:hover {
+    background-color: #0056b3;
+  }
+  
+
+  .open-cash-register {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 5px;
+    background-color: #a4c1e2; /* Color de fondo del botón */
+    color: #fff; /* Color del texto */
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+    width: 90%;
+  }
+  .close-cash-register {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 5px;
+    background-color: #000000; /* Color de fondo del botón */
+    color: #fff; /* Color del texto */
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+    width: 90%;
+  }
+
+
+  .ver-cash-register {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 5px;
+    background-color: #fd9727; /* Color de fondo del botón */
+    color: #fff; /* Color del texto */
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+    width: 90%;
+  }
+  
+  .ver-cash-register  .icon {
+    background-image: url('https://cdn-icons-png.flaticon.com/512/4696/4696938.png');
+    background-size: 40px; /* Tamaño de la imagen */
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 40px; /* Ancho de la imagen */
+    height: 40px; /* Altura de la imagen */
+    margin-right: 10px; /* Espacio entre la imagen y el texto */
+  }
+  
+  .open-cash-register  .icon {
+    background-image: url('https://cdn-icons-png.flaticon.com/512/4696/4696938.png');
+    background-size: 40px; /* Tamaño de la imagen */
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 40px; /* Ancho de la imagen */
+    height: 40px; /* Altura de la imagen */
+    margin-right: 10px; /* Espacio entre la imagen y el texto */
+  }
+
+
+  .close-cash-register  .icon {
+    background-image: url('https://cdn-icons-png.flaticon.com/512/463/463612.png');
+    background-size: 40px; /* Tamaño de la imagen */
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 40px; /* Ancho de la imagen */
+    height: 40px; /* Altura de la imagen */
+    margin-right: 10px; /* Espacio entre la imagen y el texto */
+  }
+  
+  .open-cash-register:hover {
+    opacity: 0.8;
+  }
+  
+  input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* Asegura que el padding no aumente el tamaño total */
+    transition: border-color 0.3s ease; /* Efecto de transición en el borde */
+  }
+  
+  /* Cambia el color del borde al enfocar el input */
+  input[type="text"]:focus {
+    outline: none; /* Quita el contorno al enfocar */
+    border-color: #007bff; /* Cambia el color del borde al enfocar */
+  }
+
+  input[type="number"]:focus {
+    outline: none; /* Quita el contorno al enfocar */
+    border-color: #007bff; /* Cambia el color del borde al enfocar */
+  }
+  
+  .number {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* Asegura que el padding no aumente el tamaño total */
+    transition: border-color 0.3s ease; /* Efecto de transición en el borde */
+  }
+
+
+  
+
+
+
+
+  /* En tu archivo CSS */
+.search-container {
+  display: flex;
+  position: relative;
+  cursor: pointer;
+  border: 0px solid #ccc;
+  border-radius: 4px;
+  padding: 4px;
+  background-color: #fff;
+  overflow: hidden;
+  width: fit-content; /* ajusta el tamaño según el contenido */
+  align-items: center;
+}
+
+.search-input {
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 4px 8px;
+  margin-right: 4px;
+  width: calc(100% - 30px); /* ajusta el tamaño del input */
+  pointer-events: none; /* evita la interacción con el input */
+}
+
+.search-icon {
+  width: 40px;
+  height: 40px;
+ margin-top: 10px;
+  pointer-events: none; /* evita la interacción con la imagen */
+  cursor: pointer;
+}
+
+
+.search-label {
+  display: flex;
+  align-items: center;
+}
+
+.search-label label {
+  margin-right: 10px; /* Espacio entre el label y el input */
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+  margin-left: 20px;
+}
+
+
+

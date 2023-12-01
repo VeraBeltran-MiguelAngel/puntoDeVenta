@@ -4,6 +4,8 @@ import { RecepcionRoutingModule } from './recepcion-routing.module';
 import { RecepDashboardComponent } from './components/recep-dashboard/recep-dashboard.component';
 import { HeaderComponent } from './components/header/header.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 //incluir librerias de material que necesitara el modulo recepcion
 import { RecepMaterialModule } from './recepMaterial';
@@ -32,6 +34,8 @@ import { MensajeEmergenteComponent } from './components/mensaje-emergente/mensaj
 import { InventariosComponent } from './components/inventarios/inventarios.component';
 import { TransferenciasComponent } from './components/transferencias/transferencias.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MensajeListaComponent } from './components/ListaClientes/mensaje-cargando.component';
+import { MensajeEliminarComponent } from './components/mensaje-eliminar/mensaje-eliminar.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +46,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     InventariosComponent,
     TransferenciasComponent,
     MensajeEmergenteComponent,
+    MensajeListaComponent,
+    MensajeEliminarComponent
   ],
   imports: [
     CommonModule,
@@ -51,6 +57,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     FormsModule,
     ReactiveFormsModule,
     FlexLayoutModule,
+    MatFormFieldModule,
+    MatInputModule,
     
   ],
 })
