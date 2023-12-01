@@ -52,7 +52,7 @@ import { TablaEmergenteService } from 'src/app/service/tablaEmergente.service';
     TablaProductosTransferenciaComponent,
     MensajeEmergenteComponent,
     MensajeListaComponent,
-    MensajeEliminarComponent
+    MensajeEliminarComponent,
     FormPagoEmergenteComponent
   ],
   imports: [
