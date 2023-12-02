@@ -1,0 +1,22 @@
+<br/>
+<div class="search-container">
+    <input matInput class="search-input" placeholder="Buscar cliente" (keyup)="filtrarClientes($event)">
+  </div>
+
+<table class="client-table">
+    <thead>
+      <tr>
+        <th>Selecciona un cliente</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let cliente of clientesFiltrados" [class.selected]="cliente.ID_Cliente === selectedClient" (click)="seleccionarCliente(cliente.ID_Cliente)">
+        <td>
+          {{ cliente.nombre }} {{ cliente.apPaterno }} {{ cliente.apMaterno }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <br/>
+  <button (click)="enviarDatosAlOtroComponente()" class="button">Aceptar </button>
+  

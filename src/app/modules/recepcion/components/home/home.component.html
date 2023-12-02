@@ -1,62 +1,203 @@
-<br>
-<h1>Productos a la venta sucursal {{ubicacion}}</h1>
+<div class="container mt-4">
+  <h1>CAJA</h1>
+  <div class="row">
+     <div class="col-sm-4">
+        <button class="open-cash-register" (click)="mostrarInput()" [disabled]="mostrarInputFlag" >
+        <span class="icon"></span>
+        <span class="btn-text" style="color: black;margin-left: 20px;">ABRIR CAJA</span>
+        </button>
+     </div>
 
-<h3>Ingresa el valor de una columna</h3>
-<mat-form-field class="full-width">
-  <mat-label>Filtro</mat-label>
-  <input
-    matInput
-    (keyup)="applyFilter($event)"
-    placeholder="Busca por columnas"
-    #input
-  />
-</mat-form-field>
+     <!------------------------------------------------------------------------------------------------->
+     <div class="col-sm-4">
+        <button class="close-cash-register" style="margin-left: 20px;" (click)="actualizarCaja()" >
+        <span class="icon"></span>
+        <span class="btn-text" style="color: rgb(255, 255, 255);margin-left: 20px;">CERRAR CAJA</span>
+        </button>
+     </div>
+     <!------------------------------------------------------------------------------------------------->
+     <div class="col-sm-4">
+        <button class="ver-cash-register" style="float: right;" (click)="mostrarVentas()" [disabled]="botonDeshabilitadoCorte">
+        <span class="icon"></span>
+        <span class="btn-text" style="color: rgb(255, 255, 255);margin-left: 20px;">VER CORTE</span>
+        </button>
+     </div>
+     
+    <!-- <div *ngIf="mostrarLasVentas">
+        <h2 class="mb-3">Corte de caja</h2>
+        <div class="row">
+           <table class="table table-hover">
+              <thead>
+                 <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Cantidad Vendida</th>
+                    <th scope="col">Precio Unitario</th>
+                 </tr>
+              </thead>
+              <tbody>
+                 <tr *ngFor="let detalleVenta of detalles">
+                    <td>{{ detalleVenta.nombreProducto }} </td>
+                    <td>{{ detalleVenta.cantidadElegida }} </td>
+                    <td>{{ detalleVenta.precioUnitario }} </td>
+                 </tr>
+              </tbody>
+           </table>
+        </div>
+     </div>-->
+     <div *ngIf="mostrarLasVentas">
+     <div *ngIf="detallesCaja.length > 0"> <!-- Verifica si hay detalles de la caja para mostrar -->
+      <h2>Detalles de la Caja</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Nombre Producto</th>
+            <th scope="col">Cantidad</th>
+            <th scope="col">Precio Unitario</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let detalle of detallesCaja">
+            <td>{{ detalle.nombreProducto }}</td>
+            <td>{{ detalle.cantidadElegida }}</td>
+            <td>{{ detalle.precioUnitario }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <button mat-raised-button color="primary" (click)="imprimirResumenCorte()">Imprimir</button>
+    </div>
+    <div *ngIf="detallesCaja.length === 0"> <!-- Si no hay detalles de la caja -->
+      <p>No hay detalles disponibles para esta caja.</p>
+    </div>
+   </div>
+    
+    
+     <br/>
+     <form [formGroup]="formularioCaja">
+      <div *ngIf="botonProductos">
+      <br/><br/>
+      <h1>¿Deseas continuar?</h1>
+      <div style="display: flex; justify-content: center;">
+         <button style="background-color: rgb(240, 240, 240); color: rgb(0, 0, 0); padding: 10px 20px; 
+             border-radius: 5px; border: 1px solid black; color: black; cursor: pointer; transition: background-color 0.3s ease; width: 90%;"  (click)="mostrarProductos = true">Continuar caja</button>
+       </div>
+      </div>
 
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-  <ng-container [matColumnDef]="column" *ngFor="let column of displayedColumns">
-    <th mat-header-cell *matHeaderCellDef>{{ column }}</th>
-    <td mat-cell *matCellDef="let prod">
-      <ng-container *ngIf="column !== 'cantidad'">
-        {{ prod[column] }}
-      </ng-container>
-      <ng-container *ngIf="column === 'cantidad'">
-        <mat-form-field>
-          <input matInput [(ngModel)]="prod.cantidad" type="number" min="0" />
+        <div class="row" *ngIf="!mostrarProductos && mostrarInputFlag &&!botonProductos">
+
+           <div>
+              <br/>
+              <label>Monto inicial:</label>
+              <input class="number" type="number" id="cashInput" placeholder="Ingrese el monto" style="margin-top: 10px;" formControlName="cantidadDineroExistente">
+           </div>
+           <div class="col-sm-6">
+              <br/>
+              <label>Fecha actual:</label>
+              <input type="text" id="fechaInput" [value]="fecha"  formControlName="fechaApertura">
+           </div>
+           <br/><br/>
+           <div class="col-sm-12"></div>
+           <div class="col-sm-6">
+              <br/>
+              <button style="width: 50%;   background-color: #fd9727; display: inline-flex;
+                 align-items: center;
+                 padding: 10px 20px;
+                 font-size: 16px;
+                 border: none;
+                 border-radius: 5px;" (click)="mostrarCaja()">
+              Abrir
+              </button>
+           </div>
+
+        </div>
+     </form>
+
+     <div *ngIf="mostrarProductos && cerrarCaja">
+      <div class="search-label">
+        <h2>Busca a tu cliente:</h2>
+        <div class="search-container" (click)="abrirDialogo()">
+           <input type="text" class="search-input" placeholder="Buscar..." disabled>
+           <img src="https://media.istockphoto.com/id/1135487794/es/vector/icono-de-b%C3%BAsqueda-ilustraci%C3%B3n-vectorial-aislada-en-el-bot%C3%B3n-cuadrado-plano.jpg?s=612x612&w=0&k=20&c=2f7Km0xyaXPdL9IEH7Ep4y4tLwj0HXDxJIEeWGGYfCk=" alt="Imagen" class="search-icon">
+        </div>
+      </div> 
+        <div class="row" *ngIf="cliente">
+          <h1>Información</h1>
+          <div class="col-sm-4">
+            <h3>ID CLIENTE:</h3>
+            <input type="text" id="id" name="id" [value]="cliente.ID_Cliente || ''" disabled><br><br>
+         </div>
+           <div class="col-sm-4">
+              <h3>NOMBRE:</h3>
+              <input type="text" id="nombreCompleto" name="nombreCompleto" [value]="cliente.nombre + ' ' + cliente.apPaterno + ' ' + cliente.apMaterno || ''" disabled>
+           </div>
+           <div class="col-sm-4">
+            <h3>EMAIL:</h3>
+              <input type="text" id="email" name="email" [value]="cliente.email || ''" disabled><br><br>
+           </div>
+        </div>
+        <h3>Ingresa el valor de una columna</h3>
+        <mat-form-field class="full-width">
+           <mat-label>Filtro</mat-label>
+           <input
+           matInput
+           (keyup)="applyFilter($event)"
+           placeholder="Busca por columnas"
+           #input
+           />
         </mat-form-field>
-      </ng-container>
-      <ng-container *ngIf="column === 'acciones'">
-        <mat-icon class="add-box-icon" (click)="agregaraBalance(prod)"
-          >add_box</mat-icon
-        >
-      </ng-container>
-    </td>
-  </ng-container>
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let productofila; columns: displayedColumns"></tr>
-</table>
-<mat-paginator [pageSizeOptions]="[5, 10, 15, 20]" showFirstLastButtons></mat-paginator>
-
-<div class="resumen">
-  <h1>Resumen de Compra</h1>
-  <ul>
-    <li *ngFor="let selectedProduct of selectedProducts">
-      {{ selectedProduct.nombre }} x {{ selectedProduct.cantidad }} - ${{
-        selectedProduct.precio * selectedProduct.cantidad
-      }}
-    </li>
-  </ul>
-  <h2>Total a Pagar: ${{ totalAPagar }}</h2>
-  <mat-form-field>
-    <mat-label>Dinero recibido</mat-label>
-    <input
-      matInput
-      [(ngModel)]="dineroRecibido"
-      placeholder="Ingresa cantidad"
-      #input
-      type="number"
-      min="0"
-    />
-  </mat-form-field>
-  <h2>Cambio: ${{ dineroRecibido - totalAPagar }}</h2>
-  <button (click)="imprimirResumen()">Imprimir</button>
-</div>
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+           <ng-container [matColumnDef]="column" *ngFor="let column of displayedColumns">
+           <th mat-header-cell *matHeaderCellDef>{{ column }}</th>
+           <td mat-cell *matCellDef="let prod">
+              <ng-container *ngIf="column !== 'cantidad'">
+                 {{ prod[column] }}
+              </ng-container>
+              <ng-container *ngIf="column === 'cantidad'">
+                 <mat-form-field>
+                    <input matInput [(ngModel)]="prod.cantidad" type="number" min="0" />
+                 </mat-form-field>
+              </ng-container>
+              <ng-container *ngIf="column === 'acciones'">
+                 <mat-icon class="add-box-icon" (click)="agregaraBalance(prod)"
+                    >add_box</mat-icon
+                    >
+              </ng-container>
+           </td>
+           </ng-container>
+           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+           <tr mat-row *matRowDef="let productofila; columns: displayedColumns"></tr>
+        </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 15, 20]" showFirstLastButtons></mat-paginator>
+        <div class="resumen">
+           <h1>Resumen de Compra</h1>
+           <table>
+              <thead>
+                 <tr>
+                    <th>Nombre</th>
+                    <th>Cantidad</th>
+                    <th>Precio Unitario</th>
+                    <th>Total</th>
+                 </tr>
+              </thead>
+              <tbody>
+                 <tr *ngFor="let selectedProduct of selectedProducts">
+                    <td>{{ selectedProduct.nombre }}</td>
+                    <td >{{ selectedProduct.cantidad }}</td>
+                    <td>${{ selectedProduct.precio }}</td>
+                    <td>${{ selectedProduct.precio * selectedProduct.cantidad }}</td>
+                 </tr>
+              </tbody>
+           </table>
+           <div class="total">
+              <h2>Total a Pagar: ${{ totalAPagar }}</h2>
+              <mat-form-field appearance="fill">
+                 <mat-label>Dinero recibido</mat-label>
+                 <input matInput [(ngModel)]="dineroRecibido" placeholder="Ingresa cantidad" #input type="number" min="0" />
+              </mat-form-field>
+              <h2>Cambio: ${{ dineroRecibido - totalAPagar }}</h2>
+              <button mat-raised-button color="primary" (click)="imprimirResumen()">Imprimir</button>
+              <button mat-raised-button color="#fd9727" (click)="enviarDatosYDetallesVenta()">Registrar venta</button>
+           </div>
+        </div>
+     </div>
+     <br>
+  </div>
