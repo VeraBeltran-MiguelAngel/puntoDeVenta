@@ -8,5 +8,5 @@ export interface Producto {
   tamaño: string;
   descripcion: string;
   precio: number;
-  cantidad:number;
+  cantidad:number;// es la cantidad de producto que va a salir en la venta
 }

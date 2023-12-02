@@ -14,9 +14,9 @@ export class ProductosService {
   private productosSeleccionados = new BehaviorSubject<Producto[]>([]);
   
   // API: string = 'https://apimocha.com/productosgym/listar'
-  API: string = 'http://localhost/productos/productosv2.php/';
-  // API: string =
-  //   'https://olympus.arvispace.com/puntoDeVenta/conf/productosv2.php/';
+  // API: string = 'http://localhost/productos/productosv2.php/';
+  API: string =
+    'https://olympus.arvispace.com/puntoDeVenta/conf/productosv2.php/';
   constructor(private clienteHttp: HttpClient, private auth: AuthService) {}
 
   /**
@@ -75,6 +75,10 @@ export class ProductosService {
   setProductosSeleccionados(productos: Producto[]) {
      // Crear una copia de la lista
     this.productosSeleccionados.next([...productos]);
+  }
+
+  clearProductosSeleccionados() {
+    this.productosSeleccionados.next([]);
   }
 
 }

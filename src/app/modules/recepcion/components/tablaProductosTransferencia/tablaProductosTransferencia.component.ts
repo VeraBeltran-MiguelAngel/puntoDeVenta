@@ -46,7 +46,7 @@ export class TablaProductosTransferenciaComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
   ngOnInit(): void {
-      //obtener los productos seleccionados previamente 
+    //obtener los productos seleccionados previamente
     this.productoService.getProductosSeleccionados().subscribe((productos) => {
       this.selectedProducts = [...productos]; // Crear una copia de la lista
       console.log('selectedProductsPrevios:', this.selectedProducts);
@@ -94,15 +94,20 @@ export class TablaProductosTransferenciaComponent implements OnInit {
      */
     if (productoExistente) {
       productoExistente.cantidad += producto.cantidad;
-      this.toastr.success('Cantidad actualizada', 'Producto agregado previamente', {
-        positionClass: 'toast-bottom-left',
-      });
+      this.toastr.success(
+        'Cantidad actualizada',
+        'Producto agregado previamente',
+        {
+          positionClass: 'toast-bottom-left',
+        }
+      );
     } else {
       this.selectedProducts.push({ ...producto });
       this.toastr.success('Nuevo producto agregado', '', {
         positionClass: 'toast-bottom-left',
       });
     }
+
 
     console.log('lista de productos seleccionados', this.selectedProducts);
     // Reiniciar la cantidad del producto

@@ -14,18 +14,18 @@
               <mat-form-field appearance="outline" class="inputs_properties">
                 <mat-label>Folio de transferencia</mat-label>
                 <input
-                  id="idUsuario"
+                  id="folio"
                   type="text"
                   matInput
-                  value="{{folioTransferencia}}"
+                  value="{{ folioTransferencia }}"
                   [disabled]="true"
                   autocomplete="off"
                 />
               </mat-form-field>
-              <mat-form-field appearance="outline" class="inputs_properties">
+              <mat-form-field appearance="outline" class="inputs_properties" hidden="!mostrarCampo">
                 <mat-label>Clave gimnasio origen</mat-label>
                 <input
-                  id="idGym"
+                  id="idGymOrigen"
                   type="text"
                   matInput
                   value="{{ idGymOrigen }}"
@@ -55,7 +55,7 @@
                 </mat-error>
               </mat-form-field>
 
-              <mat-form-field appearance="outline" class="inputs_properties">
+              <mat-form-field appearance="outline" class="inputs_properties" hidden="!mostrarCampo">
                 <mat-label>Clave usuario autenticado</mat-label>
                 <input
                   id="idUsuario"
@@ -70,7 +70,7 @@
               <mat-form-field appearance="outline" class="inputs_properties">
                 <mat-label>Fecha de envio</mat-label>
                 <input
-                  id="fechaEntrada"
+                  id="fechaEnvio"
                   type="text"
                   matInput
                   [value]="fechaEnvio"
@@ -78,15 +78,18 @@
                   autocomplete="off"
                 />
               </mat-form-field>
-              <button
-                class="btn"
-                mat-fab
-                title="Buscar productos"
-                (click)="abrirVentana()"
-              >
-                <fa-icon [icon]="faSearch"></fa-icon>
-                <span>Buscar productos a transferir</span>
-              </button>
+
+              <mat-form-field appearance="outline" class="inputs_properties">
+                <mat-label>Total transferencia</mat-label>
+                <input
+                  id="total"
+                  type="text"
+                  matInput
+                  value="{{totalTransferencia}}"
+                  [disabled]="true"
+                  autocomplete="off"
+                />
+              </mat-form-field>
 
               <button type="submit" id="btn_guardar" mat-raised-button>
                 Registrar
@@ -96,13 +99,38 @@
             <br />
 
             <div class="resumen">
+              <button
+                class="btn"
+                mat-fab
+                title="Buscar productos"
+                (click)="abrirVentana()"
+              >
+                <fa-icon [icon]="faSearch"></fa-icon>
+                <span>Buscar productos a transferir</span>
+              </button>
               <h1>Resumen de productos a transferir</h1>
-              <ul>
-                <li *ngFor="let selectedProduct of selectedProducts">
-                  Producto: {{ selectedProduct.nombre }} * Cantidad:
-                  {{ selectedProduct.cantidad }}
-                </li>
-              </ul>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Producto</th>
+                    <th>Precio unitario</th>
+                    <th>Cantidad</th>
+                    <th>Importe</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let selectedProduct of selectedProducts">
+                    <td>{{ selectedProduct.nombre }}</td>
+                    <td>
+                      {{ selectedProduct.precio }}
+                    </td>
+                    <td>{{ selectedProduct.cantidad }}</td>
+                    <td>
+                      {{ selectedProduct.precio * selectedProduct.cantidad }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
