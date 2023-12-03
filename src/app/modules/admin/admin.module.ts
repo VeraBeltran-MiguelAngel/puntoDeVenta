@@ -34,6 +34,7 @@ import { ProductosComponent } from './components/productos/productos.component';
 import { ProveedoresComponent } from './components/proveedores/proveedores.component';
 import { EntradasComponent } from './components/entradas/entradas.component';
 import { InventarioComponent } from './components/inventario/inventario.component';
+import { ValidarTransferenciaComponent } from './components/validarTransferencia/validarTransferencia.component';
 
 
 @NgModule({
@@ -47,6 +48,7 @@ import { InventarioComponent } from './components/inventario/inventario.componen
     ProveedoresComponent,
     EntradasComponent,
     InventarioComponent,
+    ValidarTransferenciaComponent
   ],
   imports: [
     CommonModule,

@@ -4,8 +4,7 @@ import { RecepcionRoutingModule } from './recepcion-routing.module';
 import { RecepDashboardComponent } from './components/recep-dashboard/recep-dashboard.component';
 import { HeaderComponent } from './components/header/header.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
+
 
 //incluir librerias de material que necesitara el modulo recepcion
 import { RecepMaterialModule } from './recepMaterial';
@@ -63,8 +62,7 @@ import { TablaEmergenteService } from 'src/app/service/tablaEmergente.service';
     FormsModule,
     ReactiveFormsModule,
     FlexLayoutModule,
-    MatFormFieldModule,
-    MatInputModule,
+
   ],
   providers: [TablaEmergenteService], //*si no colocas el servicio no se mostrara la tabla emergente ni el resto de contenido todo estara en blanco
 })
