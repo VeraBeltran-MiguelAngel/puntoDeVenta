@@ -5,4 +5,5 @@ export interface detalleVenta {
   nombreProducto: string;
   cantidadElegida: number;
   precioUnitario: number;
+  importe: number;
 }
