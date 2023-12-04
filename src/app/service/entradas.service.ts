@@ -8,8 +8,8 @@ import { ListaProductos } from '../modules/admin/components/models/listaProducto
   providedIn: 'root',
 })
 export class EntradasService {
-  API: string = 'http://localhost/productos/entradas.php/';
-  // API: string = 'https://olympus.arvispace.com/puntoDeVenta/conf/entradas.php';
+  // API: string = 'http://localhost/productos/entradas.php/';
+  API: string = 'https://olympus.arvispace.com/puntoDeVenta/conf/entradas.php';
   constructor(private clienteHttp: HttpClient) {}
 
   /**

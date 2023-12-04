@@ -17,7 +17,7 @@ import { ToastrService } from 'ngx-toastr';
 import { TablaEmergenteService } from 'src/app/service/tablaEmergente.service';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { TransferirProductoService } from 'src/app/service/transferirProducto.service';
-import {v4 as uuid} from 'uuid';
+import { v4 as uuid } from 'uuid'; //para crear folios unicos
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(
     control: FormControl | null,
@@ -55,7 +55,9 @@ export class TransferenciasComponent implements OnInit {
    */
   listInventarioData: any[] = [];
   selectedProducts: Producto[] = []; //lista de productos seleccionados para trasnferir (desde tabla emergente)
+  totalTransferencia: number ;
   productData: Producto[] = []; //para guardar la respuesta del api en un arreglo
+  mostrarCampo: boolean = true; // O false si quieres ocultar el campo inicialmente
 
   constructor(
     private auth: AuthService,
@@ -73,13 +75,14 @@ export class TransferenciasComponent implements OnInit {
     this.ubicacion = this.auth.getUbicacion();
     this.folioTransferencia = uuid();
 
-
     // formulario
     this.form = this.fb.group({
       idGymOrigen: [this.idGymOrigen],
       idGimnasio: ['', Validators.compose([Validators.required])],
       idUsuario: [this.idUsuario],
       fechaEnvio: [this.fechaEnvio],
+      total: [null],// Inicializar total con null
+      folio: [this.folioTransferencia],
     });
   }
 
@@ -87,6 +90,7 @@ export class TransferenciasComponent implements OnInit {
     //obtener los productos seleccionados de la tabla emergente
     this.productoService.getProductosSeleccionados().subscribe((productos) => {
       this.selectedProducts = [...productos]; // Crear una copia de la lista
+      this.calcularTotal();
       console.log('prodcutosSeleccionados:', this.selectedProducts);
     });
 
@@ -116,15 +120,46 @@ export class TransferenciasComponent implements OnInit {
     });
   }
 
+  /**
+   * Este metodo se debe invocar cada que exista un cambio en los selectedProducts
+   * para calcular el total y establecerlo en el formulario
+   */
+  calcularTotal() {
+    this.totalTransferencia = this.selectedProducts.reduce(
+      (total, p) => total + p.precio * p.cantidad,
+      0
+    );
+    this.form.get('total')?.patchValue(this.totalTransferencia);
+  }
+
   abrirVentana() {
     this.tablaEmergente.abrirVentanaEmergente();
   }
-  // Función para limpiar el formulario
+
+  // Función para limpiar el formulario y lista de productos seleccionados
   limpiarFormulario(): void {
     this.form.reset();
+    this.folioTransferencia = '';
+    this.productoService.clearProductosSeleccionados();
+  }
+
+  obtenerFechaActual(): string {
+    const fechaActual = new Date();
+    return this.datePipe.transform(fechaActual, 'yyyy-MM-dd HH:mm:ss') || '';
+  }
+
+  /**
+   * Metodo que se invoca cada que selecionas una opcion del select
+   * @param event
+   */
+  infoGym(event: number) {
+    console.log('Opción seleccionada:', event);
+    this.idGimnasio = event;
   }
 
   registrar(): any {
+    console.log('totalTransferencia',this.totalTransferencia);
+    console.log('formulario sin validar',this.form.value);
     // Verificar si no se han agregado productos
     if (this.selectedProducts.length === 0) {
       this.toastr.error(
@@ -193,6 +228,8 @@ export class TransferenciasComponent implements OnInit {
     if (this.form.valid) {
       console.log('formulario valido:', this.form.value);
       console.log('productos validos', this.selectedProducts);
+      
+
       this.transferencia
         .transferirProductos(this.form.value, this.selectedProducts)
         .subscribe({
@@ -219,19 +256,5 @@ export class TransferenciasComponent implements OnInit {
           },
         });
     }
-  }
-
-  obtenerFechaActual(): string {
-    const fechaActual = new Date();
-    return this.datePipe.transform(fechaActual, 'yyyy-MM-dd HH:mm:ss') || '';
-  }
-
-  /**
-   * Metodo que se invoca cada que selecionas una opcion del select
-   * @param event
-   */
-  infoGym(event: number) {
-    console.log('Opción seleccionada:', event);
-    this.idGimnasio = event;
   }
 }
