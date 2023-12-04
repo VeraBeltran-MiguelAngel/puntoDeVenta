@@ -335,7 +335,8 @@ cantidadSolicitada: number = 0;
           nombreProducto: producto.nombre,
           cantidadElegida: producto.cantidad,
           precioUnitario: producto.precio,
-          Gimnasio_idGimnasio: this.auth.getIdGym()
+          Gimnasio_idGimnasio: this.auth.getIdGym(),
+          importe: producto.cantidad*producto.precio
         };
       });
   
