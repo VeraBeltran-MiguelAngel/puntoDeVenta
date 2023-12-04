@@ -10,7 +10,7 @@
 
      <!------------------------------------------------------------------------------------------------->
      <div class="col-sm-4">
-        <button class="close-cash-register" style="margin-left: 20px;" (click)="actualizarCaja()" >
+        <button class="close-cash-register" style="margin-left: 20px;" (click)="actualizarCaja()" [disabled]="botonDeshabilitado">
         <span class="icon"></span>
         <span class="btn-text" style="color: rgb(255, 255, 255);margin-left: 20px;">CERRAR CAJA</span>
         </button>
@@ -46,6 +46,7 @@
      </div>-->
      <div *ngIf="mostrarLasVentas">
      <div *ngIf="detallesCaja.length > 0"> <!-- Verifica si hay detalles de la caja para mostrar -->
+      <br>
       <h2>Detalles de la Caja</h2>
       <table class="table">
         <thead>
@@ -63,9 +64,10 @@
           </tr>
         </tbody>
       </table>
-      <button mat-raised-button color="primary" (click)="imprimirResumenCorte()">Imprimir</button>
+      <button  style="background-color: blue; border-color: blue; color: blanchedalmond; width: 120px; margin-right: 20px; border-radius: 5px;height: 38px;"  (click)="imprimirResumenCorte()">Imprimir</button>
     </div>
     <div *ngIf="detallesCaja.length === 0"> <!-- Si no hay detalles de la caja -->
+      <br>
       <p>No hay detalles disponibles para esta caja.</p>
     </div>
    </div>
@@ -144,6 +146,9 @@
            #input
            />
         </mat-form-field>
+      
+      <div class="table-container">
+         
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
            <ng-container [matColumnDef]="column" *ngFor="let column of displayedColumns">
            <th mat-header-cell *matHeaderCellDef>{{ column }}</th>
@@ -157,16 +162,17 @@
                  </mat-form-field>
               </ng-container>
               <ng-container *ngIf="column === 'acciones'">
-                 <mat-icon class="add-box-icon" (click)="agregaraBalance(prod)"
-                    >add_box</mat-icon
-                    >
-              </ng-container>
+               <mat-icon class="add-box-icon" (click)="validaryUnir(prod)">add_box</mat-icon>
+             </ng-container> 
            </td>
            </ng-container>
            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
            <tr mat-row *matRowDef="let productofila; columns: displayedColumns"></tr>
         </table>
         <mat-paginator [pageSizeOptions]="[5, 10, 15, 20]" showFirstLastButtons></mat-paginator>
+   
+      </div>
+        
         <div class="resumen">
            <h1>Resumen de Compra</h1>
            <table>
@@ -194,8 +200,8 @@
                  <input matInput [(ngModel)]="dineroRecibido" placeholder="Ingresa cantidad" #input type="number" min="0" />
               </mat-form-field>
               <h2>Cambio: ${{ dineroRecibido - totalAPagar }}</h2>
-              <button mat-raised-button color="primary" (click)="imprimirResumen()">Imprimir</button>
-              <button mat-raised-button color="#fd9727" (click)="enviarDatosYDetallesVenta()">Registrar venta</button>
+              <button mat-raised-button style="margin-right: 20px; background-color: black;" (click)="imprimirResumen()">Imprimir</button>
+              <button mat-raised-button color="#fd9727"  (click)="enviarDatosYDetallesVenta()">Registrar venta</button>
            </div>
         </div>
      </div>

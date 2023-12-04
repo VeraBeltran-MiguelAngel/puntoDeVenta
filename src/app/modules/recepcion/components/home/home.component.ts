@@ -4,7 +4,7 @@ import { MatPaginator } from "@angular/material/paginator"; //para paginacion en
 import { Producto } from "../models/producto";
 import { ProductosService } from "src/app/service/productos.service";
 import { AuthService } from "src/app/service/auth.service";
-import { FormGroup, FormBuilder, Validators, FormArray } from "@angular/forms";
+import { FormGroup, FormBuilder, Validators, FormArray, FormControl, FormGroupDirective, NgForm } from "@angular/forms";
 import { CajaService } from "src/app/service/caja.service";
 import { DetalleVenta } from "src/app/service/detalleVenta.service";
 import { detalleVenta } from "../models/detalleVenta";
@@ -18,6 +18,11 @@ import { VentasService } from "src/app/service/ventas.service";
 import { MensajeEmergenteComponent } from '../mensaje-emergente/mensaje-emergente.component';
 import { JoinDetalleVentaService } from "src/app/service/JoinDetalleVenta";
 import { MensajeEliminarComponent } from "../mensaje-eliminar/mensaje-eliminar.component";
+import { inventarioService } from "src/app/service/inventario.service";
+import { ErrorStateMatcher } from '@angular/material/core';
+import { ToastrService } from 'ngx-toastr';
+
+
 interface Cliente {
   ID_Cliente: number;
   nombre: string;
@@ -31,7 +36,8 @@ interface Cliente {
   styleUrls: ["./home.component.css"],
 })
 export class HomeComponent implements OnInit {
-  selectedProducts: Producto[] = []; //lista de productos seleccionados
+  selectedProducts: Producto[] = [];
+  ubicacionGym: string; //lista de productos seleccionados
   totalAPagar: number = 0;
   dineroRecibido: number = 0;
   ubicacion: string;
@@ -60,10 +66,15 @@ export class HomeComponent implements OnInit {
   clientesFiltrados: Cliente[] = [];
   selectedClient: number | null = null;
   cerrarCaja: boolean = true;
-  botonDeshabilitado: boolean = true;
+  botonDeshabilitado: boolean = false;
   botonHabilitado: boolean = false;
   botonDeshabilitadoCorte: boolean = true;
-  botonProductos: boolean = true;
+  botonProductos: boolean = false;
+
+  producto: any; // Variable para almacenar el producto obtenido
+// Reemplaza con la cantidad que se solicita
+productos: any;
+cantidadSolicitada: number = 0;
 
   displayedColumns: string[] = [
     "id",
@@ -81,11 +92,13 @@ export class HomeComponent implements OnInit {
 
   //paginator es una variable de la clase MatPaginator
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  @ViewChild('paginator', { static: true }) paginatorPrueba!: MatPaginator;
 
   constructor(
     private productoService: ProductosService,
     private auth: AuthService,
     private cajaService: CajaService,
+    private InventarioService: inventarioService,
     private ventasService: VentasService,
     private DetalleVenta: DetalleVenta,
     private ListarClientesService: listarClientesService,
@@ -93,7 +106,8 @@ export class HomeComponent implements OnInit {
     public formulario: FormBuilder,
     private router: Router,
     public dialog: MatDialog,
-    private clienteService: ClienteService
+    private clienteService: ClienteService,
+    private toastr: ToastrService,
   ) {
     const lastInsertedId = this.auth.getUltimoIdInsertado();
     console.log("id",lastInsertedId);
@@ -137,12 +151,16 @@ export class HomeComponent implements OnInit {
     });
   }
 
+
+
   ngOnInit(): void {
     //paginator
+    
     this.productoService.obternerProductos().subscribe((respuesta) => {
       this.productData = respuesta;
       this.dataSource = new MatTableDataSource(this.productData);
       this.dataSource.paginator = this.paginator;
+      console.log("paginator",this.dataSource.paginator)
     });
     //ubicacion
     this.ubicacion = this.auth.getUbicacion();
@@ -170,7 +188,6 @@ export class HomeComponent implements OnInit {
        console.error('Error al consultar la fecha de cierre:', error);
      }
    );
-   
 
   }
 
@@ -235,31 +252,7 @@ export class HomeComponent implements OnInit {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
-  /*** Metodo para ir agregando productos a la lista de productos seleccionados* @param producto*/
-  agregaraBalance(producto: Producto) {
-    /*** el método busca si el producto que se está intentando agregar existe en la lista de productos seleccionados
-     */
-    const productoExistente = this.selectedProducts.find(
-      (p) => p.id === producto.id
-    );
-    /**
-     * Si se encuentra un producto existente con el mismo id, significa que el producto ya ha sido agregado
-     * al carrito. En este caso, el código aumenta la cantidad del producto existente en la lista selectedProducts
-     *  al agregar la cantidad del nuevo producto (producto.cantidad) a la cantidad existente del producto.
-     */
-    if (productoExistente) {
-      productoExistente.cantidad += producto.cantidad;
-    } else {
-      this.selectedProducts.push({ ...producto });
-    }
-    // Recalcular el total a pagar
-    this.totalAPagar = this.selectedProducts.reduce(
-      (total, p) => total + p.precio * p.cantidad, 0
-    );
-   
-    // Reiniciar la cantidad del producto
-    producto.cantidad = 0;
-  }
+  
 
   mostrarInput() {
     this.mostrarInputFlag = true;
@@ -275,14 +268,14 @@ export class HomeComponent implements OnInit {
     this.formularioCaja.get("fechaApertura")?.setValue(fechaConHoraPersonalizada);
   }
 
-  mostrarOcultarBoton(fechaCierre: string) {
+  mostrarOcultarBoton(fechaCierre: string) { 
     console.log("fechaCierre",fechaCierre);
-    if (fechaCierre === '0000-00-00 00:00:00') {
+    if (fechaCierre === '0000-00-00 00:00:00' ) {
       this.botonProductos = true;
     } else {
       this.botonProductos = false; 
     }
-  }  
+}
 
   mostrarCaja() {
     if (this.formularioCaja.valid) {
@@ -306,7 +299,12 @@ export class HomeComponent implements OnInit {
     // Guardamos el registro del usuario en el local storage (en formato cadena)
   }
 
+  listInventarioData: any[] = [];
+  
+
   enviarDatosYDetallesVenta() {
+   console.log("total",this.totalAPagar <= this.dineroRecibido);
+    if (this.totalAPagar <= this.dineroRecibido){
     const lastInsertedId = this.auth.getUltimoIdInsertado();
     console.log("id",lastInsertedId);
     const fechaActual = new Date();
@@ -326,15 +324,18 @@ export class HomeComponent implements OnInit {
     console.log("datos a guardar - Ventas", datosVentas);
     this.ventasService.agregarVentas(datosVentas).subscribe((response) => {
       console.log("Datos de ventas guardados correctamente");
-      const lastInsertedId3 = response.lastInsertedId3;
+      
+       const lastInsertedId3 = response.lastInsertedId3;
+      console.log("lastInsertedId3", lastInsertedId3);
       // Enviar detalles de ventas
       const detallesVenta = this.selectedProducts.map((producto) => {
         return {
-          Ventas_idSalidas: lastInsertedId3,
+          Ventas_idVentas: lastInsertedId3,
           Producto_idProducto: producto.id,
           nombreProducto: producto.nombre,
           cantidadElegida: producto.cantidad,
           precioUnitario: producto.precio,
+          Gimnasio_idGimnasio: this.auth.getIdGym()
         };
       });
   
@@ -351,10 +352,15 @@ export class HomeComponent implements OnInit {
         if (cerrarDialogo) {
           this.resetearValores();
         } else {
-
+         
         }
       });
     });
+  }else{
+    this.toastr.error(
+      'Ingresa el pago'
+    );
+  };
   }
 
 // Luego, en una función para restablecer los valores
@@ -414,6 +420,7 @@ export class HomeComponent implements OnInit {
   }
 
   imprimirResumen() {
+    if (this.totalAPagar <= this.dineroRecibido){
     const totalCantidad = this.selectedProducts.reduce(
       (total, producto) => total + producto.cantidad,
       0
@@ -546,6 +553,11 @@ export class HomeComponent implements OnInit {
       ventanaImpresion.document.close();
       ventanaImpresion.print();
       ventanaImpresion.close();
+    }}else{
+      this.toastr.error(
+        'Ingresa el pago'
+      );
+
     }
   }
   
@@ -559,18 +571,10 @@ export class HomeComponent implements OnInit {
       0
     );
     const totalEnPesos = this.convertirNumeroAPalabrasPesos(this.totalAPagarCorte);
-    if (this.formularioCaja) {
+   
       const cantidadDinero = this.formularioCaja.get('cantidadDineroExistente')?.value;
     
-      if (cantidadDinero !== null && cantidadDinero !== undefined) {
-        console.log('Cantidad de dinero existente:', cantidadDinero);
-        // Realiza cualquier acción adicional con cantidadDinero aquí
-      } else {
-        console.log('La cantidad de dinero no está definida');
-      }
-    } else {
-      console.log('El formulario formularioCaja es nulo o indefinido');
-    }    
+       
     const ventanaImpresion = window.open("", "_blank");
     const fechaActual = new Date().toLocaleDateString("es-MX"); // Obtener solo la fecha en formato local de México
     const horaActual = new Date().toLocaleTimeString("es-MX", {
@@ -678,12 +682,13 @@ export class HomeComponent implements OnInit {
                 </tbody>
               </table>
               <hr>
-              <p>{ cantidadDinero }</p>
+              <p></p>
               <p>Cantidad total de productos: ${totalCantidad}</p>
               <div class="total">
+              <p>Monto inicial en caja: $${cantidadDinero} </P>
                 <p>Total de ventas: $${this.totalAPagarCorte}</p>
+                <p>Total en caja: $${this.totalAPagarCorte + cantidadDinero }  </p>
               </div>
-                <p>(${totalEnPesos} PESOS)</p>
             </div>
           </body>
         </html>
@@ -741,11 +746,27 @@ export class HomeComponent implements OnInit {
       "NOVECIENTOS",
     ];
 
+    const decimales = [
+      "CERO",
+      "UN",
+      "DOS",
+      "TRES",
+      "CUATRO",
+      "CINCO",
+      "SEIS",
+      "SIETE",
+      "OCHO",
+      "NUEVE",
+    ];
+
     const miles = "MIL";
     const millones = "MILLÓN";
     const millonesPlural = "MILLONES";
 
     let palabras = "";
+    const entero = Math.floor(numero);
+    const decimal = Math.round((numero - entero) * 100); // Obtiene los dos decimales
+
 
     if (numero === 0) {
       palabras = "CERO";
@@ -776,5 +797,100 @@ export class HomeComponent implements OnInit {
 
     return palabras;
   }
+
+obtenerProducto(id: any, cantidadSolicitada: number): void {
+  this.InventarioService.obtenerProductoPorId(id).subscribe(
+    (data) => {
+      this.producto = data; // Almacena el producto obtenido en la variable 'producto'
+      console.log('Producto obtenido:', this.producto);
+      console.log("aca", data[0].cantidadDisponible);
+      if (data[0].cantidadDisponible < cantidadSolicitada) {
+        console.error('No hay suficiente stock disponible para esta cantidad.');
+        // Aquí puedes mostrar un mensaje de error o realizar alguna acción apropiada
+        this.toastr.error(
+          'No hay suficiente stock disponible para esta cantidad'
+        );
+      } else {
+        // Aquí puedes realizar las operaciones necesarias con el producto obtenido
+        
+      }
+    },
+    (error) => {
+      console.error('Error al obtener el producto:', error);
+    }
+  );
+}
+  /*** Metodo para ir agregando productos a la lista de productos seleccionados* @param producto*/
+agregaraBalance(producto: Producto) {
+    /*** el método busca si el producto que se está intentando agregar existe en la lista de productos seleccionados
+     */
+    const productoExistente = this.selectedProducts.find(
+      (p) => p.id === producto.id
+    );
+    /**
+     * Si se encuentra un producto existente con el mismo id, significa que el producto ya ha sido agregado
+     * al carrito. En este caso, el código aumenta la cantidad del producto existente en la lista selectedProducts
+     *  al agregar la cantidad del nuevo producto (producto.cantidad) a la cantidad existente del producto.
+     */
+   
+    if (productoExistente) {
+      productoExistente.cantidad += producto.cantidad;
+    } else {
+      this.selectedProducts.push({ ...producto });
+    }
+    // Recalcular el total a pagar
+    this.totalAPagar = this.selectedProducts.reduce(
+      (total, p) => total + p.precio * p.cantidad, 0
+    );
+
+    this.cantidadSolicitada = producto.cantidad;
+    console.log("productoExistente",producto.id);
+    console.log("producto.cantidad",producto.cantidad);
+    this.obtenerProducto(producto.id,producto.cantidad);
+    // Reiniciar la cantidad del producto
+    producto.cantidad = 0;
+  }
+
+ validaryUnir(producto: Producto){
+  this.InventarioService.obtenerProductoPorId(producto.id).subscribe(
+    (data) => {
+      this.producto = data; // Almacena el producto obtenido en la variable 'producto'
+      console.log('Producto obtenido:', this.producto);
+      console.log("aca", data[0].cantidadDisponible);
+      if (data[0].cantidadDisponible < producto.cantidad) {
+        console.error('No hay suficiente stock disponible para esta cantidad.');
+        // Aquí puedes mostrar un mensaje de error o realizar alguna acción apropiada
+        this.toastr.error(
+          'No hay suficiente stock disponible para esta cantidad'
+        );
+      } else {
+        const productoExistente = this.selectedProducts.find(
+          (p) => p.id === producto.id
+        );
+        // Aquí puedes realizar las operaciones necesarias con el producto obtenido
+        if (productoExistente) {
+          productoExistente.cantidad += producto.cantidad;
+        } else {
+          this.selectedProducts.push({ ...producto });
+        }
+        // Recalcular el total a pagar
+        this.totalAPagar = this.selectedProducts.reduce(
+          (total, p) => total + p.precio * p.cantidad, 0
+        );
+
+        this.cantidadSolicitada = producto.cantidad;
+        console.log("productoExistente",producto.id);
+        console.log("producto.cantidad",producto.cantidad);
+        this.obtenerProducto(producto.id,producto.cantidad);
+        // Reiniciar la cantidad del producto
+        producto.cantidad = 0;
+      }
+    },
+    (error) => {
+      console.error('Error al obtener el producto:', error);
+    }
+  );
+
+ }
 
 }

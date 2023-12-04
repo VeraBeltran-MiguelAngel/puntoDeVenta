@@ -1,5 +1,6 @@
 export interface detalleVenta {
-  Ventas_idSalidas: number;
+  Ventas_idVentas: number;
+  Gimnasio_idGimnasio: number;
   Producto_idProducto: number;
   nombreProducto: string;
   cantidadElegida: number;
