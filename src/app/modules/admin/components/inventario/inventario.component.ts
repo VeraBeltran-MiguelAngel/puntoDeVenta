@@ -13,10 +13,9 @@ import { MatTableDataSource } from '@angular/material/table';
 export class InventarioComponent implements OnInit {
   //titulos de columnas de la tabla
   displayedColumns: string[] = [
-    'idProducto',
+    'codigo_de_barra',
     'categoria',
     'nombre',
-    'tamaño',
     'descripcion',
     'precio de venta',
     'cantidad disponible',
