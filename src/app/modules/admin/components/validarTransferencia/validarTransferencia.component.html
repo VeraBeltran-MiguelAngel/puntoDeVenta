@@ -1,1 +1,67 @@
-<p>validarTransferencia works!</p>,
+<br />
+<h1>Transferencias internas de mercancia</h1>
+
+<div class="grid-menu" style="justify-content: center">
+  <mat-tab-group>
+    <mat-tab label="Validar transferencia">
+      <div class="datos">
+        <h2>Transferencias pendientes de validacion</h2>
+        <div class="content_margin">
+          <h3>Ingresa el valor de una columna</h3>
+          <mat-form-field class="full-width">
+            <mat-label>Filtro</mat-label>
+            <input
+              matInput
+              (keyup)="applyFilter($event)"
+              placeholder="Busca por columnas"
+              #input
+            />
+          </mat-form-field>
+
+          <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+            <ng-container
+              [matColumnDef]="column"
+              *ngFor="let column of displayedColumns"
+            >
+              <th mat-header-cell *matHeaderCellDef>{{ column }}</th>
+              <td mat-cell *matCellDef="let prod">
+                {{ prod[column] }}
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let emprow; columns: displayedColumns"></tr>
+          </table>
+          <mat-paginator
+            [pageSizeOptions]="[5, 10, 15, 20]"
+            showFirstLastButtons
+          ></mat-paginator>
+        </div>
+      </div>
+    </mat-tab>
+    <mat-tab label="Listado de validaciones">
+      <div class="datos">
+        <p><strong>Nombre del país:</strong>Chile</p>
+        <p>
+          <img src="assets/imagenes/chile.png" />
+        </p>
+        <h3>Datos generales.</h3>
+        <p>
+          Chile es un país de América ubicado en el extremo sudoeste de América
+          del Sur. Su nombre oficial es República de Chile y su capital es la
+          ciudad de Santiago. Primer país sudamericano en ingresar a la
+          Organización para la Cooperación y el Desarrollo Económicos, Chile es
+          una de las economías de América Latina que más ha crecido desde
+          mediados de la década de 1980.
+        </p>
+        <p>
+          Antes del descubrimiento de América, las tierras situadas al sur del
+          desierto de Atacama ya se llamaban Chili en la tradición indígena. Una
+          vez instalados en Nueva Castilla y Nueva Toledo, los conquistadores
+          españoles siguieron llamando de esa forma a la región del sur, a veces
+          también conocida como «valle de Chile», nombre que se extendió
+          posteriormente a todo el actual país.
+        </p>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>

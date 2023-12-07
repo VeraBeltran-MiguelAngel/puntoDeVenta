@@ -1,4 +1,5 @@
 <?php
+session_start();
 // Incluye el archivo de conexión (dentro del server el archivo productos.php 
 //debe salir dos carpetas afuera para llegar a la carpeta conPrincipal)
 require('../../conPrincipal/index.php');
@@ -119,6 +120,20 @@ if (isset($_GET["transferirPro"])) {
             // Manejo de error si no se reciben los datos esperados
             echo json_encode(["success" => false, "message" => "Datos incompletos o incorrectos"]);
         }
+    } catch (Exception $e) {
+        http_response_code(500);  // Código de estado HTTP para "Error interno del servidor"
+        echo json_encode(["success" => false, "message" => $e->getMessage()]);
+    }
+}
+
+/**
+ * Mostrar transfrencias pendientes de validacion
+ */
+if (isset($_GET["transferenciasSinValidar"])) {
+    // Obtener Gimnasio_idGimnasio de la respuesta JSON del inicio de sesión
+    $gimnasioId = isset($_SESSION['gimnasioId']) ? $_SESSION['gimnasioId'] : null;
+    try {
+        //code...
     } catch (Exception $e) {
         http_response_code(500);  // Código de estado HTTP para "Error interno del servidor"
         echo json_encode(["success" => false, "message" => $e->getMessage()]);

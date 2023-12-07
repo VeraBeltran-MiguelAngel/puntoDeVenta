@@ -1,8 +1,7 @@
 export interface Inventario{
-    idProducto:number;
+    codigo_de_barra:string;
     categoria:string;
     nombre:string;
-    tamaño:string;
     descripcion:string;
     precioVenta: number;
     cantidadDisponible:number;

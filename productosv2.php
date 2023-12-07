@@ -110,7 +110,6 @@ if (isset($_GET["listaInventario"])) {
                 $productos = mysqli_fetch_all($sqlData, MYSQLI_ASSOC);
                 // Realiza casting explícito a enteros
                 foreach ($productos as &$producto) {
-                    $producto['idProducto'] = (int)$producto['idProducto'];
                     $producto['precio de venta'] = (float)$producto['precio de venta'];
                     $producto['cantidad disponible'] = (int)$producto['cantidad disponible'];
                 }

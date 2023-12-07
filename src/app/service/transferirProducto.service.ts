@@ -8,8 +8,8 @@ import { Producto } from '../modules/recepcion/components/models/producto';
   providedIn: 'root',
 })
 export class TransferirProductoService {
-  // API: string = 'http://localhost/productos/transferirProductos.php';
-  API :string ='https://olympus.arvispace.com/puntoDeVenta/conf/transferirProductos.php';
+  API: string = 'http://localhost/productos/transferirProductos.php';
+  // API :string ='https://olympus.arvispace.com/puntoDeVenta/conf/transferirProductos.php';
 
   //para guardar los headers que manda el API
   httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
@@ -33,5 +33,10 @@ export class TransferirProductoService {
         headers: this.httpHeaders,
       }
     );
+  }
+
+
+  verTransferencias(): Observable<any> {
+    return this.clienteHttp.get(this.API + '?transferenciasSinValidar');
   }
 }

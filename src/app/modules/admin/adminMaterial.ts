@@ -11,6 +11,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatTabsModule } from '@angular/material/tabs';
 import {
   MatSlideToggleModule,
   _MatSlideToggleRequiredValidatorModule,
@@ -31,7 +32,8 @@ import {
     MatSelectModule,
     MatInputModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    MatTabsModule
   ],
 })
 export class AdminMaterialModule {}
