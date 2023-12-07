@@ -9,9 +9,9 @@ import { caja } from '../modules/recepcion/components/models/caja';
 export class CajaService {
 
   // API: string = 'http://localhost/productos/categorias.php'
-  //API: string = 'https://localhost/plan/caja.php'
+  API: string = 'https://localhost/plan/caja.php'
 
-API: string = 'https://olympus.arvispace.com/puntoDeVenta/conf/caja.php'
+//API: string = 'https://olympus.arvispace.com/puntoDeVenta/conf/caja.php'
  
   constructor(private clienteHttp:HttpClient) {
   }
@@ -22,7 +22,9 @@ API: string = 'https://olympus.arvispace.com/puntoDeVenta/conf/caja.php'
 
   // Angular service method
   agregarCaja(datoscaja: caja):Observable<any>{
+    console.log("llega")
     return this.clienteHttp.post(this.API+"?insertar=1", datoscaja);
+    
   }
 
   actualizarCaja(id:any,datoscaja:any):Observable<any>{

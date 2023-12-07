@@ -1,0 +1,75 @@
+.container {
+    font-family: Arial, sans-serif;
+    margin-top: 20px;
+}
+table {
+    width: 100%;
+}
+
+p {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+select, input {
+    margin-right: 10px;
+    margin-bottom: 10px;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 5px;
+}
+
+
+button {
+    background-color: blue;
+    border: 1px solid blue;
+    color: blanchedalmond;
+    width: 120px;
+    border-radius: 5px;
+    height: 38px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: darkblue;
+}
+
+.search-container {
+    position: relative;
+    display: flex;
+    width: 100%;
+  }
+
+  input[type="text"] {
+    padding-left: 40px; /* Ajusta el espacio del ícono al inicio */
+    width: 80%;
+  }
+  
+  .material-icons {
+    position: absolute;
+    left: 10px; /* Ajusta la posición del ícono */
+    top: 40%;
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
+
+  
+  .search-icon {
+    width: 40px;
+    height: 40px;
+    pointer-events: none; /* evita la interacción con la imagen */
+    cursor: pointer;
+  }
+
+  

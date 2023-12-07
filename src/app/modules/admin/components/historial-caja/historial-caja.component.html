@@ -1,0 +1,66 @@
+<div class="container mt-4">
+    <div class="filter-container">
+       <div class="row">
+          <div class="col-sm-6">
+             <p>Filtro por fecha</p>
+             <select [(ngModel)]="opcionSeleccionada">
+             <option value="diario">Diario</option>
+             <option value="rango">Rango Personalizado</option>
+             </select>
+             <ng-container *ngIf="opcionSeleccionada === 'diario'">
+                <input type="date" (change)="onFechaInicioChange($event)" class="input-date" style="margin-right: 20px;">
+             </ng-container>
+             <ng-container *ngIf="opcionSeleccionada === 'rango'">
+                <input type="date" (change)="onFechaInicioChange($event)" class="input-date" style="margin-right: 10px;">
+                <input type="date" (change)="onFechaFinChange($event)" class="input-date">
+             </ng-container>
+          </div>
+       
+       <div class="col-sm-6">
+        <p>Filtro por empleado:</p>
+        <div class="search-label">
+            <div class="search-container" (click)="abrirDialogo()" >
+               <input type="text" class="search-input" placeholder="Buscar..." disabled>
+               <img src="https://media.istockphoto.com/id/1135487794/es/vector/icono-de-b%C3%BAsqueda-ilustraci%C3%B3n-vectorial-aislada-en-el-bot%C3%B3n-cuadrado-plano.jpg?s=612x612&w=0&k=20&c=2f7Km0xyaXPdL9IEH7Ep4y4tLwj0HXDxJIEeWGGYfCk=" alt="Imagen" class="search-icon">
+            </div>
+          </div> 
+       </div>
+    </div>
+    </div>
+    <div class="search-container">
+       <input
+       type="text"
+       placeholder="Buscar por columnas"
+       (keyup)="applyFilter($event)"
+       #input
+       />
+       <i class="material-icons">search</i>
+    </div>
+    <button style="background-color: blue; border-color: blue; color: blanchedalmond; width: 120px; margin-right: 0px; border-radius: 5px;height: 38px;">Imprimir</button>
+    <div >
+       <!-- Contenido de los detalles de la caja -->
+       <h2>Detalles de la Caja (filtrados por fecha)</h2>
+       <table mat-table   [dataSource]="dataSource"  class="mat-elevation-z8">
+          <!-- Definición de columnas -->
+          <ng-container matColumnDef="cantidadElegida" *ngIf="detallesCaja.length > 0">
+             <th mat-header-cell *matHeaderCellDef>Cantidad</th>
+             <td mat-cell *matCellDef="let detalle">{{ detalle.cantidadElegida }}</td>
+          </ng-container>
+          <ng-container matColumnDef="nombreProducto" *ngIf="detallesCaja.length > 0">
+             <th mat-header-cell *matHeaderCellDef>Concepto</th>
+             <td mat-cell *matCellDef="let detalle">{{ detalle.nombreProducto }}</td>
+          </ng-container>
+          <ng-container matColumnDef="precioUnitario" *ngIf="detallesCaja.length > 0">
+             <th mat-header-cell *matHeaderCellDef>Valor</th>
+             <td mat-cell *matCellDef="let detalle">{{ detalle.precioUnitario }}</td>
+          </ng-container>
+          <ng-container matColumnDef="fechaVenta" *ngIf="detallesCaja.length > 0">
+             <th mat-header-cell *matHeaderCellDef>Fecha</th>
+             <td mat-cell *matCellDef="let detalle">{{ detalle.fechaVenta }}</td>
+          </ng-container>
+          <!-- Asignación de columnas a la tabla -->
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+       </table>
+    </div>
+ </div>

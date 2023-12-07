@@ -21,6 +21,7 @@ import { MensajeEliminarComponent } from "../mensaje-eliminar/mensaje-eliminar.c
 import { inventarioService } from "src/app/service/inventario.service";
 import { ErrorStateMatcher } from '@angular/material/core';
 import { ToastrService } from 'ngx-toastr';
+import { User } from "src/app/service/User";
 
 
 interface Cliente {
@@ -68,7 +69,7 @@ export class HomeComponent implements OnInit {
   cerrarCaja: boolean = true;
   botonDeshabilitado: boolean = false;
   botonHabilitado: boolean = false;
-  botonDeshabilitadoCorte: boolean = true;
+  //botonDeshabilitadoCorte: boolean = true;
   botonProductos: boolean = false;
 
   producto: any; // Variable para almacenar el producto obtenido
@@ -110,6 +111,7 @@ cantidadSolicitada: number = 0;
     private toastr: ToastrService,
   ) {
     const lastInsertedId = this.auth.getUltimoIdInsertado();
+
     console.log("id",lastInsertedId);
     this.cajaService
       .consultarCaja(this.lastInsertedId)
@@ -126,7 +128,9 @@ cantidadSolicitada: number = 0;
         });
       });
 
+    const id = this.auth.setUserData;
     this.formularioCaja = this.formulario.group({
+     
       // fechaApertura: [{ value: '', disabled: true }],
       fechaApertura: [""],
       fechaCierre: ["0000-00-00"],
@@ -172,7 +176,13 @@ cantidadSolicitada: number = 0;
     this.clienteService;
 
    //////////////////////////////////////////////////////777777777
+  
+
    const lastInsertedId = this.auth.getUltimoIdInsertado();
+
+
+
+
    console.log("idddddddddd",lastInsertedId);
    this.cajaService.consultarCaja(lastInsertedId).subscribe(
      (resultados) => {
@@ -255,6 +265,7 @@ cantidadSolicitada: number = 0;
   
 
   mostrarInput() {
+    console.log("hola", this.mostrarInputFlag);
     this.mostrarInputFlag = true;
     const fechaActual = new Date();
     const year = fechaActual.getFullYear();
@@ -279,9 +290,11 @@ cantidadSolicitada: number = 0;
 
   mostrarCaja() {
     if (this.formularioCaja.valid) {
+      console.log("ID insertado caja:", this.formularioCaja.value);
       this.cajaService
         .agregarCaja(this.formularioCaja.value)
         .subscribe((respuesta) => {
+          console.log("pasa");
           if (respuesta.success === 1) {
             this.lastInsertedId = respuesta.lastInsertedId;
             console.log("ID insertado caja:", this.lastInsertedId);
@@ -306,6 +319,7 @@ cantidadSolicitada: number = 0;
    console.log("total",this.totalAPagar <= this.dineroRecibido);
     if (this.totalAPagar <= this.dineroRecibido){
     const lastInsertedId = this.auth.getUltimoIdInsertado();
+
     console.log("id",lastInsertedId);
     const fechaActual = new Date();
     const fechaVenta = fechaActual.toISOString().split("T")[0]; // Obtiene la fecha en formato YYYY-MM-DD
@@ -397,11 +411,13 @@ cantidadSolicitada: number = 0;
       .subscribe((confirmado: Boolean) => {
         if (confirmado) {
           const lastInsertedId = this.auth.getUltimoIdInsertado();
+
+          
           console.log("id",lastInsertedId);
           this.cajaService.actualizarCaja(lastInsertedId, this.formularioCaja.value).subscribe((respuesta) => {
             console.log("si actualizo la caja");
-            this.botonDeshabilitadoCorte = false;
-            this.mostrarInputFlag = false;
+            //this.botonDeshabilitadoCorte = false;
+            this.mostrarInputFlag = true;
             this.cerrarCaja = false;
             this.botonProductos = false; 
         });
@@ -414,6 +430,9 @@ cantidadSolicitada: number = 0;
   mostrarVentas() {
     this.mostrarLasVentas = true;
     const lastInsertedId = this.auth.getUltimoIdInsertado();
+
+
+   
     console.log("id",lastInsertedId);
     this.obtenerDetallesCaja(lastInsertedId);
     this.botonDeshabilitado = true;

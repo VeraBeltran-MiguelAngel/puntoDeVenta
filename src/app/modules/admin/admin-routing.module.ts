@@ -8,6 +8,7 @@ import { ProveedoresComponent } from './components/proveedores/proveedores.compo
 import { EntradasComponent } from './components/entradas/entradas.component';
 import { InventarioComponent } from './components/inventario/inventario.component';
 import { ValidarTransferenciaComponent } from './components/validarTransferencia/validarTransferencia.component';
+import { HistorialCajaComponent } from './components/historial-caja/historial-caja.component';
 
 const routes: Routes = [
   {
@@ -20,6 +21,7 @@ const routes: Routes = [
       { path: 'proveedores', component: ProveedoresComponent },
       { path: 'entradas', component: EntradasComponent },
       { path: 'inventario', component: InventarioComponent },
+      { path: 'caja', component: HistorialCajaComponent },
       {
         path: 'validarTransferencia',
         component: ValidarTransferenciaComponent,
