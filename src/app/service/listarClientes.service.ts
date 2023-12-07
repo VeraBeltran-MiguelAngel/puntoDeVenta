@@ -8,8 +8,8 @@ import { caja } from '../modules/recepcion/components/models/caja';
 })
 export class listarClientesService {
 
-  //API: string = 'https://localhost/plan/ListaCliente.php'
-  API: string = 'https://olympus.arvispace.com/puntoDeVenta/conf/ListaCliente.php'
+  API: string = 'https://localhost/plan/ListaCliente.php'
+  //API: string = 'https://olympus.arvispace.com/puntoDeVenta/conf/ListaCliente.php'
   
   constructor(private clienteHttp:HttpClient) {
   }

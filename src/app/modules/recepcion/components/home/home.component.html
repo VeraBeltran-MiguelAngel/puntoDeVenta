@@ -2,7 +2,7 @@
   <h1>CAJA</h1>
   <div class="row">
      <div class="col-sm-4">
-        <button class="open-cash-register" (click)="mostrarInput()" [disabled]="mostrarInputFlag" >
+        <button class="open-cash-register" (click)="mostrarInput()" >
         <span class="icon"></span>
         <span class="btn-text" style="color: black;margin-left: 20px;">ABRIR CAJA</span>
         </button>
@@ -17,7 +17,7 @@
      </div>
      <!------------------------------------------------------------------------------------------------->
      <div class="col-sm-4">
-        <button class="ver-cash-register" style="float: right;" (click)="mostrarVentas()" [disabled]="botonDeshabilitadoCorte">
+        <button class="ver-cash-register" style="float: right;" (click)="mostrarVentas()" >
         <span class="icon"></span>
         <span class="btn-text" style="color: rgb(255, 255, 255);margin-left: 20px;">VER CORTE</span>
         </button>
@@ -88,7 +88,7 @@
 
            <div>
               <br/>
-              <label>Monto inicial:</label>
+              <label>¿Con cuánto dinero empiezas el turno? *</label>
               <input class="number" type="number" id="cashInput" placeholder="Ingrese el monto" style="margin-top: 10px;" formControlName="cantidadDineroExistente">
            </div>
            <div class="col-sm-6">
@@ -106,7 +106,7 @@
                  font-size: 16px;
                  border: none;
                  border-radius: 5px;" (click)="mostrarCaja()">
-              Abrir
+             Empezar turno
               </button>
            </div>
 

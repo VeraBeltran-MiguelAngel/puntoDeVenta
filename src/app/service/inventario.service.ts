@@ -8,8 +8,8 @@ import { caja } from '../modules/recepcion/components/models/caja';
 })
 export class inventarioService {
 
-  //API: string = 'https://localhost/plan/inventario.php'
-  API: string = 'https://olympus.arvispace.com/puntoDeVenta/conf/inventario.php'
+API: string = 'https://localhost/plan/inventario.php'
+  //API: string = 'https://olympus.arvispace.com/puntoDeVenta/conf/inventario.php'
   
   constructor(private clienteHttp:HttpClient) {
   }
@@ -22,6 +22,8 @@ export class inventarioService {
   obtenerProductoPorId(id:any):Observable<any>{
     return this.clienteHttp.get(this.API+"?consultar="+id);
   }
+
+  
 
   
 

@@ -35,6 +35,9 @@ import { ProveedoresComponent } from './components/proveedores/proveedores.compo
 import { EntradasComponent } from './components/entradas/entradas.component';
 import { InventarioComponent } from './components/inventario/inventario.component';
 import { ValidarTransferenciaComponent } from './components/validarTransferencia/validarTransferencia.component';
+import { HistorialCajaComponent } from './components/historial-caja/historial-caja.component';
+import { FiltroFechaPipe } from './components/pipes/filtro-fecha.pipe';
+import { MensajeListaComponent } from './components/ListaEmpleados/mensaje-cargando.component';
 
 
 @NgModule({
@@ -48,7 +51,10 @@ import { ValidarTransferenciaComponent } from './components/validarTransferencia
     ProveedoresComponent,
     EntradasComponent,
     InventarioComponent,
-    ValidarTransferenciaComponent
+    ValidarTransferenciaComponent,
+    HistorialCajaComponent,
+    FiltroFechaPipe,
+    MensajeListaComponent
   ],
   imports: [
     CommonModule,
@@ -56,7 +62,7 @@ import { ValidarTransferenciaComponent } from './components/validarTransferencia
     FontAwesomeModule,
     ReactiveFormsModule,
     FormsModule,
-    AdminMaterialModule //aqui esta todo lo que se necesita de material
+    AdminMaterialModule 
   ],
 })
 export class AdminModule {
