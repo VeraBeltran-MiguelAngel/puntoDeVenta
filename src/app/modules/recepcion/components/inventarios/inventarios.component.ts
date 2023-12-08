@@ -17,10 +17,9 @@ import { ProductosService } from 'src/app/service/productos.service';
 })
 export class InventariosComponent implements OnInit {
   displayedColumns: string[] = [
-    'idProducto',
+    'codigo_de_barra',
     'categoria',
     'nombre',
-    'tamaño',
     'descripcion',
     'precio de venta',
     'cantidad disponible',

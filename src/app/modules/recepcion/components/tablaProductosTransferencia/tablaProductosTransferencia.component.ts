@@ -24,7 +24,7 @@ export class TablaProductosTransferenciaComponent implements OnInit {
   faClose = faClose; //icono de busqueda
   //titulos de columnas de la tabla
   displayedColumns: string[] = [
-    'id',
+    'codigo_de_barra',
     'categoria',
     'nombre',
     'tamaño',

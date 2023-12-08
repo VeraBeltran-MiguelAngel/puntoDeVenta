@@ -38,7 +38,6 @@ if (isset($_GET["listaProductosRecepcion"])) {
                 $productos = mysqli_fetch_all($sqlData, MYSQLI_ASSOC);
                 // Realiza casting explícito a enteros
                 foreach ($productos as &$producto) {
-                    $producto['id'] = (int)$producto['id'];
                     $producto['precio'] = (float)$producto['precio'];
                     $producto['cantidad'] = (int)$producto['cantidad'];
                 }
@@ -57,10 +56,17 @@ if (isset($_GET["listaProductosRecepcion"])) {
 // Consultar los productos de la franquicia para mostrarlos al admin
 if (isset($_GET["listaProductosAdmin"])) {
 
-    $consultaProductosAdmin = "SELECT p.idProducto, p.nombre, p.tamaño, p.descripcion, 
-    p.precio as 'precio de venta', p.estatus, c.nombre as 'categoria'
-    FROM producto p
-    INNER JOIN categoria c ON c.idCategoria = p.Categoria_idCategoria;";
+    $consultaProductosAdmin = "SELECT
+        p.codigoBarra AS 'codigo_de_barra',
+        p.nombre,
+        p.descripcion,
+        p.precio AS 'precio de venta',
+        p.estatus,
+        c.nombre AS 'categoria'
+    FROM
+        producto p
+    INNER JOIN categoria c ON
+    c.idCategoria = p.Categoria_idCategoria";
 
     // echo $consultaProductosAdmin;
 
@@ -70,7 +76,6 @@ if (isset($_GET["listaProductosAdmin"])) {
         $productosAdmin = mysqli_fetch_all($sqlData, MYSQLI_ASSOC);
         // Realiza casting explícito a enteros
         foreach ($productosAdmin as &$producto) {
-            $producto['idProducto'] = (int)$producto['idProducto'];
             $producto['precio de venta'] = (float)$producto['precio de venta'];
         }
         echo json_encode($productosAdmin, JSON_UNESCAPED_UNICODE);

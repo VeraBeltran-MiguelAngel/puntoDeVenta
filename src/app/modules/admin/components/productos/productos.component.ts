@@ -12,9 +12,8 @@ import { MatPaginator } from '@angular/material/paginator'; //para paginacion en
 export class ProductosComponent implements OnInit {
   //titulos de columnas de la tabla
   displayedColumns: string[] = [
-    'idProducto',
+    'codigo_de_barra',
     'nombre',
-    'tamaño',
     'descripcion',
     'precio de venta',
     'estatus',

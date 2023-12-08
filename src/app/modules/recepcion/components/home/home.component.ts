@@ -78,7 +78,7 @@ productos: any;
 cantidadSolicitada: number = 0;
 
   displayedColumns: string[] = [
-    "id",
+    'codigo_de_barra',
     "categoria",
     "nombre",
     "tamaño",
