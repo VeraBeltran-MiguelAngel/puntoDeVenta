@@ -2,7 +2,8 @@
  * esta interfaz representa los productos que estan a la venta
  */
 export interface Producto {
-  id: number;
+  id:number;
+  codigo_de_barra: string;
   categoria: string;
   nombre:string;
   tamaño: string;
