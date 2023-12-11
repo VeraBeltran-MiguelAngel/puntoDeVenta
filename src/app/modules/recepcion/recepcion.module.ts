@@ -38,8 +38,9 @@ import { MensajeListaComponent } from './components/ListaClientes/mensaje-cargan
 import { MensajeEliminarComponent } from './components/mensaje-eliminar/mensaje-eliminar.component';
 import { FormPagoEmergenteComponent } from './components/form-pago-emergente/form-pago-emergente.component';
 import { TablaEmergenteService } from 'src/app/service/tablaEmergente.service';
-
-
+import { FiltroFechaPipe } from './components/pipes/filtro-fecha.pipe';
+import { FiltroNombreProductoPipe } from './components/pipes/filtro-concepto.pipe';
+import { FilterByDatePipe } from './components/pipes/filtroFechas.pipe';
 @NgModule({
   declarations: [
     RecepDashboardComponent,
@@ -52,7 +53,10 @@ import { TablaEmergenteService } from 'src/app/service/tablaEmergente.service';
     MensajeEmergenteComponent,
     MensajeListaComponent,
     MensajeEliminarComponent,
-    FormPagoEmergenteComponent
+    FormPagoEmergenteComponent,
+    FiltroFechaPipe,
+    FiltroNombreProductoPipe,
+    FilterByDatePipe
   ],
   imports: [
     CommonModule,

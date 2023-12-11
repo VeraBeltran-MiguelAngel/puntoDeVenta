@@ -77,6 +77,8 @@ export class HomeComponent implements OnInit {
 productos: any;
 cantidadSolicitada: number = 0;
 
+columnas: string[] = ['nombreProducto', 'cantidadElegida', 'precioUnitario', 'fechaVenta'];
+
   displayedColumns: string[] = [
     'codigo_de_barra',
     "categoria",
@@ -88,11 +90,10 @@ cantidadSolicitada: number = 0;
   ];
   productData: Producto[] = []; //para guardar la respuesta del api en un arreglo
 
-  dataSource: any; // instancia para matTableDatasource
+  dataSource = new MatTableDataSource<any>(this.detallesCaja);
 
   //paginator es una variable de la clase MatPaginator
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
-  @ViewChild('paginator', { static: true }) paginatorPrueba!: MatPaginator;
 
   constructor(
     private productoService: ProductosService,
@@ -154,8 +155,6 @@ cantidadSolicitada: number = 0;
     });
   }
 
-
-
   ngOnInit(): void {
     //paginator
     
@@ -200,18 +199,72 @@ cantidadSolicitada: number = 0;
 
   }
 
-  obtenerDetallesCaja(idCaja: number | null) {
-    this.joinDetalleVentaService.consultarProductosVentas(idCaja)
+  obtenerDetallesCaja(Recepcionista_idRecepcionista: number | null) {
+    this.joinDetalleVentaService.consultarProductosVentas(1)
       .subscribe(
         (data) => {
           this.detallesCaja = data; // Asigna los detalles de la caja obtenidos del servicio a la variable del componente
           console.log('Detalles de la caja:', this.detallesCaja);
+          console.log("this.detallesCaja.length", this.detallesCaja.length);
+  
+          // Agrega aquí la lógica que necesitas realizar con los detalles de la caja
         },
         (error) => {
           console.error('Error al obtener detalles de la caja:', error);
         }
       );
   }
+
+  
+  opcionSeleccionada: string = "diario";
+  mostrarRango: boolean = false;
+  mostrarDiario: boolean = true;
+
+  seleccionarOpcion(opcion: string) {
+    this.opcionSeleccionada = opcion;
+
+    // Lógica para mostrar elementos correspondientes al modo diario
+    if (opcion === "diario") {
+      this.mostrarDiario = true; // Define una variable para mostrar elementos de diario
+      this.mostrarRango = false; // Oculta los elementos del rango
+    } else if (opcion === "rango") {
+      this.mostrarRango = true; // Define una variable para mostrar elementos del rango
+      this.mostrarDiario = false; // Oculta los elementos de diario
+    }
+  }
+
+  fechaInicio: Date;
+  fechaFin: Date;
+  fechaFiltro: string = '';
+
+  aplicarFiltro() {
+    const fechaFiltrar = new Date(this.fechaFiltro);
+    this.dataSource.filter = fechaFiltrar.toISOString().slice(0, 10); // Ajusta el formato a 'YYYY-MM-DD'
+    // Asegúrate de que aquí 'fechaVenta' sea la propiedad correcta por la cual estás filtrando
+    console.log("this.dataSource.filter", this.dataSource.filter);
+    console.log("this.dataSource.filterPredicate", this.dataSource.filterPredicate);
+    this.dataSource.filterPredicate = (data: any, filter: string) => {
+      return data.fechaVenta.includes(filter); // Compara la fecha con el filtro
+    };
+  }
+
+  aplicarFiltross() {
+    const fechaInicioFiltrar = new Date(this.fechaInicio);
+    const fechaFinFiltrar = new Date(this.fechaFin);
+
+    this.dataSource.filterPredicate = (data: any, filter: string) => {
+      const fechaItem = new Date(data.fechaVenta); // Ajusta 'fechaVenta' a tu propiedad de fecha
+
+      return fechaItem >= fechaInicioFiltrar && fechaItem <= fechaFinFiltrar;
+    };
+
+    // Concatenar las fechas con un carácter que no se espera en las fechas
+    const filtro = `${fechaInicioFiltrar.toISOString().slice(0, 10)}_${fechaFinFiltrar.toISOString().slice(0, 10)}`;
+
+    this.dataSource.filter = filtro;
+    console.log("filtro", filtro);
+  }
+
 
   obtenerCliente(idCliente: number) {
     this.ListarClientesService.consultarCliente(idCliente).subscribe(
@@ -260,6 +313,7 @@ cantidadSolicitada: number = 0;
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+    console.log(" this.dataSource.filter",  this.dataSource.filter);
   }
   
 
@@ -429,9 +483,6 @@ cantidadSolicitada: number = 0;
   mostrarVentas() {
     this.mostrarLasVentas = true;
     const lastInsertedId = this.auth.getUltimoIdInsertado();
-
-
-   
     console.log("id",lastInsertedId);
     this.obtenerDetallesCaja(lastInsertedId);
     this.botonDeshabilitado = true;
@@ -871,8 +922,9 @@ agregaraBalance(producto: Producto) {
   }
 
  validaryUnir(producto: Producto){
-  this.InventarioService.obtenerProductoPorId(producto.id).subscribe({
-    next:(data) => {
+  console.log("producto",producto.id);
+  this.InventarioService.obtenerProductoPorId(producto.id).subscribe(
+    (data) => {
       this.producto = data; // Almacena el producto obtenido en la variable 'producto'
       console.log('Producto obtenido:', this.producto);
       console.log("aca", data[0].cantidadDisponible);

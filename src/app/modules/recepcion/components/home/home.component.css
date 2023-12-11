@@ -253,5 +253,77 @@ table {
   margin-left: 20px;
 }
 
+/* Estilos para los inputs de fecha */
+.input-date {
+  padding: 8px 12px; /* Espaciado interno */
+  border: 1px solid #ccc; /* Borde */
+  border-radius: 5px; /* Bordes redondeados */
+  font-size: 16px; /* Tamaño del texto */
+  margin-bottom: 10px; /* Margen inferior */
+}
+
+/* Estilos cuando el input de fecha está enfocado */
+.input-date:focus {
+  outline: none; /* Eliminar el contorno al enfocar */
+  border-color: dodgerblue; /* Cambiar color del borde al enfocar */
+}
+
+.filter-container {
+  display: flex;
+  align-items: center;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+}
+
+.input-date {
+  margin-right: 10px; /* Ajusta el margen si es necesario */
+}
+
+input[type="text"] {
+  padding-left: 30px; /* Ajusta el espacio del ícono al inicio */
+  width: 100%;
+}
+
+.material-icons {
+  position: absolute;
+  left: 10px; /* Ajusta la posición del ícono */
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+
+/* Estilos para el select */
+select {
+  /* Cambiar el color de fondo y texto */
+  background-color: #f4f4f4;
+  color: #333;
+
+  /* Cambiar el borde y esquinas */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+
+  /* Ajustar tamaño y espaciado */
+  padding: 8px;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+/* Estilos para el select cuando está enfocado */
+select:focus {
+  /* Cambiar color de borde cuando se selecciona */
+  border-color: #66afe9;
+  outline: 0; /* Eliminar el contorno de enfoque predeterminado */
+}
+
+/* Estilos para las opciones del select */
+option {
+  /* Cambiar el color de fondo y texto */
+  background-color: #fff;
+  color: #333;
+}
 
 
