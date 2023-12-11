@@ -818,8 +818,8 @@ cantidadSolicitada: number = 0;
   }
 
 obtenerProducto(id: any, cantidadSolicitada: number): void {
-  this.InventarioService.obtenerProductoPorId(id).subscribe(
-    (data) => {
+  this.InventarioService.obtenerProductoPorId(id).subscribe({
+  next:  (data) => {
       this.producto = data; // Almacena el producto obtenido en la variable 'producto'
       console.log('Producto obtenido:', this.producto);
       console.log("aca", data[0].cantidadDisponible);
@@ -834,10 +834,10 @@ obtenerProducto(id: any, cantidadSolicitada: number): void {
         
       }
     },
-    (error) => {
+   error: (error) => {
       console.error('Error al obtener el producto:', error);
     }
-  );
+});
 }
   /*** Metodo para ir agregando productos a la lista de productos seleccionados* @param producto*/
 agregaraBalance(producto: Producto) {
@@ -871,8 +871,8 @@ agregaraBalance(producto: Producto) {
   }
 
  validaryUnir(producto: Producto){
-  this.InventarioService.obtenerProductoPorId(producto.id).subscribe(
-    (data) => {
+  this.InventarioService.obtenerProductoPorId(producto.id).subscribe({
+    next:(data) => {
       this.producto = data; // Almacena el producto obtenido en la variable 'producto'
       console.log('Producto obtenido:', this.producto);
       console.log("aca", data[0].cantidadDisponible);
@@ -884,7 +884,7 @@ agregaraBalance(producto: Producto) {
         );
       } else {
         const productoExistente = this.selectedProducts.find(
-          (p) => p.id === producto.id
+          (p) => p.codigo_de_barra === producto.codigo_de_barra
         );
         // Aquí puedes realizar las operaciones necesarias con el producto obtenido
         if (productoExistente) {
@@ -898,17 +898,17 @@ agregaraBalance(producto: Producto) {
         );
 
         this.cantidadSolicitada = producto.cantidad;
-        console.log("productoExistente",producto.id);
+        console.log("productoExistente",producto.codigo_de_barra);
         console.log("producto.cantidad",producto.cantidad);
         this.obtenerProducto(producto.id,producto.cantidad);
         // Reiniciar la cantidad del producto
         producto.cantidad = 0;
       }
     },
-    (error) => {
+   error: (error) => {
       console.error('Error al obtener el producto:', error);
     }
-  );
+ });
 
  }
 

@@ -83,7 +83,7 @@ export class TablaProductosTransferenciaComponent implements OnInit {
      * existe en la lista de productos seleccionados
      */
     const productoExistente = this.selectedProducts.find(
-      (p) => p.id === producto.id
+      (p) => p.codigo_de_barra === producto.codigo_de_barra
     );
 
     /**
