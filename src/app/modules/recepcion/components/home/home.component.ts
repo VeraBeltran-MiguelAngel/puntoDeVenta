@@ -81,7 +81,6 @@ cantidadSolicitada: number = 0;
     'codigo_de_barra',
     "categoria",
     "nombre",
-    "tamaño",
     "descripcion",
     "precio",
     "cantidad",

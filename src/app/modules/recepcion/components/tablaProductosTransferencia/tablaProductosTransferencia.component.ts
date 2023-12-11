@@ -27,7 +27,6 @@ export class TablaProductosTransferenciaComponent implements OnInit {
     'codigo_de_barra',
     'categoria',
     'nombre',
-    'tamaño',
     'descripcion',
     'precio',
     'cantidad',
