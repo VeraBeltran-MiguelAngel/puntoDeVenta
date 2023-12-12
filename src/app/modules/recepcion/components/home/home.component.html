@@ -48,7 +48,9 @@
             <br>
             <div class="row">
                <div class="col-sm-6">
-                  <p>Filtro por fecha</p>
+                  
+                  <p>Filtro por fecha:</p>
+                  
                   <select [(ngModel)]="opcionSeleccionada" style="margin-right: 20px;">
                   <option value="diario">Diario</option>
                   <option value="rango">Rango Personalizado</option>
@@ -64,23 +66,22 @@
             </div>
             <div class="row">
                <div class="col-sm-9">
+                  <br>
+                  <p>Filtro por producto:</p>
                   <div class="search-container">
                      <input
-                     type="text"
-                     placeholder="Buscar por concepto"
-                     (keyup)="applyFilter($event)"
-                     #input
-                     />
+                     type="text" placeholder="Buscar por concepto" (keyup)="applyFilter($event)" #input/>
                      <i class="material-icons">search</i>
                   </div>
                </div>
                <div class="col-sm-3">
+                  
                   <button  style="background-color: blue; border-color: blue; color: blanchedalmond; width: 120px; margin-right: 20px; border-radius: 5px;height: 38px;"  (click)="imprimirResumenCorte()">Imprimir</button>
                </div>
             </div>
             <br><br>
             <h2>Detalles de la Caja</h2>
-            <table mat-table [dataSource]="detallesCaja" class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource2" class="mat-elevation-z8">
 
                <!-- Definición de las columnas -->
                <ng-container matColumnDef="nombreProducto">
@@ -111,7 +112,8 @@
                <!-- Filas con los datos -->
                <tr mat-row *matRowDef="let row; columns: columnas;"></tr>
              </table>
-            
+             <mat-paginator [pageSizeOptions]="[5, 10, 15, 20]" showFirstLastButtons></mat-paginator>
+
          </div>
          <div *ngIf="detallesCaja.length === 0">
             <!-- Si no hay detalles de la caja -->
@@ -123,7 +125,7 @@
       
       <br/>
       <form [formGroup]="formularioCaja">
-         <div *ngIf="botonProductos">
+         <div *ngIf="botonProductos && !mostrarLasVentas">
             <br/><br/>
             <h1>¿Deseas continuar?</h1>
             <div style="display: flex; justify-content: center;">
@@ -204,7 +206,7 @@
                      </mat-form-field>
                   </ng-container>
                   <ng-container *ngIf="column === 'acciones'">
-                     <button class="add-box-icon" (click)="validaryUnir(prod)">add_box</button>
+                     <mat-icon class="add-box-icon" (click)="validaryUnir(prod)">add_box</mat-icon>
                   </ng-container>
                </td>
                </ng-container>

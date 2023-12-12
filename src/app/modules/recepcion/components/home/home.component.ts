@@ -90,10 +90,13 @@ columnas: string[] = ['nombreProducto', 'cantidadElegida', 'precioUnitario', 'fe
   ];
   productData: Producto[] = []; //para guardar la respuesta del api en un arreglo
 
-  dataSource = new MatTableDataSource<any>(this.detallesCaja);
+  dataSource = new MatTableDataSource<any>([]);
+  
+  dataSource2 = new MatTableDataSource<any>([]);
 
   //paginator es una variable de la clase MatPaginator
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  @ViewChild(MatPaginator) paginator2!: MatPaginator;
 
   constructor(
     private productoService: ProductosService,
@@ -156,13 +159,14 @@ columnas: string[] = ['nombreProducto', 'cantidadElegida', 'precioUnitario', 'fe
   }
 
   ngOnInit(): void {
+  
     //paginator
+    this.dataSource2.paginator = this.paginator2;
     
     this.productoService.obternerProductos().subscribe((respuesta) => {
       this.productData = respuesta;
       this.dataSource = new MatTableDataSource(this.productData);
       this.dataSource.paginator = this.paginator;
-      console.log("paginator",this.dataSource.paginator)
     });
     //ubicacion
     this.ubicacion = this.auth.getUbicacion();
@@ -174,12 +178,8 @@ columnas: string[] = ['nombreProducto', 'cantidadElegida', 'precioUnitario', 'fe
     this.clienteService;
 
    //////////////////////////////////////////////////////777777777
-  
 
    const lastInsertedId = this.auth.getUltimoIdInsertado();
-
-
-
 
    console.log("idddddddddd",lastInsertedId);
    this.cajaService.consultarCaja(lastInsertedId).subscribe(
@@ -200,21 +200,19 @@ columnas: string[] = ['nombreProducto', 'cantidadElegida', 'precioUnitario', 'fe
   }
 
   obtenerDetallesCaja(Recepcionista_idRecepcionista: number | null) {
-    this.joinDetalleVentaService.consultarProductosVentas(1)
-      .subscribe(
-        (data) => {
-          this.detallesCaja = data; // Asigna los detalles de la caja obtenidos del servicio a la variable del componente
-          console.log('Detalles de la caja:', this.detallesCaja);
-          console.log("this.detallesCaja.length", this.detallesCaja.length);
-  
-          // Agrega aquí la lógica que necesitas realizar con los detalles de la caja
-        },
-        (error) => {
-          console.error('Error al obtener detalles de la caja:', error);
-        }
-      );
+    this.joinDetalleVentaService.consultarProductosVentas(1).subscribe(
+      (data) => {
+        this.detallesCaja = data;
+        this.dataSource2.data = this.detallesCaja; // Asigna los datos al dataSource
+        console.log('Detalles de la caja:', this.detallesCaja);
+        console.log("this.detallesCaja.length", this.detallesCaja.length);
+        // Resto del código
+      },
+      (error) => {
+        console.error('Error al obtener detalles de la caja:', error);
+      }
+    );
   }
-
   
   opcionSeleccionada: string = "diario";
   mostrarRango: boolean = false;
@@ -239,11 +237,11 @@ columnas: string[] = ['nombreProducto', 'cantidadElegida', 'precioUnitario', 'fe
 
   aplicarFiltro() {
     const fechaFiltrar = new Date(this.fechaFiltro);
-    this.dataSource.filter = fechaFiltrar.toISOString().slice(0, 10); // Ajusta el formato a 'YYYY-MM-DD'
+    this.dataSource2.filter = fechaFiltrar.toISOString().slice(0, 10); // Ajusta el formato a 'YYYY-MM-DD'
     // Asegúrate de que aquí 'fechaVenta' sea la propiedad correcta por la cual estás filtrando
-    console.log("this.dataSource.filter", this.dataSource.filter);
-    console.log("this.dataSource.filterPredicate", this.dataSource.filterPredicate);
-    this.dataSource.filterPredicate = (data: any, filter: string) => {
+    console.log("this.dataSource.filter", this.dataSource2.filter);
+    console.log("this.dataSource.filterPredicate", this.dataSource2.filterPredicate);
+    this.dataSource2.filterPredicate = (data: any, filter: string) => {
       return data.fechaVenta.includes(filter); // Compara la fecha con el filtro
     };
   }
@@ -252,7 +250,7 @@ columnas: string[] = ['nombreProducto', 'cantidadElegida', 'precioUnitario', 'fe
     const fechaInicioFiltrar = new Date(this.fechaInicio);
     const fechaFinFiltrar = new Date(this.fechaFin);
 
-    this.dataSource.filterPredicate = (data: any, filter: string) => {
+    this.dataSource2.filterPredicate = (data: any, filter: string) => {
       const fechaItem = new Date(data.fechaVenta); // Ajusta 'fechaVenta' a tu propiedad de fecha
 
       return fechaItem >= fechaInicioFiltrar && fechaItem <= fechaFinFiltrar;
@@ -261,7 +259,7 @@ columnas: string[] = ['nombreProducto', 'cantidadElegida', 'precioUnitario', 'fe
     // Concatenar las fechas con un carácter que no se espera en las fechas
     const filtro = `${fechaInicioFiltrar.toISOString().slice(0, 10)}_${fechaFinFiltrar.toISOString().slice(0, 10)}`;
 
-    this.dataSource.filter = filtro;
+    this.dataSource2.filter = filtro;
     console.log("filtro", filtro);
   }
 
@@ -312,9 +310,9 @@ columnas: string[] = ['nombreProducto', 'cantidadElegida', 'precioUnitario', 'fe
   /**metodo para filtrar la informacion que escribe el usaurio*/
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-    console.log(" this.dataSource.filter",  this.dataSource.filter);
-  }
+    this.dataSource2.filter = filterValue.trim().toLowerCase();
+    console.log("this.dataSource.filter", this.dataSource2.filter);
+  }  
   
 
   mostrarInput() {
@@ -922,7 +920,8 @@ agregaraBalance(producto: Producto) {
   }
 
  validaryUnir(producto: Producto){
-  console.log("producto",producto.id);
+  console.log("producto000000sssss",producto);
+  console.log("producto000000",producto.id);
   this.InventarioService.obtenerProductoPorId(producto.id).subscribe(
     (data) => {
       this.producto = data; // Almacena el producto obtenido en la variable 'producto'
@@ -957,11 +956,12 @@ agregaraBalance(producto: Producto) {
         producto.cantidad = 0;
       }
     },
-   error: (error) => {
+   (error) => {
       console.error('Error al obtener el producto:', error);
     }
- });
+ );
 
  }
 
+ 
 }
