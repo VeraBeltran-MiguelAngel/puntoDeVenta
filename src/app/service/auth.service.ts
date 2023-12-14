@@ -38,8 +38,8 @@ export class AuthService {
 
   setUserData(userData: string): void {
     localStorage.setItem('userData', userData);
-    
   }
+  
 
  getUltimoIdInsertado(): number | null {
     const lastInsertedIdString = localStorage.getItem('lastInsertedId');
@@ -50,21 +50,11 @@ export class AuthService {
   }
 
 
-  getUltimoIdInsertados(usuarioActual: User): number | null {
-    const userId = usuarioActual.id; // Usar una propiedad única del usuario (puede ser su ID)
-    const lastInsertedIdString = localStorage.getItem(`lastInsertedId_${userId}`);
-    if (lastInsertedIdString) {
-      return parseInt(lastInsertedIdString, 10);
-    }
-    return null;
-  }
+
   
-  guardarUltimoIdInsertado(usuarioActual: User, lastInsertedId: number) {
-    const userId = usuarioActual.id; // Usar una propiedad única del usuario (puede ser su ID)
-    localStorage.setItem(`lastInsertedId_${userId}`, lastInsertedId.toString());
-  }
-
-
+ 
+  
+  
   //este metodo devuelve la info del usuario en un json ya no en una cadena
   getUserData(): any | null {
     const localData = localStorage.getItem('userData');

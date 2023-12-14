@@ -48,7 +48,9 @@
             <br>
             <div class="row">
                <div class="col-sm-6">
-                  <p>Filtro por fecha</p>
+                  
+                  <p>Filtro por fecha:</p>
+                  
                   <select [(ngModel)]="opcionSeleccionada" style="margin-right: 20px;">
                   <option value="diario">Diario</option>
                   <option value="rango">Rango Personalizado</option>
@@ -64,23 +66,26 @@
             </div>
             <div class="row">
                <div class="col-sm-9">
+                  <br>
+                  <p>Filtro por producto:</p>
                   <div class="search-container">
                      <input
-                     type="text"
-                     placeholder="Buscar por concepto"
-                     (keyup)="applyFilter($event)"
-                     #input
+                       type="text"
+                       placeholder="Buscar por concepto"
+                       (keyup)="applyFilter($event)"
+                       #input
                      />
-                     <i class="material-icons">search</i>
-                  </div>
+                     <i class="material-icons search-ico">search</i>
+                   </div>
                </div>
                <div class="col-sm-3">
+                  <br><br><br>
                   <button  style="background-color: blue; border-color: blue; color: blanchedalmond; width: 120px; margin-right: 20px; border-radius: 5px;height: 38px;"  (click)="imprimirResumenCorte()">Imprimir</button>
                </div>
             </div>
             <br><br>
             <h2>Detalles de la Caja</h2>
-            <table mat-table [dataSource]="detallesCaja" class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource2" class="mat-elevation-z8">
 
                <!-- Definición de las columnas -->
                <ng-container matColumnDef="nombreProducto">
@@ -111,7 +116,12 @@
                <!-- Filas con los datos -->
                <tr mat-row *matRowDef="let row; columns: columnas;"></tr>
              </table>
-            
+             <mat-paginator [length]="100"
+              [pageSize]="10"
+              [pageSizeOptions]="[5, 10, 25, 100]"
+              aria-label="Select page">
+</mat-paginator>
+
          </div>
          <div *ngIf="detallesCaja.length === 0">
             <!-- Si no hay detalles de la caja -->
@@ -123,7 +133,7 @@
       
       <br/>
       <form [formGroup]="formularioCaja">
-         <div *ngIf="botonProductos">
+         <div *ngIf="botonProductos && !mostrarLasVentas">
             <br/><br/>
             <h1>¿Deseas continuar?</h1>
             <div style="display: flex; justify-content: center;">
@@ -131,7 +141,7 @@
                   border-radius: 5px; border: 1px solid black; color: black; cursor: pointer; transition: background-color 0.3s ease; width: 90%;"  (click)="mostrarProductos = true">Continuar caja</button>
             </div>
          </div>
-         <div class="row" *ngIf="!mostrarProductos && mostrarInputFlag &&!botonProductos">
+         <div class="row" *ngIf="!mostrarProductos && mostrarInputFlag &&!botonProductos && !mostrarLasVentas">
             <div>
                <br/>
                <label>¿Con cuánto dinero empiezas el turno? *</label>
@@ -140,7 +150,7 @@
             <div class="col-sm-6">
                <br/>
                <label>Fecha actual:</label>
-               <input type="text" id="fechaInput" [value]="fecha"  formControlName="fechaApertura">
+               <input type="text" id="fechaInput" [value]="fecha"  formControlName="fechaApertura" [disabled]="modoLectura">
             </div>
             <br/><br/>
             <div class="col-sm-12"></div>
@@ -157,7 +167,7 @@
             </div>
          </div>
       </form>
-      <div *ngIf="mostrarProductos && cerrarCaja">
+      <div *ngIf="mostrarProductos && cerrarCaja && !mostrarLasVentas">
          <div class="search-label">
             <h2>Busca a tu cliente:</h2>
             <div class="search-container" (click)="abrirDialogo()">
@@ -204,14 +214,14 @@
                      </mat-form-field>
                   </ng-container>
                   <ng-container *ngIf="column === 'acciones'">
-                     <button class="add-box-icon" (click)="validaryUnir(prod)">add_box</button>
+                     <mat-icon class="add-box-icon" (click)="validaryUnir(prod)">add_box</mat-icon>
                   </ng-container>
                </td>
                </ng-container>
                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-               <tr mat-row *matRowDef="let productofila; columns: displayedColumns"></tr>
+        <tr mat-row *matRowDef="let productofila; columns: displayedColumns"></tr>
             </table>
-            <mat-paginator [pageSizeOptions]="[5, 10, 15, 20]" showFirstLastButtons></mat-paginator>
+            <mat-paginator #paginator [pageSizeOptions]="[5, 10, 15, 20]" showFirstLastButtons></mat-paginator>
          </div>
          <div class="resumen">
             <h1>Resumen de Compra</h1>
