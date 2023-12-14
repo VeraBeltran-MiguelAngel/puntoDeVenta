@@ -282,7 +282,10 @@ input[type="text"] {
   width: 100%;
 }
 
-.material-icons {
+
+
+
+.search-container .search-ico {
   position: absolute;
   left: 10px; /* Ajusta la posición del ícono */
   top: 60%;
@@ -290,6 +293,7 @@ input[type="text"] {
   cursor: pointer;
   margin-right: 200px;
 }
+
 
 
 /* Estilos para el select */

@@ -22,6 +22,8 @@ import { inventarioService } from "src/app/service/inventario.service";
 import { ErrorStateMatcher } from '@angular/material/core';
 import { ToastrService } from 'ngx-toastr';
 import { User } from "src/app/service/User";
+import { ChangeDetectorRef } from '@angular/core';
+
 
 
 interface Cliente {
@@ -48,6 +50,7 @@ export class HomeComponent implements OnInit {
   mostrarInputFlag: boolean = false;
   mostrarProductos: boolean = false;
   mostrarLasVentas: boolean = false;
+
   listaClientes: any[] = [];
   fecha: string = "";
   hora: string = "";
@@ -61,6 +64,7 @@ export class HomeComponent implements OnInit {
   lastInsertedId3: number;
   lastInsertedId: number;
   totalAPagarCorte: number = 0;
+  idUsuarioo: number;
   detallesCaja: any[] = []; 
   
   clientes: Cliente[] = [];
@@ -96,7 +100,6 @@ columnas: string[] = ['nombreProducto', 'cantidadElegida', 'precioUnitario', 'fe
 
   //paginator es una variable de la clase MatPaginator
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
-  @ViewChild(MatPaginator) paginator2!: MatPaginator;
 
   constructor(
     private productoService: ProductosService,
@@ -112,6 +115,7 @@ columnas: string[] = ['nombreProducto', 'cantidadElegida', 'precioUnitario', 'fe
     public dialog: MatDialog,
     private clienteService: ClienteService,
     private toastr: ToastrService,
+    private changeDetectorRef: ChangeDetectorRef
   ) {
     const lastInsertedId = this.auth.getUltimoIdInsertado();
 
@@ -130,16 +134,18 @@ columnas: string[] = ['nombreProducto', 'cantidadElegida', 'precioUnitario', 'fe
             respuesta[0]["Recepcionista_idRecepcionista"],
         });
       });
-
-    const id = this.auth.setUserData;
+     
+      const idUsuario = this.auth.getIdUsuario();
+      console.log('ID de usuariooooo:', idUsuario);
+      
     this.formularioCaja = this.formulario.group({
      
-      // fechaApertura: [{ value: '', disabled: true }],
-      fechaApertura: [""],
+      fechaApertura: [{ value: '', disabled: true }],
+     // fechaApertura: [""],
       fechaCierre: ["0000-00-00"],
       cantidadDineroAcumuladoTeoria: ["0"],
       cantidadDineroExistente: ["", Validators.required],
-      Recepcionista_idRecepcionista: [1],
+      Recepcionista_idRecepcionista: [idUsuario],
     });
 
     this.formularioDetalleVenta = this.formulario.group({
@@ -158,29 +164,35 @@ columnas: string[] = ['nombreProducto', 'cantidadElegida', 'precioUnitario', 'fe
     });
   }
 
+
+
   ngOnInit(): void {
-  
-    //paginator
-    this.dataSource2.paginator = this.paginator2;
+    
+    
+
+
+
     
     this.productoService.obternerProductos().subscribe((respuesta) => {
       this.productData = respuesta;
+      //this.dataSource = new MatTableDataSource(this.productData);
       this.dataSource = new MatTableDataSource(this.productData);
       this.dataSource.paginator = this.paginator;
-    });
+    
+      console.log(this.dataSource.paginator, "this.paginatooooooooooooor")
+      
+  });
     //ubicacion
     this.ubicacion = this.auth.getUbicacion();
     //datos de detalle venta
     this.DetalleVenta.obternerVentaDetalle().subscribe({next: (resultData) => {this.detalle = resultData;
       },
     });
-   
     this.clienteService;
 
    //////////////////////////////////////////////////////777777777
 
    const lastInsertedId = this.auth.getUltimoIdInsertado();
-
    console.log("idddddddddd",lastInsertedId);
    this.cajaService.consultarCaja(lastInsertedId).subscribe(
      (resultados) => {
@@ -192,18 +204,24 @@ columnas: string[] = ['nombreProducto', 'cantidadElegida', 'precioUnitario', 'fe
        this.mostrarOcultarBoton(fechaCierre); // Llamada al método para mostrar u ocultar el botón
        console.log("botoooooon",this.mostrarOcultarBoton(fechaCierre));
      },
-     (error) => {
-       console.error('Error al consultar la fecha de cierre:', error);
-     }
+     (error) => {console.error('Error al consultar la fecha de cierre:', error);}
    );
-
   }
 
+  
   obtenerDetallesCaja(Recepcionista_idRecepcionista: number | null) {
-    this.joinDetalleVentaService.consultarProductosVentas(1).subscribe(
+    const idUsuario = this.auth.getIdUsuario();
+    console.log("idUsuario",idUsuario);
+    this.joinDetalleVentaService.consultarProductosVentas(idUsuario).subscribe(
       (data) => {
         this.detallesCaja = data;
-        this.dataSource2.data = this.detallesCaja; // Asigna los datos al dataSource
+        this.dataSource2.data = this.detallesCaja;
+        console.log('DataSource2:', this.dataSource2.data);
+        this.dataSource2= new MatTableDataSource(this.detallesCaja);
+    
+        this.dataSource2.paginator = this.paginator;
+        console.log('this.dataSource2.paginator:', this.dataSource2.paginator);
+       
         console.log('Detalles de la caja:', this.detallesCaja);
         console.log("this.detallesCaja.length", this.detallesCaja.length);
         // Resto del código
@@ -315,8 +333,11 @@ columnas: string[] = ['nombreProducto', 'cantidadElegida', 'precioUnitario', 'fe
   }  
   
 
+  modoLectura: boolean = false;
+
   mostrarInput() {
     console.log("hola", this.mostrarInputFlag);
+  
     this.mostrarInputFlag = true;
     const fechaActual = new Date();
     const year = fechaActual.getFullYear();
@@ -339,7 +360,10 @@ columnas: string[] = ['nombreProducto', 'cantidadElegida', 'precioUnitario', 'fe
     }
 }
 
+
+
   mostrarCaja() {
+    this.formularioCaja.get('fechaApertura')?.enable();
     if (this.formularioCaja.valid) {
       console.log("ID insertado caja:", this.formularioCaja.value);
       this.cajaService
@@ -348,6 +372,7 @@ columnas: string[] = ['nombreProducto', 'cantidadElegida', 'precioUnitario', 'fe
           console.log("pasa");
           if (respuesta.success === 1) {
             this.lastInsertedId = respuesta.lastInsertedId;
+            
             console.log("ID insertado caja:", this.lastInsertedId);
             this.mostrarProductos = true;
 
@@ -373,7 +398,9 @@ columnas: string[] = ['nombreProducto', 'cantidadElegida', 'precioUnitario', 'fe
 
     console.log("id",lastInsertedId);
     const fechaActual = new Date();
-    const fechaVenta = fechaActual.toISOString().split("T")[0]; // Obtiene la fecha en formato YYYY-MM-DD
+    const offset = fechaActual.getTimezoneOffset(); // Obtiene el offset en minutos
+    fechaActual.setMinutes(fechaActual.getMinutes() - offset);
+    const fechaVenta = fechaActual.toISOString().replace('T', ' ').split('.')[0];
     const idCliente = this.cliente?.ID_Cliente || null; // Acceder al ID del cliente seleccionado
     const totalAPagar = this.selectedProducts.reduce(
       (total, producto) => total + producto.precio * producto.cantidad,
@@ -443,15 +470,15 @@ columnas: string[] = ['nombreProducto', 'cantidadElegida', 'precioUnitario', 'fe
   }
 
   actualizarCaja() {
-    const fechaActual = new Date();
-    const year = fechaActual.getFullYear();
-    const month = (fechaActual.getMonth() + 1).toString().padStart(2, "0"); // Agrega un 0 si el mes tiene un solo dígito
-    const day = fechaActual.getDate().toString().padStart(2, "0"); // Agrega un 0 si el día tiene un solo dígito
-    const hours = fechaActual.getHours().toString().padStart(2, "0"); // Agrega un 0 si la hora tiene un solo dígito
-    const minutes = fechaActual.getMinutes().toString().padStart(2, "0"); // Agrega un 0 si los minutos tienen un solo dígito
-    const seconds = fechaActual.getSeconds().toString().padStart(2, "0"); // Agrega un 0 si los segundos tienen un solo dígito
-    const fechaConHoraPersonalizada = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-    this.formularioCaja.get("fechaCierre")?.setValue(fechaConHoraPersonalizada);
+    const fechaActual1 = new Date();
+    const year = fechaActual1.getFullYear();
+    const month = (fechaActual1.getMonth() + 1).toString().padStart(2, "0"); // Agrega un 0 si el mes tiene un solo dígito
+    const day = fechaActual1.getDate().toString().padStart(2, "0"); // Agrega un 0 si el día tiene un solo dígito
+    const hours = fechaActual1.getHours().toString().padStart(2, "0"); // Agrega un 0 si la hora tiene un solo dígito
+    const minutes = fechaActual1.getMinutes().toString().padStart(2, "0"); // Agrega un 0 si los minutos tienen un solo dígito
+    const seconds = fechaActual1.getSeconds().toString().padStart(2, "0"); // Agrega un 0 si los segundos tienen un solo dígito
+    const fechaConHoraPersonalizada1 = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    this.formularioCaja.get("fechaCierre")?.setValue(fechaConHoraPersonalizada1);
     console.log(this.formularioCaja.value);
 
     this.dialog.open(MensajeEliminarComponent, {
@@ -483,14 +510,14 @@ columnas: string[] = ['nombreProducto', 'cantidadElegida', 'precioUnitario', 'fe
     const lastInsertedId = this.auth.getUltimoIdInsertado();
     console.log("id",lastInsertedId);
     this.obtenerDetallesCaja(lastInsertedId);
-    this.botonDeshabilitado = true;
-    this.botonHabilitado = false;
+   // this.botonDeshabilitado = true;
+    //this.botonHabilitado = false;
   }
 
   imprimirResumen() {
     if (this.totalAPagar <= this.dineroRecibido){
     const totalCantidad = this.selectedProducts.reduce(
-      (total, producto) => total + producto.cantidad,
+      (total, producto) =>  producto.cantidad,
       0
     );
     const totalEnPesos = this.convertirNumeroAPalabrasPesos(this.totalAPagar);
@@ -654,7 +681,7 @@ columnas: string[] = ['nombreProducto', 'cantidadElegida', 'precioUnitario', 'fe
       ventanaImpresion.document.write(`
         <html>
           <head>
-            <title>CORTE DE CAJA</title>
+            <title>REPORTE DE CAJA</title>
             <style>
               body {
                 font-family: 'Arial', sans-serif;
@@ -717,7 +744,7 @@ columnas: string[] = ['nombreProducto', 'cantidadElegida', 'precioUnitario', 'fe
           </head>
           <body>
             <div class="ticket">
-              <h1>CORTE DE CAJA</h1>
+              <h1>REPORTE DE CAJA</h1>
               <hr>
               <div class="fecha-hora">
                 <p>Fecha: ${fechaActual}</p> <!-- Fecha -->
@@ -735,19 +762,19 @@ columnas: string[] = ['nombreProducto', 'cantidadElegida', 'precioUnitario', 'fe
                   </tr>
                 </thead>
                 <tbody>
-                  ${this.detallesCaja
-                    .map(
-                      (detalle) => `
-                      <tr>
-                        <td>${detalle.nombreProducto}</td>
-                        <td>${detalle.cantidadElegida}</td>
-                        <td>$${detalle.precioUnitario}</td>
-                        <td>$${detalle.precioUnitario * detalle.cantidadElegida}</td>
-                      </tr>
-                    `
-                    )
-                    .join("")}
-                </tbody>
+          ${this.dataSource2.filteredData
+            .map(
+              (detalle: any) => `
+              <tr>
+                <td>${detalle.nombreProducto}</td>
+                <td>${detalle.cantidadElegida}</td>
+                <td>$${detalle.precioUnitario}</td>
+                <td>$${detalle.precioUnitario * detalle.cantidadElegida}</td>
+              </tr>
+            `
+            )
+            .join("")}
+        </tbody>
               </table>
               <hr>
               <p></p>
