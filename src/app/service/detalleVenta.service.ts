@@ -8,8 +8,8 @@ import { detalleVenta } from '../modules/recepcion/components/models/detalleVent
 })
 export class DetalleVenta {
 
-   API: string = 'https://localhost/plan/detalle_venta.php'
- //API: string = 'https://olympus.arvispace.com/puntoDeVenta/conf/detalle_venta.php'
+   //API: string = 'https://localhost/plan/detalle_venta.php'
+ API: string = 'https://olympus.arvispace.com/puntoDeVenta/conf/detalle_venta.php'
   constructor(private clienteHttp:HttpClient) {
   }
 

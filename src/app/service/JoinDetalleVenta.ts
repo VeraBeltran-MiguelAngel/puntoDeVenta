@@ -6,8 +6,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class JoinDetalleVentaService {
-  API: string = 'https://localhost/plan/JoinDetalleVenta.php'
-  //API: string = 'https://olympus.arvispace.com/puntoDeVenta/conf/JoinDetalleVenta.php'
+  //API: string = 'https://localhost/plan/JoinDetalleVenta.php'
+  API: string = 'https://olympus.arvispace.com/puntoDeVenta/conf/JoinDetalleVenta.php'
   
   constructor(private clienteHttp:HttpClient) {
   }
