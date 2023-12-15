@@ -9,6 +9,7 @@ import { EntradasComponent } from './components/entradas/entradas.component';
 import { InventarioComponent } from './components/inventario/inventario.component';
 import { ValidarTransferenciaComponent } from './components/validarTransferencia/validarTransferencia.component';
 import { HistorialCajaComponent } from './components/historial-caja/historial-caja.component';
+import { ProductosVendidosComponent } from './components/productos-vendidos/productos-vendidos.component';
 
 const routes: Routes = [
   {
@@ -22,6 +23,7 @@ const routes: Routes = [
       { path: 'entradas', component: EntradasComponent },
       { path: 'inventario', component: InventarioComponent },
       { path: 'caja', component: HistorialCajaComponent },
+      { path: 'productosVendidos', component: ProductosVendidosComponent},
       {
         path: 'validarTransferencia',
         component: ValidarTransferenciaComponent,

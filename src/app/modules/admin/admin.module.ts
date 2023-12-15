@@ -38,6 +38,7 @@ import { ValidarTransferenciaComponent } from './components/validarTransferencia
 import { HistorialCajaComponent } from './components/historial-caja/historial-caja.component';
 import { FiltroFechaPipe } from './components/pipes/filtro-fecha.pipe';
 import { MensajeListaComponent } from './components/ListaEmpleados/mensaje-cargando.component';
+import { ProductosVendidosComponent } from './components/productos-vendidos/productos-vendidos.component';
 
 
 @NgModule({
@@ -54,7 +55,8 @@ import { MensajeListaComponent } from './components/ListaEmpleados/mensaje-carga
     ValidarTransferenciaComponent,
     HistorialCajaComponent,
     FiltroFechaPipe,
-    MensajeListaComponent
+    MensajeListaComponent,
+    ProductosVendidosComponent
   ],
   imports: [
     CommonModule,
