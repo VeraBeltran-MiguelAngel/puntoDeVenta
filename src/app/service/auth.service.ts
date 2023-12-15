@@ -40,7 +40,6 @@ export class AuthService {
     localStorage.setItem('userData', userData);
   }
   
-
  getUltimoIdInsertado(): number | null {
     const lastInsertedIdString = localStorage.getItem('lastInsertedId');
     if (lastInsertedIdString) {
@@ -49,12 +48,6 @@ export class AuthService {
     return null;
   }
 
-
-
-  
- 
-  
-  
   //este metodo devuelve la info del usuario en un json ya no en una cadena
   getUserData(): any | null {
     const localData = localStorage.getItem('userData');
@@ -95,6 +88,7 @@ export class AuthService {
   logout() {
     localStorage.removeItem('userData');
     this.router.navigate(['login']);
+    localStorage.removeItem('lastInsertedId'); // Aquí eliminas lastInsertedId al cerrar sesión
   }
 
   login(credenciales: User): Observable<any> {

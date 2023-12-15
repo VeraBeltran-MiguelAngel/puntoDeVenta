@@ -282,6 +282,12 @@ input[type="text"] {
   width: 100%;
 }
 
+.mat-header-cell.sticky,
+.mat-cell.sticky {
+  position: sticky;
+  background-color: white; /* Cambia el color de fondo si es necesario */
+  z-index: 1; /* Ajusta el índice z si es necesario */
+}
 
 
 
