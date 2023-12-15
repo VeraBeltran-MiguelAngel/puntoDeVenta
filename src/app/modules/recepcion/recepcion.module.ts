@@ -4,8 +4,6 @@ import { RecepcionRoutingModule } from './recepcion-routing.module';
 import { RecepDashboardComponent } from './components/recep-dashboard/recep-dashboard.component';
 import { HeaderComponent } from './components/header/header.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-
-
 //incluir librerias de material que necesitara el modulo recepcion
 import { RecepMaterialModule } from './recepMaterial';
 
@@ -41,6 +39,8 @@ import { TablaEmergenteService } from 'src/app/service/tablaEmergente.service';
 import { FiltroFechaPipe } from './components/pipes/filtro-fecha.pipe';
 import { FiltroNombreProductoPipe } from './components/pipes/filtro-concepto.pipe';
 import { FilterByDatePipe } from './components/pipes/filtroFechas.pipe';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { ListarProductosPipe } from './components/pipes/productos/lista-proveedor.pipe';
 @NgModule({
   declarations: [
     RecepDashboardComponent,
@@ -56,7 +56,8 @@ import { FilterByDatePipe } from './components/pipes/filtroFechas.pipe';
     FormPagoEmergenteComponent,
     FiltroFechaPipe,
     FiltroNombreProductoPipe,
-    FilterByDatePipe
+    FilterByDatePipe,
+    ListarProductosPipe
   ],
   imports: [
     CommonModule,
@@ -66,6 +67,7 @@ import { FilterByDatePipe } from './components/pipes/filtroFechas.pipe';
     FormsModule,
     ReactiveFormsModule,
     FlexLayoutModule,
+    MatPaginatorModule
 
   ],
   providers: [TablaEmergenteService], //*si no colocas el servicio no se mostrara la tabla emergente ni el resto de contenido todo estara en blanco

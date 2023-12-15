@@ -86,8 +86,6 @@
             <br><br>
             <h2>Detalles de la Caja</h2>
             <table mat-table [dataSource]="dataSource2" class="mat-elevation-z8">
-
-               <!-- Definición de las columnas -->
                <ng-container matColumnDef="nombreProducto">
                  <th mat-header-cell *matHeaderCellDef> Nombre Producto </th>
                  <td mat-cell *matCellDef="let detalle"> {{ detalle.nombreProducto }} </td>
@@ -107,24 +105,12 @@
                   <th mat-header-cell *matHeaderCellDef> Fecha </th>
                   <td mat-cell *matCellDef="let detalle"> {{ detalle.fechaVenta }} </td>
                 </ng-container>
-             
-               <!-- Agrega más ng-container para las otras columnas si es necesario -->
-             
-               <!-- Encabezados de las columnas -->
-               <tr mat-header-row *matHeaderRowDef="columnas"></tr>
-             
-               <!-- Filas con los datos -->
-               <tr mat-row *matRowDef="let row; columns: columnas;"></tr>
-             </table>
-             <mat-paginator [length]="100"
-              [pageSize]="10"
-              [pageSizeOptions]="[5, 10, 25, 100]"
-              aria-label="Select page">
-</mat-paginator>
-
+                <tr mat-header-row *matHeaderRowDef="columnas; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: columnas;"></tr>
+            </table>
+            <mat-paginator #paginator2 [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons></mat-paginator>
          </div>
          <div *ngIf="detallesCaja.length === 0">
-            <!-- Si no hay detalles de la caja -->
             <br>
             <p>No hay detalles disponibles para esta caja.</p>
          </div>
@@ -221,7 +207,7 @@
                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let productofila; columns: displayedColumns"></tr>
             </table>
-            <mat-paginator #paginator [pageSizeOptions]="[5, 10, 15, 20]" showFirstLastButtons></mat-paginator>
+            <mat-paginator  #paginator1 [pageSizeOptions]="[5, 10, 15, 20]" showFirstLastButtons></mat-paginator>
          </div>
          <div class="resumen">
             <h1>Resumen de Compra</h1>

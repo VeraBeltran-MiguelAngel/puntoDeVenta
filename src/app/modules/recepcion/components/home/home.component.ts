@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { MatTableDataSource } from "@angular/material/table"; //para controlar los datos del api y ponerlos en una tabla
-import { MatPaginator } from "@angular/material/paginator"; //para paginacion en la tabla
 import { Producto } from "../models/producto";
 import { ProductosService } from "src/app/service/productos.service";
 import { AuthService } from "src/app/service/auth.service";
@@ -23,8 +22,8 @@ import { ErrorStateMatcher } from '@angular/material/core';
 import { ToastrService } from 'ngx-toastr';
 import { User } from "src/app/service/User";
 import { ChangeDetectorRef } from '@angular/core';
-
-
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 
 interface Cliente {
   ID_Cliente: number;
@@ -71,7 +70,7 @@ export class HomeComponent implements OnInit {
   clientesFiltrados: Cliente[] = [];
   selectedClient: number | null = null;
   cerrarCaja: boolean = true;
-  botonDeshabilitado: boolean = false;
+  botonDeshabilitado: boolean = true;
   botonHabilitado: boolean = false;
   //botonDeshabilitadoCorte: boolean = true;
   botonProductos: boolean = false;
@@ -94,12 +93,14 @@ columnas: string[] = ['nombreProducto', 'cantidadElegida', 'precioUnitario', 'fe
   ];
   productData: Producto[] = []; //para guardar la respuesta del api en un arreglo
 
-  dataSource = new MatTableDataSource<any>([]);
+  dataSource: MatTableDataSource<any>;
   
-  dataSource2 = new MatTableDataSource<any>([]);
+  dataSource2: MatTableDataSource<any>;
 
   //paginator es una variable de la clase MatPaginator
-  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+
+  @ViewChild('paginator1') paginator1: MatPaginator;
+  @ViewChild('paginator2') paginator2: MatPaginator;
 
   constructor(
     private productoService: ProductosService,
@@ -116,7 +117,9 @@ columnas: string[] = ['nombreProducto', 'cantidadElegida', 'precioUnitario', 'fe
     private clienteService: ClienteService,
     private toastr: ToastrService,
     private changeDetectorRef: ChangeDetectorRef
+    
   ) {
+    this.dataSource2 = new MatTableDataSource<any>(); 
     const lastInsertedId = this.auth.getUltimoIdInsertado();
 
     console.log("id",lastInsertedId);
@@ -167,31 +170,21 @@ columnas: string[] = ['nombreProducto', 'cantidadElegida', 'precioUnitario', 'fe
 
 
   ngOnInit(): void {
-    
-    
-
-
-
-    
+    this.dataSource2.paginator = this.paginator2;  
+    /////////////////////////////////////////////////////
     this.productoService.obternerProductos().subscribe((respuesta) => {
       this.productData = respuesta;
-      //this.dataSource = new MatTableDataSource(this.productData);
       this.dataSource = new MatTableDataSource(this.productData);
-      this.dataSource.paginator = this.paginator;
-    
-      console.log(this.dataSource.paginator, "this.paginatooooooooooooor")
-      
+      this.dataSource.paginator = this.paginator1;
+      console.log(this.dataSource.paginator, "this.paginatooooooooooooor") 
   });
     //ubicacion
     this.ubicacion = this.auth.getUbicacion();
     //datos de detalle venta
-    this.DetalleVenta.obternerVentaDetalle().subscribe({next: (resultData) => {this.detalle = resultData;
-      },
+    this.DetalleVenta.obternerVentaDetalle().subscribe({next: (resultData) => {this.detalle = resultData;},
     });
     this.clienteService;
-
-   //////////////////////////////////////////////////////777777777
-
+    //////////////////////////////////////////////////////777777777
    const lastInsertedId = this.auth.getUltimoIdInsertado();
    console.log("idddddddddd",lastInsertedId);
    this.cajaService.consultarCaja(lastInsertedId).subscribe(
@@ -211,26 +204,21 @@ columnas: string[] = ['nombreProducto', 'cantidadElegida', 'precioUnitario', 'fe
   
   obtenerDetallesCaja(Recepcionista_idRecepcionista: number | null) {
     const idUsuario = this.auth.getIdUsuario();
-    console.log("idUsuario",idUsuario);
+    console.log("idUsuario", idUsuario);
     this.joinDetalleVentaService.consultarProductosVentas(idUsuario).subscribe(
       (data) => {
         this.detallesCaja = data;
-        this.dataSource2.data = this.detallesCaja;
-        console.log('DataSource2:', this.dataSource2.data);
-        this.dataSource2= new MatTableDataSource(this.detallesCaja);
-    
-        this.dataSource2.paginator = this.paginator;
-        console.log('this.dataSource2.paginator:', this.dataSource2.paginator);
-       
-        console.log('Detalles de la caja:', this.detallesCaja);
-        console.log("this.detallesCaja.length", this.detallesCaja.length);
-        // Resto del código
+       // this.dataSource2 = new MatTableDataSource(this.detallesCaja); // Inicializar dataSource2 como MatTableDataSource
+        //this.dataSource2.paginator = this.paginator2; // Vincular el paginador con el dataSource2
+       // console.log("this.dataSource2.paginator", this.dataSource2.paginator);
+        this.dataSource2.data = this.detallesCaja; // Asignar los datos al dataSource2
       },
       (error) => {
         console.error('Error al obtener detalles de la caja:', error);
       }
     );
   }
+  
   
   opcionSeleccionada: string = "diario";
   mostrarRango: boolean = false;
@@ -355,6 +343,8 @@ columnas: string[] = ['nombreProducto', 'cantidadElegida', 'precioUnitario', 'fe
     console.log("fechaCierre",fechaCierre);
     if (fechaCierre === '0000-00-00 00:00:00' ) {
       this.botonProductos = true;
+      this.botonDeshabilitado = false;
+
     } else {
       this.botonProductos = false; 
     }
@@ -990,5 +980,14 @@ agregaraBalance(producto: Producto) {
 
  }
 
+ public page: number = 0;
  
+ nextPage() {
+  this.page += 5;
+}
+
+prevPage() {
+  if ( this.page > 0 )
+    this.page -= 5;
+}
 }
