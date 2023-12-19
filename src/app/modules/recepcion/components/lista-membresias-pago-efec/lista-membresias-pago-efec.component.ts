@@ -11,6 +11,15 @@ import { MensajeListaComponent } from "../ListaClientes/mensaje-cargando.compone
 import { listarClientesService } from "src/app/service/listarClientes.service";
 import { ClienteService } from "src/app/service/cliente.service";
 import { HuellaService } from "src/app/service/huella.service";
+import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
+
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, formulario: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = formulario && formulario.submitted;
+    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+  }
+}
 
 @Component({
   selector: 'app-lista-membresias-pago-efec',
@@ -19,6 +28,8 @@ import { HuellaService } from "src/app/service/huella.service";
 })
 
 export class ListaMembresiasPagoEfecComponent implements OnInit{
+ form: FormGroup;
+ matcher = new MyErrorStateMatcher();
   clientePago: any;
   clienteActivo: any;
   clienteReenovacion : any;
@@ -74,12 +85,19 @@ export class ListaMembresiasPagoEfecComponent implements OnInit{
   @ViewChild('paginatorReenovacionMem', { static: true }) paginatorReenovacion!: MatPaginator;
 
   constructor(private pagoService: PagoMembresiaEfectivoService,
-    public dialog: MatDialog, 
+    public dialog: MatDialog,
+    private fb: FormBuilder, 
     private router: Router, 
     private toastr: ToastrService,
     private ListarClientesService: listarClientesService,
     private huellasService: HuellaService,
     private clienteService: ClienteService){
+
+      this.form = this.fb.group({
+        idUsuario:[this.cliente.ID_Cliente],
+        action:['add'],
+        id_module: ['', Validators.compose([ Validators.required])],
+      });
 
     //obtener id del cliente
     this.clienteService.data$.subscribe((data) => {
@@ -314,6 +332,10 @@ export class ListaMembresiasPagoEfecComponent implements OnInit{
       }
       
     });
+  }
+
+  mandaInstruccionTorniquete(){
+   console.log( this.form.value);
   }
 
 }
