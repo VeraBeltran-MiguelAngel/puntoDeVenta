@@ -7,6 +7,10 @@ import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { Router,  ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { FormPagoEmergenteComponent } from '../form-pago-emergente/form-pago-emergente.component';
+import { MensajeListaComponent } from "../ListaClientes/mensaje-cargando.component";
+import { listarClientesService } from "src/app/service/listarClientes.service";
+import { ClienteService } from "src/app/service/cliente.service";
+import { HuellaService } from "src/app/service/huella.service";
 
 @Component({
   selector: 'app-lista-membresias-pago-efec',
@@ -18,6 +22,7 @@ export class ListaMembresiasPagoEfecComponent implements OnInit{
   clientePago: any;
   clienteActivo: any;
   clienteReenovacion : any;
+  cliente: any;
   //dataSource: any[] = []; // Inicializa tu fuente de datos
   dataSource: any; // instancia para matTableDatasource
   dataSourceActivos: any;
@@ -68,7 +73,21 @@ export class ListaMembresiasPagoEfecComponent implements OnInit{
   @ViewChild('paginatorActivos', { static: true }) paginatorActivos!: MatPaginator;
   @ViewChild('paginatorReenovacionMem', { static: true }) paginatorReenovacion!: MatPaginator;
 
-  constructor(private pagoService: PagoMembresiaEfectivoService,public dialog: MatDialog, private router: Router, private toastr: ToastrService){
+  constructor(private pagoService: PagoMembresiaEfectivoService,
+    public dialog: MatDialog, 
+    private router: Router, 
+    private toastr: ToastrService,
+    private ListarClientesService: listarClientesService,
+    private huellasService: HuellaService,
+    private clienteService: ClienteService){
+
+    //obtener id del cliente
+    this.clienteService.data$.subscribe((data) => {
+      console.log("Datos recibidos:", data);
+      if (data && data.idCliente) {
+        this.obtenerCliente(data.idCliente); // Obtener cliente usando el ID recibido
+      }
+    });
 
   }
 
@@ -254,5 +273,47 @@ export class ListaMembresiasPagoEfecComponent implements OnInit{
     }
   }
 
+  /*********PARTE DEL DIALOGO *************/
+  abrirDialogo() {
+    this.dialog
+      .open(MensajeListaComponent, {
+        //data: `Membresía agregada exitosamente`,
+        width: "500px",
+        height: "500px",
+      })
+      .afterClosed()
+      .subscribe((cerrarDialogo: Boolean) => {
+        if (cerrarDialogo) {
+          this.router.navigateByUrl("/admin/listaMembresias");
+        } else {
+        }
+      });
+  }
+
+
+  obtenerCliente(idCliente: number) {
+    this.ListarClientesService.consultarCliente(idCliente).subscribe(
+      (data: any[]) => {
+        if (data && data.length > 0) {
+          console.log("Datos del cliente:", data[0]);
+          this.cliente = data[0]; // Asigna el primer elemento del array como cliente
+        }
+      }
+    );
+  }
+
+
+  RegistrarHuella(idCliente: number): void{
+    //console.log(idCliente);
+    this.huellasService.registroHuella(idCliente).subscribe((dataResponse: any)=>{
+      console.log(dataResponse);
+      if(dataResponse){
+        console.log("Mi ID es: ",dataResponse.ID_Cliente, "Y mi nombre es: ", dataResponse.nombre);
+      }else{
+        console.log("No existe el cliente");
+      }
+      
+    });
+  }
 
 }

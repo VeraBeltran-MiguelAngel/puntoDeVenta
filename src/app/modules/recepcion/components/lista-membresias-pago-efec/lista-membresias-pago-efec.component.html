@@ -149,5 +149,54 @@
             </table>
             <mat-paginator #paginatorPagoOnline [pageSizeOptions]="[5, 10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
         </mat-tab>
+
+        <mat-tab label="Registro de huella"> 
+          <br>
+          <h2>Lista de clientes para registrar huella dactilar</h2>
+          
+          <div class="search-label">
+            <h2>Busca a tu cliente:</h2>
+            <div class="search-container" (click)="abrirDialogo()"> 
+              <mat-form-field>
+                <input matInput type="text" class="search-input" placeholder="Buscar..." disabled>
+              </mat-form-field>
+                <img src="https://media.istockphoto.com/id/1135487794/es/vector/icono-de-b%C3%BAsqueda-ilustraci%C3%B3n-vectorial-aislada-en-el-bot%C3%B3n-cuadrado-plano.jpg?s=612x612&w=0&k=20&c=2f7Km0xyaXPdL9IEH7Ep4y4tLwj0HXDxJIEeWGGYfCk=" alt="Imagen" class="search-icon">
+            </div>
+          </div>
+        
+          <div *ngIf="cliente">
+            <h1>Información</h1>
+            <div class="grid-inputs">
+              <div>
+                <mat-form-field>
+                  <mat-label>ID CLIENTE:</mat-label>
+                  <input matInput type="text" id="id" name="id" [value]="cliente.ID_Cliente || ''" disabled>
+                </mat-form-field>
+              </div>
+
+              <div></div>
+
+              <div>
+                <mat-form-field>
+                  <mat-label>NOMBRE:</mat-label>
+                  <input matInput type="text" id="nombreCompleto" name="nombreCompleto" [value]="cliente.nombre + ' ' + cliente.apPaterno + ' ' + cliente.apMaterno || ''" disabled>
+                </mat-form-field>
+              </div>
+
+              <div></div>
+
+              <div>
+                <mat-form-field>
+                  <mat-label>EMAIL:</mat-label>
+                  <input matInput type="text" id="email" name="email" [value]="cliente.email || ''" disabled>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <button mat-button class="mat-button" (click)="RegistrarHuella(this.cliente.ID_Cliente)">Registrar huella</button>
+            </div>
+          </div>
+        
+        </mat-tab>
     </mat-tab-group>
 </div>

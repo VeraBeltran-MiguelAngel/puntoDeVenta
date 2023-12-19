@@ -32,3 +32,40 @@ table {
     font-size: 27px;
 }
 
+
+.search-container {
+    display: flex;
+    position: relative;
+    cursor: pointer;
+    background-color: #fff;
+    overflow: hidden;
+    align-items: center;
+  }
+
+  .search-input {
+    border: none;
+    outline: none;
+    background: transparent;
+    padding: 4px 8px;
+    margin-right: 4px;
+    width: calc(100% - 30px); /* ajusta el tamaño del input */
+    pointer-events: none; /* evita la interacción con el input */
+  }
+
+  .search-icon {
+    width: 60px;
+    height: 70px;
+   margin-top: -30px;
+    pointer-events: none; /* evita la interacción con la imagen */
+    cursor: pointer;
+  }
+
+  .mat-button {
+    background-color: #F9A640; /* Cambia este color según tus preferencias */
+    color: #ffffff; /* Cambia este color según tus preferencias */
+}
+
+.grid-inputs{
+    display: grid;
+    grid-template-columns: 25% 5% 25% 5% 25%  
+}
