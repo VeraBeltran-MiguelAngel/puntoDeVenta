@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { caja } from '../modules/recepcion/components/models/caja';
 
@@ -8,8 +8,8 @@ import { caja } from '../modules/recepcion/components/models/caja';
 })
 export class inventarioService {
 
-//API: string = 'https://localhost/plan/inventario.php'
-  API: string = 'https://olympus.arvispace.com/puntoDeVenta/conf/inventario.php'
+API: string = 'https://localhost/plan/inventario.php'
+  //API: string = 'https://olympus.arvispace.com/puntoDeVenta/conf/inventario.php'
   
   constructor(private clienteHttp:HttpClient) {
   }
@@ -19,8 +19,9 @@ export class inventarioService {
   }
 
 
-  obtenerProductoPorId(id:any):Observable<any>{
-    return this.clienteHttp.get(this.API+"?consultar="+id);
+  obtenerProductoPorId(id: any, idGimnasio: any): Observable<any> {
+    let params = new HttpParams().set('consultar', id).set('idGimnasio', idGimnasio);
+    return this.clienteHttp.get(this.API, { params: params });
   }
 
   

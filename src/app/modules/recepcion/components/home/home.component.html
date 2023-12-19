@@ -16,107 +16,11 @@
       </div>
       <!------------------------------------------------------------------------------------------------->
       <div class="col-sm-4">
-         <button class="ver-cash-register" style="float: right;" (click)="mostrarVentas()" >
+         <button class="ver-cash-register" style="float: right;" routerLink="../verCorte">
          <span class="icon"></span>
          <span class="btn-text" style="color: rgb(255, 255, 255);margin-left: 20px;">VER CORTE</span>
          </button>
       </div>
-      <!-- <div *ngIf="mostrarLasVentas">
-         <h2 class="mb-3">Corte de caja</h2>
-         <div class="row">
-            <table class="table table-hover">
-               <thead>
-                  <tr>
-                     <th scope="col">Nombre</th>
-                     <th scope="col">Cantidad Vendida</th>
-                     <th scope="col">Precio Unitario</th>
-                  </tr>
-               </thead>
-               <tbody>
-                  <tr *ngFor="let detalleVenta of detalles">
-                     <td>{{ detalleVenta.nombreProducto }} </td>
-                     <td>{{ detalleVenta.cantidadElegida }} </td>
-                     <td>{{ detalleVenta.precioUnitario }} </td>
-                  </tr>
-               </tbody>
-            </table>
-         </div>
-         </div>-->
-      <div *ngIf="mostrarLasVentas">
-         <div *ngIf="detallesCaja.length > 0">
-            <!-- Verifica si hay detalles de la caja para mostrar -->
-            <br>
-            <div class="row">
-               <div class="col-sm-6">
-                  
-                  <p>Filtro por fecha:</p>
-                  
-                  <select [(ngModel)]="opcionSeleccionada" style="margin-right: 20px;">
-                  <option value="diario">Diario</option>
-                  <option value="rango">Rango Personalizado</option>
-                  </select>
-                  <ng-container *ngIf="opcionSeleccionada === 'diario'">
-                     <input type="date" [(ngModel)]="fechaFiltro" (change)="aplicarFiltro()" class="input-date" style="margin-right: 20px;">
-                  </ng-container>
-                  <ng-container *ngIf="opcionSeleccionada === 'rango'">
-                     <input type="date" [(ngModel)]="fechaInicio" (change)="aplicarFiltross()" class="input-date">
-                     <input type="date" [(ngModel)]="fechaFin" (change)="aplicarFiltross()" class="input-date">
-                  </ng-container>
-               </div>
-            </div>
-            <div class="row">
-               <div class="col-sm-9">
-                  <br>
-                  <p>Filtro por producto:</p>
-                  <div class="search-container">
-                     <input
-                       type="text"
-                       placeholder="Buscar por concepto"
-                       (keyup)="applyFilter($event)"
-                       #input
-                     />
-                     <i class="material-icons search-ico">search</i>
-                   </div>
-               </div>
-               <div class="col-sm-3">
-                  <br><br><br>
-                  <button  style="background-color: blue; border-color: blue; color: blanchedalmond; width: 120px; margin-right: 20px; border-radius: 5px;height: 38px;"  (click)="imprimirResumenCorte()">Imprimir</button>
-               </div>
-            </div>
-            <br><br>
-            <h2>Detalles de la Caja</h2>
-            <table mat-table [dataSource]="dataSource2" class="mat-elevation-z8">
-               <ng-container matColumnDef="nombreProducto">
-                 <th mat-header-cell *matHeaderCellDef> Nombre Producto </th>
-                 <td mat-cell *matCellDef="let detalle"> {{ detalle.nombreProducto }} </td>
-               </ng-container>
-             
-               <ng-container matColumnDef="cantidadElegida">
-                 <th mat-header-cell *matHeaderCellDef> Cantidad </th>
-                 <td mat-cell *matCellDef="let detalle"> {{ detalle.cantidadElegida }} </td>
-               </ng-container>
-             
-               <ng-container matColumnDef="precioUnitario">
-                 <th mat-header-cell *matHeaderCellDef> Precio Unitario </th>
-                 <td mat-cell *matCellDef="let detalle"> {{ detalle.precioUnitario }} </td>
-               </ng-container>
-
-               <ng-container matColumnDef="fechaVenta">
-                  <th mat-header-cell *matHeaderCellDef> Fecha </th>
-                  <td mat-cell *matCellDef="let detalle"> {{ detalle.fechaVenta }} </td>
-                </ng-container>
-                <tr mat-header-row *matHeaderRowDef="columnas; sticky: true"></tr>
-                <tr mat-row *matRowDef="let row; columns: columnas;"></tr>
-            </table>
-            <mat-paginator #paginator2 [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons></mat-paginator>
-         </div>
-         <div *ngIf="detallesCaja.length === 0">
-            <br>
-            <p>No hay detalles disponibles para esta caja.</p>
-         </div>
-      </div>
-
-      
       <br/>
       <form [formGroup]="formularioCaja">
          <div *ngIf="botonProductos && !mostrarLasVentas">
@@ -124,12 +28,12 @@
             <h1>¿Deseas continuar?</h1>
             <div style="display: flex; justify-content: center;">
                <button style="background-color: rgb(240, 240, 240); color: rgb(0, 0, 0); padding: 10px 20px; 
-                  border-radius: 5px; border: 1px solid black; color: black; cursor: pointer; transition: background-color 0.3s ease; width: 90%;"  (click)="mostrarProductos = true">Continuar caja</button>
+                  border-radius: 5px; border: 1px solid black; color: black; cursor: pointer; transition: background-color 0.3s ease; width: 90%;"  (click)="mostrarP()">Continuar caja</button>
             </div>
          </div>
          <div class="row" *ngIf="!mostrarProductos && mostrarInputFlag &&!botonProductos && !mostrarLasVentas">
             <div>
-               <br/>
+               <br/><br/>
                <label>¿Con cuánto dinero empiezas el turno? *</label>
                <input class="number" type="number" id="cashInput" placeholder="Ingrese el monto" style="margin-top: 10px;" formControlName="cantidadDineroExistente">
             </div>
@@ -153,9 +57,10 @@
             </div>
          </div>
       </form>
-      <div *ngIf="mostrarProductos && cerrarCaja && !mostrarLasVentas">
+      <br><br>
+      <div *ngIf="mostrarProductos && cerrarCaja">
          <div class="search-label">
-            <h2>Busca a tu cliente:</h2>
+            <h2 style="margin-right: 15px;">Busca a tu cliente:</h2>
             <div class="search-container" (click)="abrirDialogo()">
                <input type="text" class="search-input" placeholder="Buscar..." disabled>
                <img src="https://media.istockphoto.com/id/1135487794/es/vector/icono-de-b%C3%BAsqueda-ilustraci%C3%B3n-vectorial-aislada-en-el-bot%C3%B3n-cuadrado-plano.jpg?s=612x612&w=0&k=20&c=2f7Km0xyaXPdL9IEH7Ep4y4tLwj0HXDxJIEeWGGYfCk=" alt="Imagen" class="search-icon">
@@ -176,6 +81,7 @@
                <input type="text" id="email" name="email" [value]="cliente.email || ''" disabled><br><br>
             </div>
          </div>
+ 
          <h3>Ingresa el valor de una columna</h3>
          <mat-form-field class="full-width">
             <mat-label>Filtro</mat-label>
@@ -189,25 +95,27 @@
          <div class="table-container">
             <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
                <ng-container [matColumnDef]="column" *ngFor="let column of displayedColumns">
-               <th mat-header-cell *matHeaderCellDef>{{ column }}</th>
-               <td mat-cell *matCellDef="let prod">
-                  <ng-container *ngIf="column !== 'cantidad'">
+                 <th mat-header-cell *matHeaderCellDef>{{ column }}</th>
+                 <td mat-cell *matCellDef="let prod">
+                   <ng-container *ngIf="column !== 'cantidad'">
                      {{ prod[column] }}
-                  </ng-container>
-                  <ng-container *ngIf="column === 'cantidad'">
+                   </ng-container>
+                   <ng-container *ngIf="column === 'cantidad'">
                      <mat-form-field>
-                        <input matInput [(ngModel)]="prod.cantidad" type="number" min="0" />
+                       <input matInput [(ngModel)]="prod.cantidad" type="number" min="0" />
                      </mat-form-field>
-                  </ng-container>
-                  <ng-container *ngIf="column === 'acciones'">
-                     <mat-icon class="add-box-icon" (click)="validaryUnir(prod)">add_box</mat-icon>
-                  </ng-container>
-               </td>
+                   </ng-container>
+                   <ng-container *ngIf="column === 'acciones'">
+                     <mat-icon class="add-box-icon" (click)="validarYAgregarProducto(prod)">add_box</mat-icon>
+                   </ng-container>
+                 </td>
                </ng-container>
                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let productofila; columns: displayedColumns"></tr>
-            </table>
-            <mat-paginator  #paginator1 [pageSizeOptions]="[5, 10, 15, 20]" showFirstLastButtons></mat-paginator>
+               <tr mat-row *matRowDef="let productofila; columns: displayedColumns"></tr>
+             </table>
+             <mat-paginator #paginator [pageSizeOptions]="[5, 10, 15, 20]" showFirstLastButtons></mat-paginator>
+
+
          </div>
          <div class="resumen">
             <h1>Resumen de Compra</h1>
@@ -235,7 +143,7 @@
                   <mat-label>Dinero recibido</mat-label>
                   <input matInput [(ngModel)]="dineroRecibido" placeholder="Ingresa cantidad" #input type="number" min="0" />
                </mat-form-field>
-               <h2>Cambio: ${{ dineroRecibido - totalAPagar }}</h2>
+               <h2>Cambio: ${{ (dineroRecibido - totalAPagar).toFixed(2) }}</h2>
                <button mat-raised-button style="margin-right: 20px; background-color: black;" (click)="imprimirResumen()">Imprimir</button>
                <button mat-raised-button color="#fd9727"  (click)="enviarDatosYDetallesVenta()">Registrar venta</button>
             </div>

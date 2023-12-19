@@ -41,6 +41,9 @@ import { FiltroNombreProductoPipe } from './components/pipes/filtro-concepto.pip
 import { FilterByDatePipe } from './components/pipes/filtroFechas.pipe';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { ListarProductosPipe } from './components/pipes/productos/lista-proveedor.pipe';
+import { VerCorteComponent } from './components/ver-corte/ver-corte.component';
+import { MatMenuModule } from '@angular/material/menu';
+
 @NgModule({
   declarations: [
     RecepDashboardComponent,
@@ -57,7 +60,8 @@ import { ListarProductosPipe } from './components/pipes/productos/lista-proveedo
     FiltroFechaPipe,
     FiltroNombreProductoPipe,
     FilterByDatePipe,
-    ListarProductosPipe
+    ListarProductosPipe,
+    VerCorteComponent
   ],
   imports: [
     CommonModule,
@@ -67,7 +71,8 @@ import { ListarProductosPipe } from './components/pipes/productos/lista-proveedo
     FormsModule,
     ReactiveFormsModule,
     FlexLayoutModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatMenuModule
 
   ],
   providers: [TablaEmergenteService], //*si no colocas el servicio no se mostrara la tabla emergente ni el resto de contenido todo estara en blanco

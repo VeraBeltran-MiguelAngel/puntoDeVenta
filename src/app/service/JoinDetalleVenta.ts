@@ -6,14 +6,20 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class JoinDetalleVentaService {
-  //API: string = 'https://localhost/plan/JoinDetalleVenta.php'
-  API: string = 'https://olympus.arvispace.com/puntoDeVenta/conf/JoinDetalleVenta.php'
+  API: string = 'https://localhost/plan/JoinDetalleVenta.php'
+  API2: string = 'http://localhost/plan/JoinDetalleCaja.php'
+ // API: string = 'https://olympus.arvispace.com/puntoDeVenta/conf/JoinDetalleVenta.php'
   
   constructor(private clienteHttp:HttpClient) {
   }
 
   consultarProductosVentas(Recepcionista_idRecepcionista: number | null):Observable<any[]>{
     const url = `${this.API}?Recepcionista_idRecepcionista=${Recepcionista_idRecepcionista}`;
+    return this.clienteHttp.get<any[]>(url);
+  }
+
+  obtenerDetallesCaja(Recepcionista_idRecepcionista: string, idCaja: string): Observable<any[]> {
+    const url = `${this.API2}?Recepcionista_idRecepcionista=${Recepcionista_idRecepcionista}&idCaja=${idCaja}`;
     return this.clienteHttp.get<any[]>(url);
   }
 

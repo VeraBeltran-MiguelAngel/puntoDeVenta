@@ -194,12 +194,6 @@ table {
     transition: border-color 0.3s ease; /* Efecto de transición en el borde */
   }
 
-
-  
-
-
-
-
   /* En tu archivo CSS */
 .search-container {
   display: flex;
@@ -227,7 +221,7 @@ table {
 .search-icon {
   width: 40px;
   height: 40px;
- margin-top: 10px;
+  margin-top: 10px;
   pointer-events: none; /* evita la interacción con la imagen */
   cursor: pointer;
 }
@@ -278,7 +272,6 @@ table {
 }
 
 input[type="text"] {
-  padding-left: 30px; /* Ajusta el espacio del ícono al inicio */
   width: 100%;
 }
 
@@ -289,8 +282,6 @@ input[type="text"] {
   z-index: 1; /* Ajusta el índice z si es necesario */
 }
 
-
-
 .search-container .search-ico {
   position: absolute;
   left: 10px; /* Ajusta la posición del ícono */
@@ -299,8 +290,6 @@ input[type="text"] {
   cursor: pointer;
   margin-right: 200px;
 }
-
-
 
 /* Estilos para el select */
 select {
