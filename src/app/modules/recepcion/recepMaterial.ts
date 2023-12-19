@@ -12,7 +12,7 @@ import {MatInputModule} from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
-
+import { MatButtonModule } from '@angular/material/button';
 @NgModule({
   exports: [
     MatToolbarModule, //menu navegacion
@@ -23,7 +23,8 @@ import { MatSelectModule } from '@angular/material/select';
     MatPaginatorModule,//paginacion de tabla
     MatInputModule,//input box de material
     MatIconModule,//iconos
-    MatSelectModule //listas desplegables
+    MatSelectModule, //listas desplegables
+    MatButtonModule,
   ],
 })
 export class RecepMaterialModule {}
