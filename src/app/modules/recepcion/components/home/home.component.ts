@@ -3,7 +3,16 @@ import { MatTableDataSource } from "@angular/material/table"; //para controlar l
 import { Producto } from "../models/producto";
 import { ProductosService } from "src/app/service/productos.service";
 import { AuthService } from "src/app/service/auth.service";
-import { FormGroup, FormBuilder, Validators, FormArray, FormControl, FormGroupDirective, NgForm } from "@angular/forms";
+
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  FormArray,
+  FormControl,
+  FormGroupDirective,
+  NgForm,
+} from "@angular/forms";
 import { CajaService } from "src/app/service/caja.service";
 import { DetalleVenta } from "src/app/service/detalleVenta.service";
 import { detalleVenta } from "../models/detalleVenta";
@@ -14,16 +23,17 @@ import { MatDialog } from "@angular/material/dialog";
 import { ClienteService } from "src/app/service/cliente.service";
 import { Ventas } from "../models/ventas";
 import { VentasService } from "src/app/service/ventas.service";
-import { MensajeEmergenteComponent } from '../mensaje-emergente/mensaje-emergente.component';
+import { MensajeEmergenteComponent } from "../mensaje-emergente/mensaje-emergente.component";
 import { JoinDetalleVentaService } from "src/app/service/JoinDetalleVenta";
 import { MensajeEliminarComponent } from "../mensaje-eliminar/mensaje-eliminar.component";
 import { inventarioService } from "src/app/service/inventario.service";
-import { ErrorStateMatcher } from '@angular/material/core';
-import { ToastrService } from 'ngx-toastr';
+import { ErrorStateMatcher } from "@angular/material/core";
+import { ToastrService } from "ngx-toastr";
 import { User } from "src/app/service/User";
-import { ChangeDetectorRef } from '@angular/core';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { ChangeDetectorRef } from "@angular/core";
+import { MatPaginatorModule } from "@angular/material/paginator";
+import { MatPaginator, PageEvent } from "@angular/material/paginator";
+
 
 interface Cliente {
   ID_Cliente: number;
@@ -38,52 +48,59 @@ interface Cliente {
   styleUrls: ["./home.component.css"],
 })
 export class HomeComponent implements OnInit {
-  selectedProducts: Producto[] = [];
-  ubicacionGym: string; //lista de productos seleccionados
+  formularioCaja: FormGroup;
+  productosArray: FormArray;
+  formularioDetalleVenta: FormGroup;
+  datosParaGuardarVenta: Ventas;
+  numero: any;
+  detalle: any;
+  cliente: any;
+  detalles: any;
+  producto: any;
+  productos: any;
+  fechaFin: Date;
+  fechaInicio: Date;
+  ubicacion: string;
+  fecha: string = "";
+  hora: string = "";
+  ubicacionGym: string; 
+  fechaFiltro: string = "";
+  fechaConHora: string = "";
+  opcionSeleccionada: string = "diario";
+  idUsuarioo: number;
+  lastInsertedId: number;
+  lastInsertedId3: number;
   totalAPagar: number = 0;
   dineroRecibido: number = 0;
-  ubicacion: string;
-  numero: any;
-  formularioCaja: FormGroup;
-  formularioDetalleVenta: FormGroup;
+  totalAPagarCorte: number = 0;
+  cantidadSolicitada: number = 0;
+  cerrarCaja: boolean = true;
+  modoLectura: boolean = false;
+  mostrarRango: boolean = false;
+  mostrarDiario: boolean = true;
+  botonProductos: boolean = false;
+  botonHabilitado: boolean = false;
   mostrarInputFlag: boolean = false;
   mostrarProductos: boolean = false;
   mostrarLasVentas: boolean = false;
-
-  listaClientes: any[] = [];
-  fecha: string = "";
-  hora: string = "";
-  fechaConHora: string = "";
-  productosArray: FormArray;
-  detalle: any;
-  detalles: any;
-  cliente: any;
-  datosParaGuardarDetalleVenta: detalleVenta[] = [];
-  datosParaGuardarVenta: Ventas;
-  lastInsertedId3: number;
-  lastInsertedId: number;
-  totalAPagarCorte: number = 0;
-  idUsuarioo: number;
-  detallesCaja: any[] = []; 
-  
-  clientes: Cliente[] = [];
-  clientesFiltrados: Cliente[] = [];
-  selectedClient: number | null = null;
-  cerrarCaja: boolean = true;
   botonDeshabilitado: boolean = true;
-  botonHabilitado: boolean = false;
-  //botonDeshabilitadoCorte: boolean = true;
-  botonProductos: boolean = false;
-
-  producto: any; // Variable para almacenar el producto obtenido
-// Reemplaza con la cantidad que se solicita
-productos: any;
-cantidadSolicitada: number = 0;
-
-columnas: string[] = ['nombreProducto', 'cantidadElegida', 'precioUnitario', 'fechaVenta'];
-
+  selectedClient: number | null = null;
+  detallesCaja: any[] = [];
+  clientes: Cliente[] = [];
+  listaClientes: any[] = [];
+  productData: Producto[] = []; 
+  listInventarioData: any[] = [];
+  selectedProducts: Producto[] = [];
+  clientesFiltrados: Cliente[] = [];
+  datosParaGuardarDetalleVenta: detalleVenta[] = [];
+  columnas: string[] = [
+    "nombreProducto",
+    "cantidadElegida",
+    "precioUnitario",
+    "fechaVenta",
+  ];
   displayedColumns: string[] = [
-    'codigo_de_barra',
+    "codigo_de_barra",
     "categoria",
     "nombre",
     "descripcion",
@@ -91,73 +108,57 @@ columnas: string[] = ['nombreProducto', 'cantidadElegida', 'precioUnitario', 'fe
     "cantidad",
     "acciones",
   ];
-  productData: Producto[] = []; //para guardar la respuesta del api en un arreglo
 
-  dataSource: MatTableDataSource<any>;
-  
-  dataSource2: MatTableDataSource<any>;
-
-  //paginator es una variable de la clase MatPaginator
-
-  @ViewChild('paginator1') paginator1: MatPaginator;
-  @ViewChild('paginator2') paginator2: MatPaginator;
+  dataSource: MatTableDataSource<any>; 
+  @ViewChild('paginator', { static: true }) paginator!: MatPaginator;
 
   constructor(
-    private productoService: ProductosService,
-    private auth: AuthService,
-    private cajaService: CajaService,
-    private InventarioService: inventarioService,
-    private ventasService: VentasService,
-    private DetalleVenta: DetalleVenta,
-    private ListarClientesService: listarClientesService,
-    private joinDetalleVentaService: JoinDetalleVentaService,
-    public formulario: FormBuilder,
     private router: Router,
     public dialog: MatDialog,
-    private clienteService: ClienteService,
+    private auth: AuthService,
     private toastr: ToastrService,
-    private changeDetectorRef: ChangeDetectorRef
-    
+    public formulario: FormBuilder,
+    private cajaService: CajaService,
+    private DetalleVenta: DetalleVenta,
+    private ventasService: VentasService,
+    private clienteService: ClienteService,
+    private productoService: ProductosService,
+    private InventarioService: inventarioService,
+    private changeDetectorRef: ChangeDetectorRef,
+    private ListarClientesService: listarClientesService,
+    private joinDetalleVentaService: JoinDetalleVentaService,
   ) {
-    this.dataSource2 = new MatTableDataSource<any>(); 
-    const lastInsertedId = this.auth.getUltimoIdInsertado();
-
-    console.log("id",lastInsertedId);
-    this.cajaService
-      .consultarCaja(this.lastInsertedId)
-      .subscribe((respuesta) => {
-        console.log(respuesta);
-        this.formularioCaja.setValue({
-          fechaApertura: respuesta[0]["fechaApertura"],
-          fechaCierre: respuesta[0]["fechaCierre"],
-          cantidadDineroAcumuladoTeoria:
-            respuesta[0]["cantidadDineroAcumuladoTeoria"],
-          cantidadDineroExistente: respuesta[0]["cantidadDineroExistente"],
-          Recepcionista_idRecepcionista:
-            respuesta[0]["Recepcionista_idRecepcionista"],
-        });
+    const userId = this.auth.getIdUsuario(); // id del usuario
+    const lastInsertedIdString = localStorage.getItem(`lastInsertedId_${userId}`); // Obtener el último ID insertado para ese usuario
+    const lastInsertedId = lastInsertedIdString? parseInt(lastInsertedIdString, 10): null;
+   /* this.cajaService.consultarCaja(lastInsertedId).subscribe((respuesta) => {
+      console.log(respuesta);
+      this.formularioCaja.setValue({
+        fechaApertura: respuesta[0]["fechaApertura"],
+        fechaCierre: respuesta[0]["fechaCierre"],
+        cantidadDineroAcumuladoTeoria:
+          respuesta[0]["cantidadDineroAcumuladoTeoria"],
+        cantidadDineroExistente: respuesta[0]["cantidadDineroExistente"],
+        Recepcionista_idRecepcionista:
+          respuesta[0]["Recepcionista_idRecepcionista"],
       });
-     
-      const idUsuario = this.auth.getIdUsuario();
-      console.log('ID de usuariooooo:', idUsuario);
-      
+    });*/
     this.formularioCaja = this.formulario.group({
-     
-      fechaApertura: [{ value: '', disabled: true }],
-     // fechaApertura: [""],
+      fechaApertura: [{ value: "", disabled: true }],
       fechaCierre: ["0000-00-00"],
       cantidadDineroAcumuladoTeoria: ["0"],
       cantidadDineroExistente: ["", Validators.required],
-      Recepcionista_idRecepcionista: [idUsuario],
+      Recepcionista_idRecepcionista: [userId],
     });
-
+    /* --------------------------------------------------------------*/
     this.formularioDetalleVenta = this.formulario.group({
       productos: this.formulario.array([]),
     });
-
+    /* --------------------------------------------------------------*/
     this.productosArray = this.formularioDetalleVenta.get(
       "productos"
     ) as FormArray;
+    /* --------------------------------------------------------------*/
     //obtener id del cliente
     this.clienteService.data$.subscribe((data) => {
       console.log("Datos recibidos:", data);
@@ -167,67 +168,65 @@ columnas: string[] = ['nombreProducto', 'cantidadElegida', 'precioUnitario', 'fe
     });
   }
 
-
-
-  ngOnInit(): void {
-    this.dataSource2.paginator = this.paginator2;  
-    /////////////////////////////////////////////////////
+  ngAfterViewInit(): void {
     this.productoService.obternerProductos().subscribe((respuesta) => {
       this.productData = respuesta;
       this.dataSource = new MatTableDataSource(this.productData);
-      this.dataSource.paginator = this.paginator1;
-      console.log(this.dataSource.paginator, "this.paginatooooooooooooor") 
-  });
+      this.dataSource.paginator = this.paginator; // Asignación del paginador aquí
+      console.log(this.paginator,"this.paginator");
+    });
+  }
+  
+
+  ngOnInit(): void {
     //ubicacion
     this.ubicacion = this.auth.getUbicacion();
     //datos de detalle venta
-    this.DetalleVenta.obternerVentaDetalle().subscribe({next: (resultData) => {this.detalle = resultData;},
+    this.DetalleVenta.obternerVentaDetalle().subscribe({
+      next: (resultData) => {
+        this.detalle = resultData;
+      },
     });
     this.clienteService;
-    //////////////////////////////////////////////////////777777777
-   const lastInsertedId = this.auth.getUltimoIdInsertado();
-   console.log("idddddddddd",lastInsertedId);
-   this.cajaService.consultarCaja(lastInsertedId).subscribe(
-     (resultados) => {
-       //const fechaApertura =  resultados.fechaApertura;
-       console.log("resultados",resultados[0].fechaCierre);
-       console.log("resultados",resultados);
-       const fechaCierre = resultados[0].fechaCierre;
-       //this.mostrarOcultarBoton(fechaApertura);
-       this.mostrarOcultarBoton(fechaCierre); // Llamada al método para mostrar u ocultar el botón
-       console.log("botoooooon",this.mostrarOcultarBoton(fechaCierre));
-     },
-     (error) => {console.error('Error al consultar la fecha de cierre:', error);}
-   );
+    //////////////////////////////////////////////////////
+    const userId = this.auth.getIdUsuario(); // ID del usuario actual
+    const lastInsertedIdString = localStorage.getItem(`lastInsertedId_${userId}`); // Obtener el último ID insertado para ese usuario
+    const lastInsertedId = lastInsertedIdString? parseInt(lastInsertedIdString, 10): null;
+    //obtener datos de caja por id
+    this.cajaService.consultarCaja(lastInsertedId).subscribe(
+      (resultados) => {
+        const fechaCierre = resultados[0].fechaCierre;
+        this.mostrarOcultarBoton(fechaCierre); // Llamada al método para mostrar u ocultar el botón
+      },
+      (error) => {
+        console.error("Error al consultar la fecha de cierre:", error);
+      }
+    );   
   }
 
-  
-  obtenerDetallesCaja(Recepcionista_idRecepcionista: number | null) {
+  mostrarP(){
+    this.mostrarProductos = true;
+    this.botonProductos = false;
+  }
+
+  /*obtenerDetallesCaja(Recepcionista_idRecepcionista: number | null) {
     const idUsuario = this.auth.getIdUsuario();
-    console.log("idUsuario", idUsuario);
     this.joinDetalleVentaService.consultarProductosVentas(idUsuario).subscribe(
       (data) => {
         this.detallesCaja = data;
-       // this.dataSource2 = new MatTableDataSource(this.detallesCaja); // Inicializar dataSource2 como MatTableDataSource
+        // this.dataSource2 = new MatTableDataSource(this.detallesCaja); // Inicializar dataSource2 como MatTableDataSource
         //this.dataSource2.paginator = this.paginator2; // Vincular el paginador con el dataSource2
-       // console.log("this.dataSource2.paginator", this.dataSource2.paginator);
+        // console.log("this.dataSource2.paginator", this.dataSource2.paginator);
         this.dataSource2.data = this.detallesCaja; // Asignar los datos al dataSource2
       },
       (error) => {
-        console.error('Error al obtener detalles de la caja:', error);
+        console.error("Error al obtener detalles de la caja:", error);
       }
     );
-  }
-  
-  
-  opcionSeleccionada: string = "diario";
-  mostrarRango: boolean = false;
-  mostrarDiario: boolean = true;
+  }*/
 
   seleccionarOpcion(opcion: string) {
     this.opcionSeleccionada = opcion;
-
-    // Lógica para mostrar elementos correspondientes al modo diario
     if (opcion === "diario") {
       this.mostrarDiario = true; // Define una variable para mostrar elementos de diario
       this.mostrarRango = false; // Oculta los elementos del rango
@@ -237,16 +236,9 @@ columnas: string[] = ['nombreProducto', 'cantidadElegida', 'precioUnitario', 'fe
     }
   }
 
-  fechaInicio: Date;
-  fechaFin: Date;
-  fechaFiltro: string = '';
-
-  aplicarFiltro() {
+ /* aplicarFiltro() {
     const fechaFiltrar = new Date(this.fechaFiltro);
     this.dataSource2.filter = fechaFiltrar.toISOString().slice(0, 10); // Ajusta el formato a 'YYYY-MM-DD'
-    // Asegúrate de que aquí 'fechaVenta' sea la propiedad correcta por la cual estás filtrando
-    console.log("this.dataSource.filter", this.dataSource2.filter);
-    console.log("this.dataSource.filterPredicate", this.dataSource2.filterPredicate);
     this.dataSource2.filterPredicate = (data: any, filter: string) => {
       return data.fechaVenta.includes(filter); // Compara la fecha con el filtro
     };
@@ -255,35 +247,28 @@ columnas: string[] = ['nombreProducto', 'cantidadElegida', 'precioUnitario', 'fe
   aplicarFiltross() {
     const fechaInicioFiltrar = new Date(this.fechaInicio);
     const fechaFinFiltrar = new Date(this.fechaFin);
-
     this.dataSource2.filterPredicate = (data: any, filter: string) => {
       const fechaItem = new Date(data.fechaVenta); // Ajusta 'fechaVenta' a tu propiedad de fecha
-
       return fechaItem >= fechaInicioFiltrar && fechaItem <= fechaFinFiltrar;
     };
-
     // Concatenar las fechas con un carácter que no se espera en las fechas
     const filtro = `${fechaInicioFiltrar.toISOString().slice(0, 10)}_${fechaFinFiltrar.toISOString().slice(0, 10)}`;
-
     this.dataSource2.filter = filtro;
-    console.log("filtro", filtro);
-  }
+  }*/
 
 
   obtenerCliente(idCliente: number) {
     this.ListarClientesService.consultarCliente(idCliente).subscribe(
       (data: any[]) => {
         if (data && data.length > 0) {
-          console.log("Datos del cliente:", data[0]);
           this.cliente = data[0]; // Asigna el primer elemento del array como cliente
         }
       }
     );
   }
-/*********PARTE DEL DIALOGO *************/
+  /*********PARTE DEL DIALOGO *************/
   abrirDialogo() {
-    this.dialog
-      .open(MensajeListaComponent, {
+    this.dialog.open(MensajeListaComponent, {
         data: `Membresía agregada exitosamente`,
         width: "500px",
         height: "500px",
@@ -312,20 +297,14 @@ columnas: string[] = ['nombreProducto', 'cantidadElegida', 'precioUnitario', 'fe
     }
   }
   /*********HASTA ACA */
-  ///////////////////////////////////////////////////////////////
   /**metodo para filtrar la informacion que escribe el usaurio*/
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource2.filter = filterValue.trim().toLowerCase();
-    console.log("this.dataSource.filter", this.dataSource2.filter);
-  }  
-  
-
-  modoLectura: boolean = false;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    console.log("this.dataSource.filter", this.dataSource.filter);
+  }
 
   mostrarInput() {
-    console.log("hola", this.mostrarInputFlag);
-  
     this.mostrarInputFlag = true;
     const fechaActual = new Date();
     const year = fechaActual.getFullYear();
@@ -335,25 +314,32 @@ columnas: string[] = ['nombreProducto', 'cantidadElegida', 'precioUnitario', 'fe
     const minutes = fechaActual.getMinutes().toString().padStart(2, "0"); // Agrega un 0 si los minutos tienen un solo dígito
     const seconds = fechaActual.getSeconds().toString().padStart(2, "0"); // Agrega un 0 si los segundos tienen un solo dígito
     const fechaConHoraPersonalizada = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-    // Verifica si el formulario es válido
-    this.formularioCaja.get("fechaApertura")?.setValue(fechaConHoraPersonalizada);
+    this.formularioCaja.get("fechaApertura")?.setValue(fechaConHoraPersonalizada);  // Verifica si el formulario es válido
   }
 
-  mostrarOcultarBoton(fechaCierre: string) { 
-    console.log("fechaCierre",fechaCierre);
-    if (fechaCierre === '0000-00-00 00:00:00' ) {
+  mostrarOcultarBoton(fechaCierre: string) {
+    console.log("fechaCierre", fechaCierre);
+    if (fechaCierre === "0000-00-00 00:00:00") {
       this.botonProductos = true;
       this.botonDeshabilitado = false;
-
     } else {
-      this.botonProductos = false; 
+      this.botonProductos = false;
     }
-}
+  }
 
-
+  getUltimoIdInsertado(userId: string): number | null {
+    const lastInsertedIdString = localStorage.getItem(
+      `lastInsertedId_${userId}`
+    );
+    if (lastInsertedIdString) {
+      return parseInt(lastInsertedIdString, 10);
+    }
+    return null;
+  }
 
   mostrarCaja() {
-    this.formularioCaja.get('fechaApertura')?.enable();
+    this.formularioCaja.get("fechaApertura")?.enable();
+    console.log("this.formularioCaja.value", this.formularioCaja.value);
     if (this.formularioCaja.valid) {
       console.log("ID insertado caja:", this.formularioCaja.value);
       this.cajaService
@@ -362,11 +348,15 @@ columnas: string[] = ['nombreProducto', 'cantidadElegida', 'precioUnitario', 'fe
           console.log("pasa");
           if (respuesta.success === 1) {
             this.lastInsertedId = respuesta.lastInsertedId;
-            
+
             console.log("ID insertado caja:", this.lastInsertedId);
             this.mostrarProductos = true;
 
-            localStorage.setItem('lastInsertedId', this.lastInsertedId.toString());
+            const userId = this.auth.getIdUsuario(); // Aquí debes obtener el ID del usuario actual
+            localStorage.setItem(
+              `lastInsertedId_${userId}`,
+              this.lastInsertedId.toString()
+            );
           } else {
             console.log("Error al insertar la caja");
           }
@@ -378,85 +368,73 @@ columnas: string[] = ['nombreProducto', 'cantidadElegida', 'precioUnitario', 'fe
     // Guardamos el registro del usuario en el local storage (en formato cadena)
   }
 
-  listInventarioData: any[] = [];
-  
-
   enviarDatosYDetallesVenta() {
-   console.log("total",this.totalAPagar <= this.dineroRecibido);
-    if (this.totalAPagar <= this.dineroRecibido){
-    const lastInsertedId = this.auth.getUltimoIdInsertado();
-
-    console.log("id",lastInsertedId);
-    const fechaActual = new Date();
-    const offset = fechaActual.getTimezoneOffset(); // Obtiene el offset en minutos
-    fechaActual.setMinutes(fechaActual.getMinutes() - offset);
-    const fechaVenta = fechaActual.toISOString().replace('T', ' ').split('.')[0];
-    const idCliente = this.cliente?.ID_Cliente || null; // Acceder al ID del cliente seleccionado
-    const totalAPagar = this.selectedProducts.reduce(
-      (total, producto) => total + producto.precio * producto.cantidad,
-      0
-    );
-    // Enviar datos de ventas
-    const datosVentas = {
-      Cliente_ID_Cliente: idCliente,
-      Caja_idCaja: lastInsertedId, 
-      fechaVenta: fechaVenta,
-      total: totalAPagar,
-    };
-    console.log("datos a guardar - Ventas", datosVentas);
-    this.ventasService.agregarVentas(datosVentas).subscribe((response) => {
-      console.log("Datos de ventas guardados correctamente");
-      
-       const lastInsertedId3 = response.lastInsertedId3;
-      console.log("lastInsertedId3", lastInsertedId3);
-      // Enviar detalles de ventas
-      const detallesVenta = this.selectedProducts.map((producto) => {
-        return {
-          Ventas_idVentas: lastInsertedId3,
-          Producto_idProducto: producto.id,
-          nombreProducto: producto.nombre,
-          cantidadElegida: producto.cantidad,
-          precioUnitario: producto.precio,
-          Gimnasio_idGimnasio: this.auth.getIdGym(),
-          importe: producto.cantidad*producto.precio
-        };
+    console.log("total", this.totalAPagar <= this.dineroRecibido);
+    if (this.totalAPagar <= this.dineroRecibido) {
+      const userId = this.auth.getIdUsuario(); //ID del usuario actual
+      const lastInsertedIdString = localStorage.getItem(`lastInsertedId_${userId}`); // Obtener el último ID insertado para ese usuario
+      const lastInsertedId = lastInsertedIdString? parseInt(lastInsertedIdString, 10): null;
+      const fechaActual = new Date();
+      const offset = fechaActual.getTimezoneOffset(); // Obtiene el offset en minutos
+      fechaActual.setMinutes(fechaActual.getMinutes() - offset);
+      const fechaVenta = fechaActual.toISOString().replace("T", " ").split(".")[0];
+      const idCliente = this.cliente?.ID_Cliente || null; // Acceder al ID del cliente seleccionado
+      const totalAPagar = this.selectedProducts.reduce(
+        (total, producto) => total + producto.precio * producto.cantidad,0);
+      // Enviar datos de ventas
+      const datosVentas = {
+        Cliente_ID_Cliente: idCliente,
+        Caja_idCaja: lastInsertedId,
+        fechaVenta: fechaVenta,
+        total: totalAPagar,
+      };
+      this.ventasService.agregarVentas(datosVentas).subscribe((response) => {
+        const lastInsertedId3 = response.lastInsertedId3;
+        // Enviar detalles de ventas
+        const detallesVenta = this.selectedProducts.map((producto) => {
+          return {
+            Ventas_idVentas: lastInsertedId3,
+            Producto_idProducto: producto.id,
+            nombreProducto: producto.nombre,
+            cantidadElegida: producto.cantidad,
+            precioUnitario: producto.precio,
+            Gimnasio_idGimnasio: this.auth.getIdGym(),
+            importe: producto.cantidad * producto.precio,
+          };
+        });
+        console.log("Detalles de venta", detallesVenta);
+        this.DetalleVenta.agregarVentaDetalle(detallesVenta).subscribe(
+          (response) => {
+            console.log("Detalles de ventas guardados correctamente");
+          }
+        );
+        this.dialog.open(MensajeEmergenteComponent, {
+            data: `Productos registrados correctamente`,
+          })
+          .afterClosed()
+          .subscribe((cerrarDialogo: Boolean) => {
+            if (cerrarDialogo) {
+              this.resetearValores();
+            } else {
+            }
+          });
       });
-  
-      console.log("cosas - Detalles de venta", detallesVenta);
-      this.DetalleVenta.agregarVentaDetalle(detallesVenta).subscribe((response) => {
-        console.log("Detalles de ventas guardados correctamente");
-      });
-
-      this.dialog.open(MensajeEmergenteComponent, {
-        data: `Productos registrados correctamente`,
-      })
-      .afterClosed()
-      .subscribe((cerrarDialogo: Boolean) => {
-        if (cerrarDialogo) {
-          this.resetearValores();
-        } else {
-         
-        }
-      });
-    });
-  }else{
-    this.toastr.error(
-      'Ingresa el pago'
-    );
-  };
+    } else {
+      this.toastr.error("Ingresa el pago");
+    }
   }
 
-// Luego, en una función para restablecer los valores
   resetearValores() {
     this.selectedProducts = [];
     this.totalAPagar = 0;
     this.cliente = {
-      ID_Cliente: '',
-      nombre: '',
-      apPaterno: '',
-      apMaterno: '',
-      email: ''
+      ID_Cliente: "",
+      nombre: "",
+      apPaterno: "",
+      apMaterno: "",
+      email: "",
     };
+    this.dineroRecibido = 0;
   }
 
   actualizarCaja() {
@@ -469,57 +447,48 @@ columnas: string[] = ['nombreProducto', 'cantidadElegida', 'precioUnitario', 'fe
     const seconds = fechaActual1.getSeconds().toString().padStart(2, "0"); // Agrega un 0 si los segundos tienen un solo dígito
     const fechaConHoraPersonalizada1 = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
     this.formularioCaja.get("fechaCierre")?.setValue(fechaConHoraPersonalizada1);
-    console.log(this.formularioCaja.value);
-
-    this.dialog.open(MensajeEliminarComponent, {
-      data: `¿Deseas cerrar la caja?`,
-    })
-
-    .afterClosed()
+    this.dialog.open(MensajeEliminarComponent, {data: `¿Deseas cerrar la caja?`,})
+      .afterClosed()
       .subscribe((confirmado: Boolean) => {
         if (confirmado) {
-          const lastInsertedId = this.auth.getUltimoIdInsertado();
-
-          
-          console.log("id",lastInsertedId);
+          const userId = this.auth.getIdUsuario(); //ID del usuario actual
+          const lastInsertedIdString = localStorage.getItem(`lastInsertedId_${userId}`); // Obtener el último ID insertado para ese usuario
+          const lastInsertedId = lastInsertedIdString? parseInt(lastInsertedIdString, 10): null;
           this.cajaService.actualizarCaja(lastInsertedId, this.formularioCaja.value).subscribe((respuesta) => {
-            console.log("si actualizo la caja");
-            //this.botonDeshabilitadoCorte = false;
-            this.mostrarInputFlag = true;
-            this.cerrarCaja = false;
-            this.botonProductos = false; 
-        });
+              console.log("Caja actualizada");
+              this.mostrarInputFlag = true;
+              this.cerrarCaja = false;
+              this.botonProductos = false;
+            });
         } else {
-          
         }
-      }); 
+      });
   }
   //****** MOSTRAR TABLA DEL CORTE ******/
   mostrarVentas() {
     this.mostrarLasVentas = true;
-    const lastInsertedId = this.auth.getUltimoIdInsertado();
-    console.log("id",lastInsertedId);
-    this.obtenerDetallesCaja(lastInsertedId);
-   // this.botonDeshabilitado = true;
-    //this.botonHabilitado = false;
+    const userId = this.auth.getIdUsuario(); //ID del usuario actual
+    const lastInsertedIdString = localStorage.getItem(`lastInsertedId_${userId}`);// Obtener el último ID insertado para ese usuario
+    const lastInsertedId = lastInsertedIdString? parseInt(lastInsertedIdString, 10): null;
+    //this.obtenerDetallesCaja(lastInsertedId);
   }
 
   imprimirResumen() {
-    if (this.totalAPagar <= this.dineroRecibido){
-    const totalCantidad = this.selectedProducts.reduce(
-      (total, producto) =>  producto.cantidad,
-      0
-    );
-    const totalEnPesos = this.convertirNumeroAPalabrasPesos(this.totalAPagar);
-    const ventanaImpresion = window.open("", "_blank");
-    const fechaActual = new Date().toLocaleDateString("es-MX"); // Obtener solo la fecha en formato local de México
-    const horaActual = new Date().toLocaleTimeString("es-MX", {
-      hour: "2-digit",
-      minute: "2-digit",
-    }); // Obtener solo la hora en formato local de México
-    if (ventanaImpresion) {
-      ventanaImpresion.document.open();
-      ventanaImpresion.document.write(`
+    if (this.totalAPagar <= this.dineroRecibido) {
+      const totalCantidad = this.selectedProducts.reduce(
+        (total, producto) => producto.cantidad,
+        0
+      );
+      const totalEnPesos = this.convertirNumeroAPalabrasPesos(this.totalAPagar);
+      const ventanaImpresion = window.open("", "_blank");
+      const fechaActual = new Date().toLocaleDateString("es-MX"); // Obtener solo la fecha en formato local de México
+      const horaActual = new Date().toLocaleTimeString("es-MX", {
+        hour: "2-digit",
+        minute: "2-digit",
+      }); // Obtener solo la hora en formato local de México
+      if (ventanaImpresion) {
+        ventanaImpresion.document.open();
+        ventanaImpresion.document.write(`
         <html>
           <head>
             <title>Ticket de Compra</title>
@@ -635,31 +604,33 @@ columnas: string[] = ['nombreProducto', 'cantidadElegida', 'precioUnitario', 'fe
           </body>
         </html>
       `);
-      ventanaImpresion.document.close();
-      ventanaImpresion.print();
-      ventanaImpresion.close();
-    }}else{
-      this.toastr.error(
-        'Ingresa el pago'
-      );
-
+        ventanaImpresion.document.close();
+        ventanaImpresion.print();
+        ventanaImpresion.close();
+      }
+    } else {
+      this.toastr.error("Ingresa el pago");
     }
   }
-  
-  imprimirResumenCorte() {
+
+ /* imprimirResumenCorte() {
     this.totalAPagarCorte = this.detallesCaja.reduce(
-      (total, detalle) => total + detalle.precioUnitario * detalle.cantidadElegida,
+      (total, detalle) =>
+        total + detalle.precioUnitario * detalle.cantidadElegida,
       0
     );
     const totalCantidad = this.detallesCaja.reduce(
       (total, detalle) => total + parseInt(detalle.cantidadElegida, 10),
       0
     );
-    const totalEnPesos = this.convertirNumeroAPalabrasPesos(this.totalAPagarCorte);
-   
-      const cantidadDinero = this.formularioCaja.get('cantidadDineroExistente')?.value;
-    
-       
+    const totalEnPesos = this.convertirNumeroAPalabrasPesos(
+      this.totalAPagarCorte
+    );
+
+    const cantidadDinero = this.formularioCaja.get(
+      "cantidadDineroExistente"
+    )?.value;
+
     const ventanaImpresion = window.open("", "_blank");
     const fechaActual = new Date().toLocaleDateString("es-MX"); // Obtener solo la fecha en formato local de México
     const horaActual = new Date().toLocaleTimeString("es-MX", {
@@ -772,7 +743,9 @@ columnas: string[] = ['nombreProducto', 'cantidadElegida', 'precioUnitario', 'fe
               <div class="total">
               <p>Monto inicial en caja: $${cantidadDinero} </P>
                 <p>Total de ventas: $${this.totalAPagarCorte}</p>
-                <p>Total en caja: $${this.totalAPagarCorte + cantidadDinero }  </p>
+                <p>Total en caja: $${
+                  this.totalAPagarCorte + cantidadDinero
+                }  </p>
               </div>
             </div>
           </body>
@@ -782,7 +755,7 @@ columnas: string[] = ['nombreProducto', 'cantidadElegida', 'precioUnitario', 'fe
       ventanaImpresion.print();
       ventanaImpresion.close();
     }
-  }
+  }*/
 
   convertirNumeroAPalabrasPesos(numero: number): string {
     const unidades = [
@@ -852,7 +825,6 @@ columnas: string[] = ['nombreProducto', 'cantidadElegida', 'precioUnitario', 'fe
     const entero = Math.floor(numero);
     const decimal = Math.round((numero - entero) * 100); // Obtiene los dos decimales
 
-
     if (numero === 0) {
       palabras = "CERO";
     } else if (numero < 10) {
@@ -883,41 +855,42 @@ columnas: string[] = ['nombreProducto', 'cantidadElegida', 'precioUnitario', 'fe
     return palabras;
   }
 
-obtenerProducto(id: any, cantidadSolicitada: number): void {
-  this.InventarioService.obtenerProductoPorId(id).subscribe({
-  next:  (data) => {
-      this.producto = data; // Almacena el producto obtenido en la variable 'producto'
-      console.log('Producto obtenido:', this.producto);
-      console.log("aca", data[0].cantidadDisponible);
-      if (data[0].cantidadDisponible < cantidadSolicitada) {
-        console.error('No hay suficiente stock disponible para esta cantidad.');
-        // Aquí puedes mostrar un mensaje de error o realizar alguna acción apropiada
-        this.toastr.error(
-          'No hay suficiente stock disponible para esta cantidad'
-        );
-      } else {
-        // Aquí puedes realizar las operaciones necesarias con el producto obtenido
-        
-      }
-    },
-   error: (error) => {
-      console.error('Error al obtener el producto:', error);
-    }
-});
-}
-  /*** Metodo para ir agregando productos a la lista de productos seleccionados* @param producto*/
-agregaraBalance(producto: Producto) {
-    /*** el método busca si el producto que se está intentando agregar existe en la lista de productos seleccionados
-     */
-    const productoExistente = this.selectedProducts.find(
-      (p) => p.id === producto.id
-    );
+  obtenerProducto(id: any, idGimnasio: any, cantidadSolicitada: number): void {
+    this.InventarioService.obtenerProductoPorId(id, idGimnasio).subscribe({
+      next: (data) => {
+        this.producto = data; // Almacena el producto obtenido en la variable 'producto'
+        console.log("Producto obtenido:", this.producto);
+        console.log("aca", data[0].cantidadDisponible);
+        if (data[0].cantidadDisponible < cantidadSolicitada) {
+          console.error(
+            "No hay suficiente stock disponible para esta cantidad."
+          );
+          // Aquí puedes mostrar un mensaje de error o realizar alguna acción apropiada
+          this.toastr.error(
+            "No hay suficiente stock disponible para esta cantidad"
+          );
+        } else {
+          // Aquí puedes realizar las operaciones necesarias con el producto obtenido
+        }
+
+        if (data[0].cantidadDisponible < 5) {
+          this.toastr.warning(`Quedan solo ${data[0].cantidadDisponible} productos disponibles`);
+        }
+      },
+      error: (error) => {
+        console.error("Error al obtener el producto:", error);
+      },
+    });
+  }
+  
+  agregaraBalance(producto: Producto) {
+    /*si el producto que se está intentando agregar existe en la lista de productos seleccionados*/
+    const productoExistente = this.selectedProducts.find((p) => p.id === producto.id);
     /**
      * Si se encuentra un producto existente con el mismo id, significa que el producto ya ha sido agregado
      * al carrito. En este caso, el código aumenta la cantidad del producto existente en la lista selectedProducts
      *  al agregar la cantidad del nuevo producto (producto.cantidad) a la cantidad existente del producto.
      */
-   
     if (productoExistente) {
       productoExistente.cantidad += producto.cantidad;
     } else {
@@ -925,69 +898,63 @@ agregaraBalance(producto: Producto) {
     }
     // Recalcular el total a pagar
     this.totalAPagar = this.selectedProducts.reduce(
-      (total, p) => total + p.precio * p.cantidad, 0
+      (total, p) => total + p.precio * p.cantidad,
+      0
     );
-
     this.cantidadSolicitada = producto.cantidad;
-    console.log("productoExistente",producto.id);
-    console.log("producto.cantidad",producto.cantidad);
-    this.obtenerProducto(producto.id,producto.cantidad);
-    // Reiniciar la cantidad del producto
+    this.obtenerProducto(producto.id,this.auth.getIdGym(), producto.cantidad);
     producto.cantidad = 0;
   }
 
- validaryUnir(producto: Producto){
-  console.log("producto000000sssss",producto);
-  console.log("producto000000",producto.id);
-  this.InventarioService.obtenerProductoPorId(producto.id).subscribe(
-    (data) => {
-      this.producto = data; // Almacena el producto obtenido en la variable 'producto'
-      console.log('Producto obtenido:', this.producto);
-      console.log("aca", data[0].cantidadDisponible);
-      if (data[0].cantidadDisponible < producto.cantidad) {
-        console.error('No hay suficiente stock disponible para esta cantidad.');
-        // Aquí puedes mostrar un mensaje de error o realizar alguna acción apropiada
-        this.toastr.error(
-          'No hay suficiente stock disponible para esta cantidad'
-        );
-      } else {
-        const productoExistente = this.selectedProducts.find(
-          (p) => p.codigo_de_barra === producto.codigo_de_barra
-        );
-        // Aquí puedes realizar las operaciones necesarias con el producto obtenido
+  validarYAgregarProducto(producto: Producto) {
+    this.InventarioService.obtenerProductoPorId(producto.id, this.auth.getIdGym()).subscribe(
+      (data) => {
+        const productoObtenido = data[0];
+        
+        if (!productoObtenido) {
+          this.toastr.error("Producto no encontrado");
+          return;
+        }
+  
+        const cantidadDisponible = productoObtenido.cantidadDisponible;
+        const cantidadSolicitada = producto.cantidad;
+  
+        if (cantidadDisponible < cantidadSolicitada) {
+          this.toastr.error("No hay suficiente stock disponible para esta cantidad");
+          return;
+        }
+        console.log("cantidadDisponible",cantidadDisponible);
+  
+        if (cantidadDisponible < 5) {
+
+          console.log("entra aca");
+          this.toastr.warning(`Quedan solo ${cantidadDisponible} productos disponibles`);
+        }
+        
+  
+        const productoExistente = this.selectedProducts.find(p => p.codigo_de_barra === producto.codigo_de_barra);
+  
         if (productoExistente) {
-          productoExistente.cantidad += producto.cantidad;
+          productoExistente.cantidad += cantidadSolicitada;
         } else {
           this.selectedProducts.push({ ...producto });
         }
-        // Recalcular el total a pagar
+  
         this.totalAPagar = this.selectedProducts.reduce(
-          (total, p) => total + p.precio * p.cantidad, 0
+          (total, p) => total + (p.precio * p.cantidad),
+          0
         );
-
-        this.cantidadSolicitada = producto.cantidad;
-        console.log("productoExistente",producto.codigo_de_barra);
-        console.log("producto.cantidad",producto.cantidad);
-        this.obtenerProducto(producto.id,producto.cantidad);
-        // Reiniciar la cantidad del producto
+  
         producto.cantidad = 0;
+        this.obtenerProducto(producto.id,this.auth.getIdGym(),cantidadSolicitada);
+      },
+      (error) => {
+        console.error("Error al obtener el producto:", error);
+        this.toastr.error("Error al obtener el producto");
       }
-    },
-   (error) => {
-      console.error('Error al obtener el producto:', error);
-    }
- );
+    );
+  }
 
- }
 
- public page: number = 0;
- 
- nextPage() {
-  this.page += 5;
-}
-
-prevPage() {
-  if ( this.page > 0 )
-    this.page -= 5;
-}
+  
 }

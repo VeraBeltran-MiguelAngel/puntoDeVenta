@@ -67,10 +67,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "puntoDeVenta:build:production"
+              "buildTarget": "puntoDeVenta:build:production"
             },
             "development": {
-              "browserTarget": "puntoDeVenta:build:development"
+              "buildTarget": "puntoDeVenta:build:development"
             }
           },
           "defaultConfiguration": "development"

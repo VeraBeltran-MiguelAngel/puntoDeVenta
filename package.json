@@ -33,6 +33,7 @@
     "jspdf-autotable": "^3.8.1",
     "ngx-toastr": "^17.0.2",
     "popper.js": "^1.16.1",
+    "quagga": "^0.6.16",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "uuid": "^9.0.1",
@@ -40,7 +41,7 @@
     "zone.js": "~0.13.0"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^16.2.4",
+    "@angular-devkit/build-angular": "^17.0.7",
     "@angular/cli": "^16.2.4",
     "@angular/compiler-cli": "^16.2.0",
     "@schematics/angular": "^16.2.8",
