@@ -6,7 +6,7 @@
 /** PROPIEDADES HEADER ----- TOOLBAR ----------------------------- **/
 /**propiedades de logo toolbar**/
 .logo_h {
-    width: 50%;
+    width: 60%;
   }
 
   /**propiedades grid padre toolbar**/
@@ -50,7 +50,7 @@ mat-toolbar {
     margin: 10px;
     width: 140px;
     height: 45px;
-    border-radius: 15px;
+    border-radius: 10px;
     background: #DF7E54;
     color: black;
 }

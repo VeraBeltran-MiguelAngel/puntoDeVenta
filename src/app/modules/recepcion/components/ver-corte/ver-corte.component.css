@@ -352,3 +352,11 @@ option {
     font-size: 16px;
   }
   
+  /* Estilos para el mensaje de falta de detalles */
+.no-details-message {
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 20px;
+  /* Agrega cualquier otro estilo que desees para que se vea como quieres */
+}
