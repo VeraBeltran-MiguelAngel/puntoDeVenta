@@ -111,7 +111,7 @@ export class ListaMembresiasPagoEfecComponent implements OnInit {
     private clienteService: ClienteService
   ) {
     this.form = this.fb.group({
-      id: [''],
+      idUsuario: [''],
       action: ['add'],
       id_module: ['', Validators.compose([Validators.required])],
     });
@@ -123,7 +123,7 @@ export class ListaMembresiasPagoEfecComponent implements OnInit {
         this.obtenerCliente(data.idCliente); // Obtener cliente usando el ID recibido
         this.id = data.idCliente;
         // Actualizar el valor del control 'id' en el formulario
-        this.form.get('id')?.setValue(this.id);
+        this.form.get('idUsuario')?.setValue(this.id);
       }
     });
   }
