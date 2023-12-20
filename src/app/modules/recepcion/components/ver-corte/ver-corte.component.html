@@ -142,7 +142,29 @@
        </mat-tab-group>
     </div>
     <div *ngIf="detallesCaja.length === 0">
+      <div class="row">
+         <div class="col-sm-4">
+            <button class="open-cash-register" routerLink="../home" >
+            <span class="icon"></span>
+            <span class="btn-text" style="color: black;margin-left: 20px;">ABRIR CAJA</span>
+            </button>
+         </div>
+         <!------------------------------------------------------------------------------------------------->
+         <div class="col-sm-4">
+            <button class="close-cash-register" style="margin-left: 20px;" (click)="actualizarCaja()" >
+            <span class="icon"></span>
+            <span class="btn-text" style="color: rgb(255, 255, 255);margin-left: 20px;">CERRAR CAJA</span>
+            </button>
+         </div>
+         <!------------------------------------------------------------------------------------------------->
+         <div class="col-sm-4">
+            <button class="ver-cash-register" style="float: right;" routerLink="../verCorte">
+            <span class="icon"></span>
+            <span class="btn-text" style="color: rgb(255, 255, 255);margin-left: 20px;">VER CORTE</span>
+            </button>
+         </div>
+      </div>
        <br>
-       <p>No hay detalles disponibles para esta caja.</p>
+       <p class="no-details-message" >No hay detalles disponibles para esta caja.</p>
     </div>
  </div>

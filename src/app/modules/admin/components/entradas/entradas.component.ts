@@ -82,7 +82,6 @@ export class EntradasComponent implements OnInit {
       precioCompra: [
         '',
         Validators.compose([
-          Validators.required,
           Validators.pattern(/^\d+(\.\d{0,2})?$/), //solo acepta dos decimales
         ]),
       ],
@@ -150,6 +149,7 @@ export class EntradasComponent implements OnInit {
   // Función para limpiar el formulario
   limpiarFormulario(): void {
     this.form.reset();
+    
   }
 
   registrar(): any {

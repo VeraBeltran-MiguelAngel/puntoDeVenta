@@ -87,5 +87,4 @@ export class MensajeListaComponent implements OnInit {
     this.dialogo.close();
   }
 
-
 }
