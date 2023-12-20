@@ -170,7 +170,7 @@
               <div>
                 <mat-form-field>
                   <mat-label>ID CLIENTE:</mat-label>
-                  <input matInput type="text" id="id" name="id" [value]="cliente.ID_Cliente || ''" disabled>
+                  <input matInput type="text" id="idUsuario" name="idUsuario" [value]="cliente.ID_Cliente || ''" disabled>
                 </mat-form-field>
               </div>
 
@@ -188,7 +188,7 @@
               <div>
                 <mat-form-field>
                   <mat-label>EMAIL:</mat-label>
-                  <input matInput type="text" id="email" name="email" [value]="cliente.email || ''" disabled>
+                  <input matInput type="text"  id="email" name="email" [value]="cliente.email || ''" disabled>
                 </mat-form-field>
               </div>
             </div>
@@ -200,6 +200,12 @@
 
           <br>
           <form [formGroup]="form" (ngSubmit)="mandaInstruccionTorniquete()">
+
+            <mat-form-field hidden="true" >
+              <mat-label>ID CLIENTE:</mat-label>
+              <input matInput type="text" formControlName="id" id="id" name="id" value ="{{id}}">
+            </mat-form-field>
+
             <mat-form-field appearance="outline" class="inputs_properties">
               <mat-label>Torniquete</mat-label>
               <mat-select id="id_module" formControlName="id_module" [errorStateMatcher]="matcher">
