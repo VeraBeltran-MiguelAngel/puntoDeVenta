@@ -50,6 +50,8 @@
       <mat-label>Buscar</mat-label>
       <input matInput (keyup)="applyFilter($event)"placeholder="Buscar" #input/>
     </mat-form-field>
+
+    <div  class="table-container">
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
         <ng-container [matColumnDef]="column" *ngFor="let column of displayedColumns">
           <th mat-header-cell *matHeaderCellDef>{{ column }}</th>
@@ -83,5 +85,6 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let productofila; columns: displayedColumns"></tr>
       </table>
+    </div>
       <mat-paginator #paginatorProductos [pageSizeOptions]="[5, 10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
 </div>

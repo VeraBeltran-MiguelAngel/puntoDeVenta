@@ -87,3 +87,28 @@ at-menu {
     color: white;
     font-size: larger;
 }
+
+/* Estilos para el menú en pantallas grandes */
+.menu-items {
+    display: flex;
+    gap: 20px; /* Espacio entre botones */
+  }
+  
+  /* Estilos para el menú en pantallas pequeñas */
+  @media (max-width: 600px) {
+    .menu-items {
+      display: none; /* Oculta los elementos */
+      flex-direction: column; /* Muestra los elementos en columna */
+      position: absolute;
+      top: 56px; /* Altura del menú superior (ajusta según tu diseño) */
+      background-color: #fff; /* Color de fondo del menú */
+      width: 100%;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      padding: 10px;
+    }
+  
+    .btn-menu {
+      display: block; /* Muestra el botón */
+    }
+  }
+  
