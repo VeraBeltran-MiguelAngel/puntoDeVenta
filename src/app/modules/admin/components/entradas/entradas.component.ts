@@ -13,7 +13,9 @@ import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/service/auth.service';
 import { EntradasService } from 'src/app/service/entradas.service';
 import { ProveedoresService } from 'src/app/service/proveedores.service';
-
+import { MensajeEmergenteComponent } from 'src/app/modules/recepcion/components/mensaje-emergente/mensaje-emergente.component';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(
     control: FormControl | null,
@@ -59,7 +61,9 @@ export class EntradasComponent implements OnInit {
     private toastr: ToastrService,
     private datePipe: DatePipe,
     private entrada: EntradasService,
-    private proveedor: ProveedoresService
+    private proveedor: ProveedoresService,
+    private dialog: MatDialog,
+    private router:Router,
   ) {
     this.ubicacion = this.auth.getUbicacion();
     this.id = this.auth.getIdGym();
@@ -160,8 +164,16 @@ export class EntradasComponent implements OnInit {
           console.log(respuesta);
 
           if (respuesta.success) {
-            this.toastr.success(respuesta.message, 'Exito', {
-              positionClass: 'toast-bottom-left',
+            this.dialog
+            .open(MensajeEmergenteComponent, {
+              data: `Entrada agregada exitosamente`,
+            })
+            .afterClosed()
+            .subscribe((cerrarDialogo: Boolean) => {
+              if (cerrarDialogo) {
+                this.router.navigateByUrl('/admin/home');
+              } else {
+              }
             });
             this.limpiarFormulario();
           } else {
