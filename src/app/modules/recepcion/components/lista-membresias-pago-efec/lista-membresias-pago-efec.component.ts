@@ -362,5 +362,16 @@ export class ListaMembresiasPagoEfecComponent implements OnInit {
 
   mandaInstruccionTorniquete() {
     console.log(this.form.value);
+    this.huellasService.insertarInstruccion(this.form.value).subscribe({
+      next: (respuesta) => {
+        console.log('respuesta');
+      },
+      error: (paramError) => {
+        this.toastr.error(paramError, 'Error', {
+          positionClass: 'toast-bottom-left',
+        });
+      },
+    });
   }
+  
 }
