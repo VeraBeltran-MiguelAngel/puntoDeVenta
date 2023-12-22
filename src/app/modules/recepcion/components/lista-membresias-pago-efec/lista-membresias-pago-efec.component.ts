@@ -41,6 +41,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   styleUrls: ['./lista-membresias-pago-efec.component.css'],
 })
 export class ListaMembresiasPagoEfecComponent implements OnInit {
+  
   form: FormGroup;
   matcher = new MyErrorStateMatcher();
   clientePago: any;
@@ -113,11 +114,11 @@ export class ListaMembresiasPagoEfecComponent implements OnInit {
     this.form = this.fb.group({
       idUsuario: [''],
       action: ['add'],
-      id_module: ['', Validators.compose([Validators.required])],
+      // id_module: ['', Validators.compose([Validators.required])],
     });
 
     //obtener id del cliente
-    this.clienteService.data$.subscribe((data) => {
+    this.clienteService.data$.subscribe((data: any) => {
       console.log('Datos recibidos:', data);
       if (data && data.idCliente) {
         this.obtenerCliente(data.idCliente); // Obtener cliente usando el ID recibido
@@ -364,14 +365,18 @@ export class ListaMembresiasPagoEfecComponent implements OnInit {
     console.log(this.form.value);
     this.huellasService.insertarInstruccion(this.form.value).subscribe({
       next: (respuesta) => {
-        console.log('respuesta');
-      },
-      error: (paramError) => {
-        this.toastr.error(paramError, 'Error', {
+        console.log(respuesta);
+        this.toastr.success(respuesta.message, 'Exito', {
           positionClass: 'toast-bottom-left',
         });
       },
+      error: (paramError) => {
+        console.log(paramError);
+          this.toastr.error(paramError.message, 'Error', {
+            positionClass: 'toast-bottom-left',
+          });
+        
+      },
     });
   }
-  
 }
