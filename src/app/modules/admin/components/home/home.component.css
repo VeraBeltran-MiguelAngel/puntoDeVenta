@@ -15,3 +15,11 @@
     color: white;
     text-decoration: none;
 }
+
+.txt_msg{
+    color: #FD9727;
+}
+
+.custom-border {
+    border: 2px solid #FD9727; 
+  }

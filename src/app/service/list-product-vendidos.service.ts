@@ -17,4 +17,8 @@ export class ListProductVendidosService {
     return this.clienteHttp.get(this.URLServices, { params });
     //return this.clienteHttp.get(this.URLServices+"?consultar");
   }
+
+  topVentasMes():Observable<any>{
+    return this.clienteHttp.get(this.URLServices+"?topProductos=");
+  } 
 }
