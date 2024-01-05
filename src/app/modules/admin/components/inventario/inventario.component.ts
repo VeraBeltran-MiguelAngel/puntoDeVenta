@@ -40,6 +40,7 @@ export class InventarioComponent implements OnInit {
       this.listInventarioData=respuesta;
       this.dataSource= new MatTableDataSource(this.listInventarioData);
       this.dataSource.paginator = this.paginator;
+      
     });
   }
 

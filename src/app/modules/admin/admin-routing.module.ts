@@ -10,6 +10,11 @@ import { InventarioComponent } from './components/inventario/inventario.componen
 import { ValidarTransferenciaComponent } from './components/validarTransferencia/validarTransferencia.component';
 import { HistorialCajaComponent } from './components/historial-caja/historial-caja.component';
 import { ProductosVendidosComponent } from './components/productos-vendidos/productos-vendidos.component';
+import { MembresiasComponent } from './components/membresias/membresias.component';
+import { MembresiasAgregarComponent } from './components/membresias-agregar/membresias-agregar.component';
+import { MembresiasEditarComponent } from './components/membresias-editar/membresias-editar.component';
+import { ConfiguracionComponent } from './components/configuracion/configuracion.component';
+import { VerConfiguracionComponent } from './components/ver-configuracion/ver-configuracion.component';
 
 const routes: Routes = [
   {
@@ -24,6 +29,12 @@ const routes: Routes = [
       { path: 'inventario', component: InventarioComponent },
       { path: 'caja', component: HistorialCajaComponent },
       { path: 'productosVendidos', component: ProductosVendidosComponent},
+      { path: 'misMembresias', component: MembresiasComponent},
+      { path: 'agregarMembresias', component: MembresiasAgregarComponent},
+      { path: 'editarMembresias/:id', component: MembresiasEditarComponent},
+      { path: 'configuracion', component: ConfiguracionComponent},
+      { path: 'verConfiguracion', component: VerConfiguracionComponent},
+
       {
         path: 'validarTransferencia',
         component: ValidarTransferenciaComponent,

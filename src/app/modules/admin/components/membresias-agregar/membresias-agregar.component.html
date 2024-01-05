@@ -1,0 +1,104 @@
+
+<br/><br/>
+<mat-label class="large-text" style="font-family: Arial; font-size: 30px;margin-left: 150px;">Membresías:</mat-label>
+<br/>
+<br/>
+
+<form [formGroup]="formulariodePlan">
+    <div class="mi-div-con-borde responsive-div">
+    <div style="color:red">{{message}}</div>
+        <br/>
+        <div class="row">
+            <div class="col-sm-6">
+                <p>
+                    <label for="titulo" class="large-text" style="margin-right: 35px;margin-left: 45px;">Titulo:</label>
+                    <mat-form-field appearance="outline" class="inputs_properties" style="margin-right: 35px;" required>
+                        <mat-label>Titulo</mat-label>
+                        <input type="text" matInput placeholder="Titulo" autocomplete="off" id="titulo" formControlName="titulo">
+                    </mat-form-field>
+                </p>
+                <p>
+                    <label for="precio" class="large-text" style="margin-right: 28px;margin-left: 45px;">Precio:</label>
+                    <mat-form-field appearance="outline" class="inputs_properties" style="margin-right: 35px;" required>
+                        <mat-label>Precio</mat-label>
+                        <input type="number" placeholder="Precio" matInput autocomplete="off" id="precio" formControlName="precio">
+                    </mat-form-field>
+                </p>
+                <p>
+                    <label for="detalles" class="large-text" style="display: inline-block; margin-right: 28px; vertical-align: top; margin-left: 45px;">Detalles:</label>
+                    <mat-form-field style="display: inline-block; width: 280px; height: 110px;" required>
+                        <mat-label>Detalles</mat-label>
+                        <textarea class="textarea" matInput rows="4" placeholder="Detalles" cols="50" style="display: inline-block; width: 100%;height: 100%;" id="detalles" formControlName="detalles"> </textarea>
+                    </mat-form-field>
+                </p>
+                
+                <br/>
+            </div>
+            <div class="col-sm-6">
+                
+                <p>
+                    <label for="duracion" class="large-text" style="margin-right: 40px;margin-left: 45px;">Duración:</label>
+                    <mat-form-field style="width: 270px;height: 90px;" autocomplete="off" required>
+                        <mat-label style="font-family: Arial; font-size: 18px;">Seleccionar</mat-label>
+                        <mat-select id="duracion" formControlName="duracion">
+                            <mat-option value="12" style="font-family: Arial; font-size: 18px;">12 meses</mat-option>
+                            <mat-option value="11" style="font-family: Arial; font-size: 18px;">11 meses</mat-option>
+                            <mat-option value="10" style="font-family: Arial; font-size: 18px;">10 meses</mat-option>
+                            <mat-option value="9" style="font-family: Arial; font-size: 18px;">9 meses</mat-option>
+                            <mat-option value="8" style="font-family: Arial; font-size: 18px;">8 meses</mat-option>
+                            <mat-option value="7" style="font-family: Arial; font-size: 18px;">7 meses</mat-option>
+                            <mat-option value="6" style="font-family: Arial; font-size: 18px;">6 meses</mat-option>
+                            <mat-option value="5" style="font-family: Arial; font-size: 18px;">5 meses</mat-option>
+                            <mat-option value="4" style="font-family: Arial; font-size: 18px;">4 meses</mat-option>
+                            <mat-option value="3" style="font-family: Arial; font-size: 18px;">3 meses</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </p>
+                
+                <p><label style="margin-right: 40px;margin-left: 45px;" class="large-text">DISPONIBLE:</label></p>
+                <p>
+                    <label style="margin-left: 45px;" for="albercaAcc" class="large-text">Alberca:</label>
+                    <mat-radio-group style="margin-left: 70px;" formControlName="albercaAcc" class="custom-radio-group" color="warn" required>
+                        <mat-radio-button value="Si" class="custom-radio-button">Sí</mat-radio-button>
+                        <mat-radio-button value="No" class="custom-radio-button">No</mat-radio-button>
+                    </mat-radio-group>    
+                  </p>
+                  <p>
+                    <label style="margin-left: 45px;" for="entrenador" class="large-text">Entrenador:</label>
+                    <mat-radio-group style="margin-left: 38px;" formControlName="entrenador" class="custom-radio-group" color="warn" required>
+                        <mat-radio-button value="Si" class="custom-radio-button">Sí</mat-radio-button>
+                        <mat-radio-button value="No" class="custom-radio-button">No</mat-radio-button>
+                    </mat-radio-group>  
+                  </p>
+                  <p>
+                    <label style="margin-left: 45px;" for="canchaAcc" class="large-text">Cancha:</label>
+                    <mat-radio-group style="margin-left: 68px;" formControlName="canchaAcc" class="custom-radio-group" color="warn" required>
+                        <mat-radio-button value="Si" class="custom-radio-button">Sí</mat-radio-button>
+                        <mat-radio-button value="No" class="custom-radio-button">No</mat-radio-button>
+                    </mat-radio-group> 
+                  </p>
+                  <p>
+                    <label style="margin-left: 45px;" for="ofertas" class="large-text">Ofertas:</label>
+                    <mat-radio-group style="margin-left: 68px;" formControlName="ofertas" class="custom-radio-group" color="warn" required>
+                        <mat-radio-button value="Si" class="custom-radio-button">Sí</mat-radio-button>
+                        <mat-radio-button value="No" class="custom-radio-button">No</mat-radio-button>
+                    </mat-radio-group> 
+                  </p>             
+                  <p>
+                    <label style="margin-left: 45px;" for="gymAcc" class="large-text">Gimnasio:</label>
+                    <mat-radio-group style="margin-left: 53px;" formControlName="gymAcc" class="custom-radio-group" color="warn" required>
+                        <mat-radio-button value="Si" class="custom-radio-button" >Sí</mat-radio-button>
+                        <mat-radio-button value="No" class="custom-radio-button" >No</mat-radio-button>
+                    </mat-radio-group> 
+                  </p> 
+                <br/>
+                <br/>     
+            </div>
+        </div>
+        <div style="display: flex; justify-content: center;">
+            <button mat-stroked-button type="submit" (click)="enviar()" style="background-color: #fd9727; font-size: 20px; margin-top: 17px; height: 40px; margin-right: 90px;">Aceptar</button>
+            <button mat-stroked-button (click)="cancelar()" style="background-color: #000000; font-size: 20px; margin-top: 17px; height: 40px;color: white;">Cancelar</button>
+          </div>          
+    </div>
+</form>
+<br/><br/><br/><br/><br/><br/><br/><br/>

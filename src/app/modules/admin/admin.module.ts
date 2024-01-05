@@ -39,8 +39,12 @@ import { HistorialCajaComponent } from './components/historial-caja/historial-ca
 import { FiltroFechaPipe } from './components/pipes/filtro-fecha.pipe';
 import { MensajeListaComponent } from './components/ListaEmpleados/mensaje-cargando.component';
 import { ProductosVendidosComponent } from './components/productos-vendidos/productos-vendidos.component';
-
-
+import { MembresiasComponent } from './components/membresias/membresias.component';
+import { MembresiasAgregarComponent } from './components/membresias-agregar/membresias-agregar.component';
+import { MembresiasEditarComponent } from './components/membresias-editar/membresias-editar.component';
+import { MensajeEmergentesComponent } from './components/mensaje-emergentes/mensaje-emergentes.component';
+import { ConfiguracionComponent } from './components/configuracion/configuracion.component';
+import { VerConfiguracionComponent } from './components/ver-configuracion/ver-configuracion.component';
 @NgModule({
   declarations: [
     AdminDashboardComponent,
@@ -56,7 +60,13 @@ import { ProductosVendidosComponent } from './components/productos-vendidos/prod
     HistorialCajaComponent,
     FiltroFechaPipe,
     MensajeListaComponent,
-    ProductosVendidosComponent
+    ProductosVendidosComponent,
+    MembresiasComponent,
+    MembresiasAgregarComponent,
+    MembresiasEditarComponent,
+    MensajeEmergentesComponent,
+    ConfiguracionComponent,
+    VerConfiguracionComponent
   ],
   imports: [
     CommonModule,

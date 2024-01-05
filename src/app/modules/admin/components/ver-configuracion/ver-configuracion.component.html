@@ -1,0 +1,75 @@
+<div class="img-container">
+    <div class="full-width-image">
+        <img src="../../../../../assets/img/Imagen3.png" alt="Imagen1">
+     </div>
+</div>    
+ <div class="container">
+    <div class="gym-details">
+       <h1 style="color: #ff8400">DETALLES DE TÚ GIMNASIO</h1>
+       <div style="text-align: right; margin-bottom: 50px;">
+          <button mat-raised-button routerLink="../configuracion" style="background-color: #fd9727; width: 190px; font-size: 16px; ">
+             <mat-icon>edit</mat-icon>
+             EDITAR
+          </button>
+       </div>
+       <ul *ngFor="let gimnasio of gimnasio">
+          <div class="card">
+             <li style="font-size: 18px;">
+                <img src="../../../../../assets/img/gym.png" width="40px" alt="Icono gym" style="margin-right: 20px;margin-left: 20px; ">
+                <strong style="margin-right: 10px; ">TÚ GIMNASIO:</strong> {{ gimnasio.nombreGym}}
+             </li>
+          </div>
+          <br>
+          <div class="card" >
+             <li  style="font-size: 18px;">
+                <img src="../../../../../assets/img/telefono.png" width="40px" alt="Icono teléfono" style="margin-right: 20px;margin-left: 20px; " >
+                <strong style="margin-right: 37px; ">TELÉFONO:</strong> {{ gimnasio.telefono }}
+             </li>
+          </div>
+          <br>
+          <div class="card">
+             <li style="font-size: 18px;">
+                <img src="../../../../../assets/img/ubicacion.png" width="40px" alt="Icono direccion" style="margin-right: 20px;margin-left: 20px; ">
+                <strong style="margin-right: 35px; ">DIRECCIÓN:</strong> {{ gimnasio.calle }}, {{ gimnasio.colonia }}, {{ gimnasio.ciudad }}
+             </li>
+          </div>
+          <br>
+          <div class="card" style="font-size: 13px;">
+            <li style="font-size: 18px;">
+                <img src="../../../../../assets/img/disponible.png" width="45px" alt="Icono teléfono" style="margin-right: 20px;margin-left: 20px; ">
+                <strong style="font-size: 18px;">DISPONIBILIDAD</strong>
+            </li>
+            <ul style="list-style: none; padding-left: 0;">
+                <li style="margin-left: 15%;"><strong style="margin-right: 5%;">CASILLEROS:</strong> {{ gimnasio.casilleros === '1' ? 'Sí' : 'No' }}</li>
+                <li style="margin-left: 10%;"><strong style="margin-right: 1%;">ESTACIONAMIENTO:</strong> {{ gimnasio.estacionamiento === '1' ? 'Sí' : 'No' }}</li>
+                <li style="margin-left: 14%;"><strong style="margin-right: 6%;">REGADERAS:</strong> {{ gimnasio.regaderas === '1' ? 'Sí' : 'No' }}</li>
+                <li style="margin-left: 14%;"><strong style="margin-right: 5%;">BICICLETERO:</strong> {{ gimnasio.bicicletero === '1' ? 'Sí' : 'No' }}</li>
+            </ul>
+        </div>
+        
+       </ul>
+    </div>
+    <div class="card" style="font-size: 18px;">
+       <table style="margin-top: 30px; margin-bottom: 30px;" class="horario-table" *ngIf="datosHorario && datosHorario.length > 0; else noHorario">
+          <thead>
+             <tr>
+                <th>Día Semana</th>
+                <th>Hora Entrada</th>
+                <th>Hora Salida</th>
+                <!-- Agrega más encabezados según tus datos -->
+             </tr>
+          </thead>
+          <tbody>
+             <tr *ngFor="let horario of datosHorario">
+                <td>{{ horario.diaSemana }}</td>
+                <td>{{ horario.horaEntrada }}</td>
+                <td>{{ horario.horaSalida }}</td>
+                <!-- Agrega más celdas según tus datos -->
+             </tr>
+          </tbody>
+       </table>
+    </div>
+    <ng-template #noHorario>
+       <p>{{ message }}</p>
+    </ng-template>
+ </div>
