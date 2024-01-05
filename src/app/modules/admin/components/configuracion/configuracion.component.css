@@ -1,0 +1,201 @@
+/* Estilos generales */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
+.gym-details {
+  padding-bottom: 20px;
+}
+
+.gym-details h2 {
+  margin-bottom: 20px;
+}
+
+.gym-details ul {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 20px;
+}
+
+.gym-details ul li {
+  margin-bottom: 10px;
+}
+
+
+/* Estilos para los input y select */
+.mat-form-field {
+  width: calc(50% - 20px);
+  margin-bottom: 20px;
+}
+
+.mat-label {
+  color: #555;
+  font-size: 16px;
+}
+
+/* Estilos para los botones */
+button {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 15px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #e0e0e0;
+}
+
+/* Estilos para las tablas */
+table {
+  width: 80%;
+    border-collapse: collapse;
+    background-color: #f4f4f4; /* Color de fondo más neutro */
+    color: #333; /* Color de texto */
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #e0e0e0; /* Color de fondo para filas pares */
+}
+
+th,
+td {
+
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: center;
+}
+
+th {
+  background-color: #222; /* Color de encabezados */
+  color: #fff; /* Color de texto */
+}
+
+/* Estilos para el mensaje de error */
+.mat-error {
+  color: #ff0000;
+  font-size: 14px;
+}
+
+/* Estilos para los radio buttons */
+.mat-radio-button {
+  margin-right: 10px;
+  background-color: #f9f9f9 !important;
+  color: #555 !important;
+  font-weight: bold !important;
+}
+
+/* Estilos para los selects */
+.mat-select-panel {
+  background-color: #fff;
+}
+
+/* Estilos para los labels */
+label {
+  color: #333;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* Estilos para los input de tipo time */
+input[type='time'] {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+/* Estilos para el botón Aceptar */
+button[type='submit'] {
+  background-color: #333;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  padding: 12px 24px;
+  cursor: pointer;
+}
+
+/* Estilos para el botón Cancelar */
+button[type='button'] {
+  background-color: #bbb;
+  color: #333;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  padding: 12px 24px;
+  cursor: pointer;
+}
+
+.inputs_properties {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+.input-container {
+  display: flex;
+  align-items: center;
+}
+
+.card {
+  display: flex;
+  flex-direction: column; /* Asegura que los elementos dentro de la tarjeta se apilen verticalmente */
+  
+}
+.card li {
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  margin: 10px 0; /* Espaciado entre elementos */
+  /* Otros estilos de tu contenido */
+}
+
+.full-width-image {
+  max-width: 100%; /* Ajusta el ancho máximo de la imagen */
+  overflow: hidden;
+  display: flex;
+  justify-content: center; /* Centrado horizontal */
+  align-items: center; /* Centrado vertical */
+}
+
+.full-width-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain; /* Para mantener la relación de aspecto */
+}
+
+.img-container {
+  max-width: 100%; /* Ancho máximo del contenedor de la imagen */
+  height: auto;
+  display: flex;
+  justify-content: center; /* Centrado horizontal */
+}
+
+
+
+.table-container {
+  overflow-x: auto; /* Permite desplazamiento horizontal */
+  max-width: 100%;  /* Evita que la tabla sea más ancha que el contenedor */
+}
+.container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+

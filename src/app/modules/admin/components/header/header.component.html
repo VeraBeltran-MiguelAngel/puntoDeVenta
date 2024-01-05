@@ -1,62 +1,31 @@
-<!--Toolbar-->
-<mat-toolbar>
-  <div class="grid_tool">
-    <div class="tool_logo">
-      <img class="logo_h" src="../../../../../assets/img/logo.jpeg" />
-    </div>
-    <div class="tool_menu">
-      <button
-        routerLink="./home"
-        class="btn"
-        mat-raised-button
-        style="background: #fd9727; color: white"
-      >
-        <p class="txt_btn_footer">Inicio</p>
-      </button>
-     <!--<button
-        routerLink="./proveedores"
-        class="btn"
-        mat-raised-button
-        style="background: #fd9727; color: white"
-      >
-        <p class="txt_btn_footer">Proveedores</p>
-      </button>
-      <button
-        routerLink="./categorias"
-        class="btn"
-        mat-raised-button
-        style="background: #fd9727; color: white"
-      >
-        <p class="txt_btn_footer">Categorias</p>
-      </button>
-      <button
-        routerLink="./productos"
-        class="btn"
-        mat-raised-button
-        style="background: #fd9727; color: white"
-      >
-        <p class="txt_btn_footer">Productos</p>
-      </button>--> 
-      <button
-        routerLink="./entradas"
-        class="btn"
-        mat-raised-button
-        style="background: #fd9727; color: white"
-      >
-        <p class="txt_btn_footer">Entradas</p>
-      </button>
-
-      <button
-        routerLink="./inventario"
-        class="btn"
-        mat-raised-button
-        style="background: #fd9727; color: white"
-      >
-        <p class="txt_btn_footer">Inventario</p>
-      </button>
-      <button class="btn" title="Cerrar sesión" (click)="logout()">
-        <fa-icon [icon]="['fas', 'power-off']"></fa-icon>
-      </button>
+<nav class="navbar navbar-expand-lg">
+  <div class="container-fluid">
+    <img class="logo_h" src="../../../../../assets/img/logo.jpeg" />
+    <button mat-fab class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" style="background: #FD9727; color: white;">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        
+        <li class="nav-item" id="ops" >
+          <a class="nav-link" id="prueba" routerLink="./home" routerLinkActive="active">Inicio</a>
+        </li>
+        <li class="nav-item" id="ops" >
+          <a class="nav-link" id="prueba" routerLink="./inventario" routerLinkActive="active">Inventario</a>
+        </li>
+        <li class="nav-item" id="ops" >
+          <a class="nav-link" id="prueba" routerLink="./misMembresias" routerLinkActive="active">Membresías</a>
+        </li>
+        <li class="nav-item" id="ops" >
+          <a class="nav-link" id="prueba" routerLink="./verConfiguracion" routerLinkActive="active">Configuración</a>
+        </li>
+        <li class="nav-item" id="op" >
+          <a class="nav-link" id="prueba" (click)="logout()"><fa-icon [icon]="['fas', 'power-off']" style="color: black;"></fa-icon></a>
+        </li>
+      <!-- <button class="btn" title="Cerrar sesión" (click)="logout()">
+          <fa-icon [icon]="['fas', 'power-off']"></fa-icon>
+        </button>-->
+      </ul>
     </div>
   </div>
-</mat-toolbar>
+</nav>

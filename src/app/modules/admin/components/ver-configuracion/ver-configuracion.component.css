@@ -1,0 +1,102 @@
+/* Estilos generales */
+
+.card {
+    width: 100%
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .full-width-image {
+    max-width: 100%; /* Ajusta el ancho máximo de la imagen */
+    overflow: hidden;
+    display: flex;
+    justify-content: center; /* Centrado horizontal */
+    align-items: center; /* Centrado vertical */
+  }
+  
+  .full-width-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain; /* Para mantener la relación de aspecto */
+  }
+  
+  .img-container {
+    max-width: 100%; /* Ancho máximo del contenedor de la imagen */
+    height: auto;
+    display: flex;
+    justify-content: center; /* Centrado horizontal */
+  }
+  
+  .container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .gym-details {
+    padding-bottom: 20px;
+  }
+  
+  .gym-details h2 {
+    margin-bottom: 20px;
+  }
+  
+  .gym-details ul {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 20px;
+  }
+  
+  .gym-details ul li {
+    margin-bottom: 10px;
+  }
+  
+  .horario-table {
+    width: 90%;
+    border-collapse: collapse;
+    background-color: #f4f4f4; /* Color de fondo más neutro */
+    color: #333; /* Color de texto */
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: auto;
+  }
+  
+  .horario-table th,
+  .horario-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: center;
+  }
+  
+  .horario-table th {
+    background-color: #222; /* Color de encabezados */
+    color: #fff; /* Color de texto */
+  }
+  
+  .horario-table tbody tr:nth-child(even) {
+    background-color: #e0e0e0; /* Color de fondo para filas pares */
+  }
+  
+  .card {
+    display: flex;
+    flex-direction: column; /* Asegura que los elementos dentro de la tarjeta se apilen verticalmente */
+    
+  }
+  
+  .card li {
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    margin: 10px 0; /* Espaciado entre elementos */
+    /* Otros estilos de tu contenido */
+  }
+

@@ -1,0 +1,84 @@
+<div class="container mt-4">
+    <h2 class="mb-3">MEMBRESÍAS DISPONIBLES</h2>
+  <div style="text-align: right;">
+      <button mat-raised-button routerLink="../agregarMembresias" style="background-color: #fd9727; font-size: 16px;"><mat-icon>add</mat-icon>AGREGAR MEMBRESÍAS</button>
+    </div>
+    <br/>
+    <div style="margin-left: 70px;color:red;font-size: 20px;">{{message}}</div>
+  
+ 
+
+    <h3>Ingresa el valor de una columna</h3>
+    <mat-form-field class="full-width">
+      <mat-label>Filtro</mat-label>
+      <input
+        matInput
+        (keyup)="applyFilter($event)"
+        placeholder="Busca por columnas"
+        #input
+      />
+    </mat-form-field>
+
+  
+    <div  class="table-container">
+     
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <ng-container matColumnDef="title">
+          <th mat-header-cell *matHeaderCellDef>Título</th>
+          <td mat-cell *matCellDef="let item">{{ item.titulo }}</td>
+        </ng-container>
+        <ng-container matColumnDef="details">
+          <th mat-header-cell *matHeaderCellDef>Detalles</th>
+          <td mat-cell *matCellDef="let item">{{ item.detalles }}</td>
+        </ng-container>
+        <ng-container matColumnDef="trainer">
+          <th mat-header-cell *matHeaderCellDef>Entrenador</th>
+          <td mat-cell *matCellDef="let item">{{ item.entrenador }}</td>
+        </ng-container>
+        <ng-container matColumnDef="price">
+          <th mat-header-cell *matHeaderCellDef>Precio</th>
+          <td mat-cell *matCellDef="let item">{{ item.precio }}</td>
+        </ng-container>
+        <ng-container matColumnDef="duration">
+          <th mat-header-cell *matHeaderCellDef>Duración</th>
+          <td mat-cell *matCellDef="let item">{{ item.duracion}}</td>
+        </ng-container>
+        <ng-container matColumnDef="cancha">
+          <th mat-header-cell *matHeaderCellDef>Cancha</th>
+          <td mat-cell *matCellDef="let item">{{ item.canchaAcc}}</td>
+        </ng-container>
+        <ng-container matColumnDef="alberca">
+          <th mat-header-cell *matHeaderCellDef>Alberca</th>
+          <td mat-cell *matCellDef="let item">{{ item.albercaAcc}}</td>
+        </ng-container>
+        <ng-container matColumnDef="gimnasio">
+          <th mat-header-cell *matHeaderCellDef>Gimnasio</th>
+          <td mat-cell *matCellDef="let item">{{ item.gymAcc}}</td>
+        </ng-container>
+        <ng-container matColumnDef="ofertas">
+          <th mat-header-cell *matHeaderCellDef>Ofertas</th>
+          <td mat-cell *matCellDef="let item">{{ item.ofertas}}</td>
+        </ng-container>
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Acciones</th>
+          <td mat-cell *matCellDef="let item">
+            <button mat-icon-button color="primary" routerLink="../../admin/editarMembresias/{{item.idMem}}">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="borrarPlan(item.idMem)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let item; columns: displayedColumns; let i = index"></tr>
+      </table>
+      
+    </div>
+    <mat-paginator [pageSizeOptions]="[4, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+   
+  <br/><br/><br/><br/>
+  </div>
+    
+    
+    

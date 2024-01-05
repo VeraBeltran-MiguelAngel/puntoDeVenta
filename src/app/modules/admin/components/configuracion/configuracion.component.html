@@ -1,0 +1,155 @@
+
+<div class="img-container">
+<div class="full-width-image">
+	<img src="../../../../../assets/img/Imagen3.png" alt="Imagen1">
+ </div>
+</div>
+
+<div class="container">
+
+	<div class="gym-details">
+		<h1 style="color: #ff8400">DETALLES DE TÚ GIMNASIO</h1>
+		<div style="display: flex; justify-content: flex-end;">
+			<button mat-raised-button type="submit" (click)="actualizar()" style="background-color: #fd9727; font-size: 20px; height: 40px; width: 190px; color: black;margin-right: 20px;">
+				<mat-icon>edit</mat-icon>
+				Aceptar
+			</button>
+			<button mat-raised-button type="submit" routerLink="/admin/verConfiguracion" style="background-color: #000000; font-size: 20px; height: 40px; width: 190px;">
+				<mat-icon>cancel</mat-icon>
+				Cancelar
+			</button>
+		</div>
+		<br>
+		<br>
+		<ul>
+			<form [formGroup]="formularioSucursales">
+			<div class="row">
+				<div class="card">
+					<li>
+					<img src="../../../../../assets/img/gym.png" width="60px" alt="Icono gym" style="margin-right: 10px;margin-left: 10px; ">
+					<mat-form-field appearance="outline" class="inputs_properties" style="margin-left: 9px;" required>
+						<mat-label>Nombre</mat-label>
+						<input type="text" matInput placeholder="Nombre" autocomplete="off" id="nombreGym" formControlName="nombreGym" />
+					</mat-form-field>
+					</li>
+				</div>
+				<div class="card" style="margin-top: 30px;">
+					<li>
+					   <img src="../../../../../assets/img/telefono.png" width="60px" alt="Icono teléfono" style="margin-right: 10px;margin-left: 10px; " >
+					   <mat-form-field appearance="outline" class="inputs_properties" style="margin-left: 9px;" required>
+						  <mat-label>Telefono</mat-label>
+						  <input type="text" placeholder="telefono" matInput autocomplete="off" id="telefono" formControlName="telefono" />
+						  <mat-error *ngIf="formularioSucursales.get('telefono')?.hasError('pattern') && !formularioSucursales.get('telefono')?.hasError('required')">
+							 <strong class="txt_msg">** Formato no válido...</strong>
+						  </mat-error>
+					   </mat-form-field>
+					</li>
+				</div>
+				<div class="card" style="margin-top: 30px;">
+					<li>
+					   <img src="../../../../../assets/img/ubicacion.png" width="60px" alt="Icono direccion" style="margin-right: 20px;margin-left: 10px; ">
+					   <mat-form-field appearance="outline" class="inputs_properties"  required>
+						  <mat-label>Estado</mat-label>
+						  <input type="text" placeholder="Estado" matInput autocomplete="off" id="estado" formControlName="estado" />
+					   </mat-form-field>
+					   <mat-form-field appearance="outline" class="inputs_properties" style="margin-left: 32px;" required>
+						  <mat-label>Ciudad</mat-label>
+						  <input type="text" placeholder="ciudad" matInput autocomplete="off" id="ciudad" formControlName="ciudad" />
+					   </mat-form-field>
+					</li>
+					<li style="margin-left: 58px;">
+					   <mat-form-field appearance="outline" class="inputs_properties" style="margin-left: 32px;" required>
+						  <mat-label>Colonia</mat-label>
+						  <input type="text" placeholder="colonia" matInput autocomplete="off" id="colonia" formControlName="colonia" />
+					   </mat-form-field>
+					   <mat-form-field appearance="outline" class="inputs_properties" style="margin-left: 30px;" required>
+						  <mat-label>Calle</mat-label>
+						  <input type="text" placeholder="calle" matInput autocomplete="off" id="calle" formControlName="calle" />
+					   </mat-form-field>
+					</li>
+					<li style="margin-left: 58px;">
+					   <mat-form-field appearance="outline" class="inputs_properties" style="margin-left: 30px; width: 170px;" required>
+						  <mat-label>Codigo postal</mat-label>
+						  <input type="text" placeholder="codigoPostal" matInput autocomplete="off" id="codigoPostal" formControlName="codigoPostal" />
+					   </mat-form-field>
+					   <mat-form-field appearance="outline" class="inputs_properties" style="margin-left: 30px; width: 170px;" required>
+						  <mat-label>numExt</mat-label>
+						  <input type="text" placeholder="numExt" matInput autocomplete="off" id="numExt" formControlName="numExt" />
+					   </mat-form-field>
+					   <mat-form-field appearance="outline" class="inputs_properties" style="margin-left: 30px; width: 170px;" required>
+						  <mat-label>numInt</mat-label>
+						  <input type="text" placeholder="numInt" matInput autocomplete="off" id="numInt" formControlName="numInt" />
+					   </mat-form-field>
+					</li>
+				 </div>
+				 <div class="card" style="font-size: 18px;margin-top: 30px;">
+					<li style="font-size: 18px;">
+					   <img src="../../../../../assets/img/disponible.png" width="60px" alt="Icono teléfono" style="margin-right: 20px;margin-left: 20px; ">
+					   <strong style="font-size: 18px;">DISPONIBILIDAD</strong>
+					</li>
+					<ul>
+					   <p>
+						  <label style="margin-left: 45px;" for="casilleros" class="large-text">Casilleros:</label>
+						  <mat-radio-group style="margin-left: 70px;" formControlName="casilleros" id="casilleros" class="custom-radio-group" color="warn" required>
+							 <mat-radio-button value="1" class="custom-radio-button">Sí</mat-radio-button>
+							 <mat-radio-button value="0" class="custom-radio-button">No</mat-radio-button>
+						  </mat-radio-group>
+					   </p>
+					   <p>
+						  <label style="margin-left: 45px;" for="estacionamiento" class="large-text">Estacionamiento:</label>
+						  <mat-radio-group style="margin-left: 15px;" id="estacionamiento" formControlName="estacionamiento" class="custom-radio-group" color="warn" required>
+							 <mat-radio-button value="1" class="custom-radio-button">Sí</mat-radio-button>
+							 <mat-radio-button value="0" class="custom-radio-button">No</mat-radio-button>
+						  </mat-radio-group>
+					   </p>
+					   <p>
+						  <label style="margin-left: 45px;" for="regaderas" class="large-text">Regaderas:</label>
+						  <mat-radio-group style="margin-left: 63px;" id="regaderas" formControlName="regaderas" class="custom-radio-group" color="warn" required>
+							 <mat-radio-button value="1" class="custom-radio-button">Sí</mat-radio-button>
+							 <mat-radio-button value="0" class="custom-radio-button">No</mat-radio-button>
+						  </mat-radio-group>
+					   </p>
+					   <p>
+						  <label style="margin-left: 45px;" for="bicicletero" class="large-text">Bicicletero:</label>
+						  <mat-radio-group style="margin-left: 63px;" id="bicicletero" formControlName="bicicletero" class="custom-radio-group" color="warn" required>
+							 <mat-radio-button value="1" class="custom-radio-button">Sí</mat-radio-button>
+							 <mat-radio-button value="0" class="custom-radio-button">No</mat-radio-button>
+						  </mat-radio-group>
+					   </p>
+					</ul>
+				 </div>
+		    </div>
+			<br>
+		</form>
+		</ul>
+		<ul>
+			<form [formGroup]="formularioHorarios">
+				<div class="row">
+				<div class="card" style="font-size: 18px">
+					<div  class="table-container">
+				<table>
+				   <thead>
+					  <tr>
+						 <th>Día de la Semana</th>
+						 <th>Hora de Entrada</th>
+						 <th>Hora de Salida</th>
+					  </tr>
+				   </thead>
+				   <tbody formArrayName="horarios">
+					  <tr *ngFor="let horario of getHorariosControls(); let i = index" [formGroupName]="i">
+					  <td *ngIf="horario.get('diaSemana') !== null">{{ horario.get('diaSemana')?.value }}</td>
+					  <td><input type="time" formControlName="horaEntrada" placeholder="Hora Entrada"></td>
+					  <td><input type="time" formControlName="horaSalida" placeholder="Hora Salida"></td>
+					  </tr>
+				   </tbody>
+				</table>
+					</div>
+				<br/>
+			</div>
+		</div>
+			 </form>
+
+		</ul>
+	</div>
+ </div>
+
