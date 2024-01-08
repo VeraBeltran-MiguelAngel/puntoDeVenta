@@ -43,6 +43,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { ListarProductosPipe } from './components/pipes/productos/lista-proveedor.pipe';
 import { VerCorteComponent } from './components/ver-corte/ver-corte.component';
 import { MatMenuModule } from '@angular/material/menu';
+import { RegistroComponent } from './components/registro/registro.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import { MatMenuModule } from '@angular/material/menu';
     FiltroNombreProductoPipe,
     FilterByDatePipe,
     ListarProductosPipe,
-    VerCorteComponent
+    VerCorteComponent,
+    RegistroComponent
   ],
   imports: [
     CommonModule,

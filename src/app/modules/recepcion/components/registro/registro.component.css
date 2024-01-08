@@ -1,0 +1,105 @@
+/* Estilos para el formulario */
+.content_body {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+  }
+  
+  .inputs_properties {
+    width: 100%;
+  }
+  
+  /* Estilos para el mensaje de error */
+  .txt_msg {
+    color: red;
+    font-size: 0.9em;
+  }
+  
+  /* Estilos para el botón */
+  .btn_int {
+    margin-top: 20px;
+    background-color: #FD9727;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn_int:hover {
+    background-color: #FFA940;
+  }
+  
+  /* Estilos para el título */
+  .title_page {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Estilos para los títulos H1 y H3 */
+  h1, h3 {
+    margin: 5px 0;
+    font-family: 'Arial', sans-serif;
+  }
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  input[type="file"] {
+    display: none;
+  }
+  
+  button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+   /* margin: 10px;
+    background-color: #FD9727;
+    color: white;
+   */
+  }
+  
+  button:hover {
+    background-color: #FFB54D;
+  }
+  
+  video {
+    margin-top: 20px;
+    width: 100%;
+    max-width: 400px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  img {
+    margin-top: 20px;
+    width: 100%;
+    max-width: 400px;
+    border: 2px solid #FD9727;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  
+
+
+
+
