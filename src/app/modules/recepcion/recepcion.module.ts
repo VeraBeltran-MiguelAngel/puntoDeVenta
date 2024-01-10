@@ -44,6 +44,7 @@ import { ListarProductosPipe } from './components/pipes/productos/lista-proveedo
 import { VerCorteComponent } from './components/ver-corte/ver-corte.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { RegistroComponent } from './components/registro/registro.component';
+import { EmergenteHistorialProductosComponent } from './components/emergente-historial-productos/emergente-historial-productos.component';
 import {WebcamModule} from 'ngx-webcam';
 
 @NgModule({
@@ -64,7 +65,8 @@ import {WebcamModule} from 'ngx-webcam';
     FilterByDatePipe,
     ListarProductosPipe,
     VerCorteComponent,
-    RegistroComponent
+    RegistroComponent,
+    EmergenteHistorialProductosComponent
   ],
   imports: [
     CommonModule,

@@ -8,6 +8,9 @@ import {
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ProductosService } from 'src/app/service/productos.service';
+import { EmergenteHistorialProductosComponent } from '../emergente-historial-productos/emergente-historial-productos.component';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'inventarios',
@@ -17,13 +20,13 @@ import { ProductosService } from 'src/app/service/productos.service';
 })
 export class InventariosComponent implements OnInit {
   displayedColumns: string[] = [
-    'codigo_de_barra',
-    'categoria',
-    'nombre',
-    'descripcion',
-    'precio de venta',
-    'cantidad disponible',
-    'sucursal',
+    'Código De Barras',
+    'Categoría',
+    'Nombre',
+    'Descripción',
+    'Precio De Venta',
+    'Cantidad Disponible',
+    'Sucursal'
   ];
 
   listInventarioData: any[] = [];
@@ -32,7 +35,7 @@ export class InventariosComponent implements OnInit {
   //paginator es una variable de la clase MatPaginator
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
-  constructor(private productoService: ProductosService) {}
+  constructor(private productoService: ProductosService, public dialog: MatDialog,private toastr: ToastrService,) {}
 
   ngOnInit(): void {
     this.productoService.inventarioGlobal().subscribe((respuesta) => {
@@ -49,5 +52,20 @@ export class InventariosComponent implements OnInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  abrirHistorial(): void {
+    this.dialog.open(EmergenteHistorialProductosComponent, {
+      maxWidth: '100%',
+      width: 'auto',
+    })
+    .afterClosed()
+    .subscribe((cerrarDialogo: Boolean) => {
+      if (cerrarDialogo) {
+        
+      } else {
+        
+      }
+    });
   }
 }

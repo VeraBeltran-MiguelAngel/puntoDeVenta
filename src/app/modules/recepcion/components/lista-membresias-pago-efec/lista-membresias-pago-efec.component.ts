@@ -526,7 +526,9 @@ export class ListaMembresiasPagoEfecComponent implements OnInit {
     saveAs(newBlob, 'Clientes Activos.xlsx');
   }
 
-
+  private formatDateV2(date: Date): string {
+    return this.datePipe.transform(date, 'dd/MM/yyyy') || '';
+  }
   
   //Descarga el archivo en PDF
   descargarPDF(): void {
@@ -540,8 +542,12 @@ export class ListaMembresiasPagoEfecComponent implements OnInit {
     // Crear un objeto jsPDF
     const pdf = new (jsPDF as any)();  // Utilizar 'as any' para evitar problemas de tipo
 
+    // Obtener las fechas seleccionadas
+    const fechaInicio = this.formatDateV2(this.fechaInicio);
+    const fechaFin = this.formatDateV2(this.fechaFin);
+
     // Encabezado del PDF con las fechas
-    pdf.text(`Reporte de los clientes activos`, 10, 10);
+    pdf.text(`Reporte de los clientes activos (${fechaInicio} - ${fechaFin})`, 10, 10);
     
     // Contenido del PDF
     const datos = this.dataSourceActivos.filteredData.map((activos: ClientesActivos) => [

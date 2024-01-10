@@ -1,0 +1,9 @@
+.grid{
+    display: grid;
+    grid-template-columns: 45% 10% 45%   
+}
+
+/* Estilo específico para el botón que quieres mover a la derecha */
+.grid .move-right {
+    justify-self: end;  /* Alinea el elemento a la derecha */
+}

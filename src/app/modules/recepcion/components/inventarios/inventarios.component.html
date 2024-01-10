@@ -1,14 +1,13 @@
 <div class="container mt-4">
     <h2 class="mb-3">Inventarios</h2>
   
-    <div style="text-align: right; margin-bottom: 50px">
-      <!-- <button
+    <div style="text-align: left; margin-bottom: 50px">
+       <button
           mat-raised-button
-          routerLink="/admin/alta-colaborador"
-          style="background-color: #fd9727; font-size: 16px; margin-right: 100px"
-        >
-          <mat-icon>add</mat-icon>AGREGAR PRODUCTO
-        </button> -->
+          (click)="abrirHistorial()"
+          style="background-color: #fd9727; font-size: 16px; margin-right: 100px">
+          <mat-icon>assignment</mat-icon>Historial de inventario global
+        </button> 
     </div>
     
     <h3>Ingresa el valor de una columna</h3>
@@ -21,12 +20,46 @@
         #input
       />
     </mat-form-field>
+
     <div  class="table-container">
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+          <ng-container [matColumnDef]="column" *ngFor="let column of displayedColumns">
+            <th mat-header-cell *matHeaderCellDef>{{ column }}</th>
+            <td mat-cell *matCellDef="let prod">
+              <ng-container *ngIf="column === 'Código De Barras'">
+                  {{ prod.codigo_de_barra }}
+                </ng-container>
+                <ng-container *ngIf="column === 'Categoría'">
+                  {{ prod.categoria }}
+                </ng-container>
+                <ng-container *ngIf="column === 'Nombre'">
+                  {{ prod.nombre }}
+                </ng-container>
+                <ng-container *ngIf="column === 'Descripción'">
+                  {{ prod.descripcion }}
+                </ng-container>
+                <ng-container *ngIf="column === 'Precio De Venta'">
+                  {{ prod.precio_de_venta }}
+                </ng-container>
+                <ng-container *ngIf="column === 'Cantidad Disponible'">
+                  {{ prod.cantidad_disponible }}
+                </ng-container>
+                <ng-container *ngIf="column === 'Sucursal'">
+                  {{ prod.sucursal }}
+                </ng-container>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let productofila; columns: displayedColumns"></tr>
+        </table>
+      </div>
+        <mat-paginator #paginatorActivos [pageSizeOptions]="[5, 10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+
+    <!--<div  class="table-container">
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
       <ng-container
         [matColumnDef]="column"
-        *ngFor="let column of displayedColumns"
-      >
+        *ngFor="let column of displayedColumns">
         <th mat-header-cell *matHeaderCellDef>{{ column }}</th>
         <td mat-cell *matCellDef="let prod">
           {{ prod[column] }}
@@ -39,7 +72,7 @@
     <mat-paginator
       [pageSizeOptions]="[5, 10, 15, 20]"
       showFirstLastButtons
-    ></mat-paginator>
+    ></mat-paginator>--->
     <br />
     <br />
     <br />

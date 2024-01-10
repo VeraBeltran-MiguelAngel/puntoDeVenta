@@ -39,8 +39,8 @@
                   Descargar Reporte
                 </button>
                 <mat-menu #menu="matMenu">
-                  <button mat-menu-item (click)="descargarExcel()">.xlsx</button>
-                  <button mat-menu-item (click)="descargarPDF()">.pdf</button>
+                  <button mat-menu-item (click)="descargarExcel()">.xlsx <mat-icon>grid_on</mat-icon></button>
+                  <button mat-menu-item (click)="descargarPDF()">.pdf <mat-icon>picture_as_pdf</mat-icon></button>
       
                 </mat-menu>
       
@@ -133,8 +133,7 @@
                     </mat-form-field>
                   </ng-container>
                   <ng-container *ngIf="column === 'Pagar'">
-                    <button mat-raised-button (click)="realizarPago(updMem)" style="background-color: #F9A640;
-                    color: #000000;">Pagar</button>
+                    <button mat-raised-button (click)="realizarPago(updMem)" style="background-color: #F9A640; color: #000000;">Pagar</button>
                   </ng-container>
                   <ng-container *ngIf="column === 'Actualizar'">
                     <button mat-fab class="button-icon" (click)="abrirEmergente(updMem)" aria-label="Example icon button with a home icon">

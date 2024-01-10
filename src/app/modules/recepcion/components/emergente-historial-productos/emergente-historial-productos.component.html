@@ -1,0 +1,87 @@
+<h1 mat-dialog-title>Historial del inventario</h1>
+    <div mat-dialog-content>
+
+        <div class="grid">
+            <div style="display: flex; justify-content: flex-end;">
+                <mat-form-field>
+                    <mat-label>Fecha Inicio</mat-label>
+                    <input matInput [matDatepicker]="pickerInicio" (ngModelChange)="onFechaInicioChange($event)" [(ngModel)]="fechaInicio" readonly>    <!--(ngModelChange)="onFechaInicioChange($event)" [(ngModel)]="fechaInicio"-->
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="pickerInicio"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerInicio></mat-datepicker>
+                </mat-form-field>
+            </div>
+    
+            <div></div>
+    
+            <div style="display: flex; justify-content: flex-start;">
+                <mat-form-field>
+                    <mat-label>Fecha Fin</mat-label>
+                    <input matInput [matDatepicker]="pickerFin" (ngModelChange)="onFechaFinChange($event)" [(ngModel)]="fechaFin" readonly>   <!--(ngModelChange)="onFechaFinChange($event)" [(ngModel)]="fechaFin"-->
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="pickerFin"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerFin></mat-datepicker>
+                </mat-form-field>
+            </div>  
+        </div>
+
+        <mat-form-field style ="font-size: 14px; width: 100%;">
+            <mat-label>Buscar</mat-label>
+            <input matInput (keyup)="applyFilter($event)"placeholder="Buscar" #input/>
+        </mat-form-field>
+
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+            <ng-container [matColumnDef]="column" *ngFor="let column of displayedColumnsHistorial">
+              <th mat-header-cell *matHeaderCellDef>{{ column }}</th>
+              <td mat-cell *matCellDef="let hist">
+                <ng-container *ngIf="column === 'Sucursal'">
+                  {{ hist.Sucursal }}
+                </ng-container>
+                <ng-container *ngIf="column === 'Usuario'">
+                  {{ hist.Usuario }}
+                </ng-container>
+                <ng-container *ngIf="column === 'Producto'">
+                  {{ hist.Producto }}
+                </ng-container>
+                <ng-container *ngIf="column === 'Concepto'">
+                  {{ hist.Concepto }}
+                </ng-container>
+                <ng-container *ngIf="column === 'Fecha Movimiento'">
+                  {{ hist.FechaMovimiento }}
+                </ng-container>
+                <ng-container *ngIf="column === 'Stock Actual'">
+                  {{ hist.ActualStock }} {{ 'pzas'}}
+                </ng-container>
+                <ng-container *ngIf="column === 'Stock Movimiento'">
+                  {{ hist.MovimientoStock }} {{ 'pzas'}}
+                </ng-container>
+                <ng-container *ngIf="column === 'Stock Nuevo'">
+                  {{ hist.NuevoStock }} {{ 'pzas'}}
+                </ng-container>
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumnsHistorial"></tr>
+            <tr mat-row *matRowDef="let productofila; columns: displayedColumnsHistorial"></tr>
+        </table>
+        <mat-paginator #paginatorHistorial [pageSizeOptions]="[5, 10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+    </div>
+    
+<div mat-dialog-actions class="grid">
+    <div class="move-right">
+        <button mat-button style="background-color: #F9A640;" [matMenuTriggerFor]="menu">
+            <mat-icon style="font-size: 22px;">download</mat-icon>
+            Descargar
+        </button>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="descargarExcel()">.xlsx <mat-icon>grid_on</mat-icon></button>
+            <button mat-menu-item (click)="descargarPDF()">.pdf <mat-icon>picture_as_pdf</mat-icon></button>
+        </mat-menu>
+    </div>
+
+    <div></div>
+    
+    <div>
+        <!--<button mat-button style="background-color: #F9A640;" (click)="cerrarDialogo()"><mat-icon>download</mat-icon>Descargar</button>-->
+        <button mat-button style="background-color: red;" (click)="cerrarDialogo()"><mat-icon >cancel</mat-icon>Cerrar</button>
+    </div>
+</div>

@@ -8,8 +8,8 @@ import { caja } from '../modules/recepcion/components/models/caja';
 })
 export class inventarioService {
 
-//API: string = 'https://localhost/plan/inventario.php'
-  API: string = 'https://olympus.arvispace.com/puntoDeVenta/conf/inventario.php'
+API: string = 'http://localhost/plan/inventario.php/'
+  //API: string = 'https://olympus.arvispace.com/puntoDeVenta/conf/inventario.php'
   
   constructor(private clienteHttp:HttpClient) {
   }
@@ -24,8 +24,9 @@ export class inventarioService {
     return this.clienteHttp.get(this.API, { params: params });
   }
 
-  
-
-  
+  HistorialInventario(startDate: any, endDate: any): Observable<any>{
+    const params = new HttpParams().set('DateStartHistorial',startDate).set('DateEndHistorial',endDate);
+    return this.clienteHttp.get(this.API, {params});
+  }
 
 }
