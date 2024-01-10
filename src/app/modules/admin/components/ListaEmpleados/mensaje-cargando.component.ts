@@ -37,7 +37,7 @@ export class MensajeListaComponent implements OnInit {
       }
     }) 
 
-    this.obtenerClientesLista();
+    //this.obtenerClientesLista();
   }
 
   clientes: Cliente[] = [];
@@ -45,7 +45,7 @@ export class MensajeListaComponent implements OnInit {
   selectedClient: number | null = null;
 
 
-  obtenerClientesLista() {
+ obtenerClientesLista() {
     this.clienteService.obtenerUsuariosPorId(1).subscribe(
       (data: any) => {
         this.clientes = data as Cliente[];

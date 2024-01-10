@@ -6,7 +6,7 @@ import { ListaMembresiasPagoEfecComponent } from './components/lista-membresias-
 import { InventariosComponent } from './components/inventarios/inventarios.component';
 import { TransferenciasComponent } from './components/transferencias/transferencias.component';
 import { VerCorteComponent } from './components/ver-corte/ver-corte.component';
-
+import { RegistroComponent } from './components/registro/registro.component';
 const routes: Routes = [
   {
     path: '',
@@ -19,6 +19,7 @@ const routes: Routes = [
       { path: 'listaMembresias', component: ListaMembresiasPagoEfecComponent },
       { path: 'inventarios', component: InventariosComponent },
       { path: 'transferencias', component: TransferenciasComponent },
+      { path: 'registro', component: RegistroComponent },
     ],
   },
 ];
