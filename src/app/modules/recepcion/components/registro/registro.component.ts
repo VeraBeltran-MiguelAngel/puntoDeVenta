@@ -19,6 +19,8 @@ import { AuthService } from "src/app/service/auth.service";
 import { autoTable } from "jspdf-autotable";
 import { plan } from "src/app/modules/admin/components/models/plan";
 import { RegistroService } from "src/app/service/registro.service";
+import { Subject, Observable } from 'rxjs';
+import { WebcamImage, WebcamInitError } from 'ngx-webcam';
 
 interface Food {
   value: string;
@@ -30,6 +32,7 @@ interface Food {
   templateUrl: "./registro.component.html",
   styleUrl: "./registro.component.css",
 })
+
 export class RegistroComponent implements OnInit {
   //imageUrl: string | ArrayBuffer | null = null;
 
@@ -78,11 +81,46 @@ export class RegistroComponent implements OnInit {
   cameraOn: boolean = false;
   isCameraOn = false;
   planes: any;
+  ver: string = '';
+  actualizar_imagen: string = '';
+  photoSelected: string | ArrayBuffer | null;
+  public errors: WebcamInitError[] = [];
   imageUrl =
     "https://images.vexels.com/media/users/3/137047/isolated/preview/5831a17a290077c646a48c4db78a81bb-icono-de-perfil-de-usuario-azul.png"; // URL de la imagen por defecto
 
   @ViewChild("videoElement") videoElement: ElementRef<HTMLVideoElement>;
   @ViewChild("defaultImage") defaultImage!: ElementRef<HTMLImageElement>;
+  private trigger: Subject<void> = new Subject<void>();
+  private nextWebcam: Subject<boolean | string> = new Subject<boolean | string>();
+  public deviceId: string;
+
+  public get triggerObservable(): Observable<void> {
+    return this.trigger.asObservable();
+  }
+  public handleImage(webcamImage: WebcamImage): void {
+    console.info('received webcam image', webcamImage);
+    this.webcamImage = webcamImage;
+    // Almacenar la imagen en el objeto Archivo
+    this.archivo.base64textString = this.webcamImage.imageAsBase64;
+    // Agregar el nombre al archivo - como tal la foto tomada no tiene nombre - por lo que se le asigna uno
+    const timestamp = new Date().getTime();
+    this.archivo.nombreArchivo = `imagen_${timestamp}.png`;
+  
+    // Asignar la URL de la imagen tomada a photoSelected
+    this.photoSelected = this.webcamImage.imageAsDataUrl;
+   
+  }
+  
+
+
+
+  public get nextWebcamObservable(): Observable<boolean | string> {
+    return this.nextWebcam.asObservable();
+  }
+  public videoOptions: MediaTrackConstraints = {
+    // width: {ideal: 1024},
+    // height: {ideal: 576}
+  };
 
   constructor(
     public fb: FormBuilder,
@@ -118,10 +156,15 @@ export class RegistroComponent implements OnInit {
       curp: ['', Validators.compose([ Validators.minLength(18), Validators.pattern(/^[A-ZÑ0-9]*[A-Z][A-ZÑ0-9]*$/)])],
       email: ['', Validators.compose([Validators.required, Validators.pattern(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)])],  
       pass: ['', Validators.compose([Validators.required, Validators.minLength(8)])],
-      tiene_huella:[1, Validators.required],
+      tiene_huella:[''
+    ],
       fotoUrl:['', Validators.required],
+      peso:['', Validators.compose([Validators.pattern(/^(0|[1-9][0-9]*)$/), Validators.max(300)])],
+      estatura:['', Validators.compose([Validators.pattern(/^(0|[1-9][0-9]*)$/), Validators.max(250)])],
       Gimnasio_idGimnasio:[this.auth.getIdGym()],
-      Membresia_idMem:['', Validators.required]
+      Membresia_idMem:['', Validators.required],
+      nombreArchivo: [''],
+      base64textString: [''],
     })
   }
 
@@ -142,74 +185,6 @@ export class RegistroComponent implements OnInit {
 
     });
     }
-
-
- 
-
-  registrar(): any {
-    //console.log("Me presionaste");
-    //console.log(this.form.value.email);
-    console.log(this.form.value);
-    this.email = this.form.value.email;
-    console.log(this.email);
-    if (this.form.valid) {
-      this.clienteService.consultarEmail(this.email).subscribe((resultData) => {
-        console.log(resultData.msg);
-        if (resultData.msg == "emailExist") {
-          this.toastr.warning("El correo ingresado ya existe.", "Alerta!!!");
-        }
-        if (resultData.msg == "emailNotExist") {
-          this.clienteService
-            .agregarCliente(this.form.value)
-            .subscribe((respuesta) => {
-              this.dialog
-                .open(MensajeEmergentesComponent, {
-                  data: `Usuario registrado exitosamente`,
-                })
-                .afterClosed()
-                .subscribe((cerrarDialogo: Boolean) => {
-                  if (cerrarDialogo) {
-                    this.router.navigateByUrl(
-                      `/recepcion/home`
-                    );
-                  } else {
-                  }
-                });
-            });
-        }
-      });
-    } else {
-      // El formulario no es válido, muestra un mensaje de error
-      this.message = "Por favor, complete todos los campos requeridos.";
-    }
-  }
-
-/*  onFileSelected(event: Event) {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files[0]) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        if (this.defaultImage) {
-          this.defaultImage.nativeElement.src = e.target?.result as string; // Actualiza la imagen con la seleccionada
-        }
-      };
-      reader.readAsDataURL(input.files[0]);
-    }
-  }*/
-
-  /*onFileSelected(event: Event) {
-    const inputElement = event.target as HTMLInputElement;
-    if (inputElement.files && inputElement.files.length > 0) {
-      const file = inputElement.files[0];
-      // Puedes asignar el archivo a un campo del formulario
-      this.form.patchValue({
-        fotourl: file // Asignar el archivo al campo 'fotourl'
-      });
-
-      // Si necesitas subir la imagen a tu servidor, puedes hacerlo aquí
-      // Utiliza el servicio HttpClient para realizar la solicitud al servidor
-    }
-  }*/
 
   selectedFile: File | null = null;
 
@@ -289,7 +264,42 @@ export class RegistroComponent implements OnInit {
         console.error("Error al acceder a la cámara:", error);
       });
   }
+  
+  archivo = {
+    id: 0,
+    nombreArchivo: '',
+    base64textString: ''
+  }
 
+  public cameraWasSwitched(deviceId: string): void {
+    console.log('active device: ' + deviceId);
+    this.deviceId = deviceId;
+  }
+
+  public handleInitError(error: WebcamInitError): void {
+    this.errors.push(error);
+  }
+  public triggerSnapshot(): void {
+    this.trigger.next();
+
+    // Ocultar la camaraweb despues de tomar la foto
+    this.toggleWebcam();
+  }
+  public toggleWebcam(): void {
+    this.showWebcam = !this.showWebcam;
+  }
+  public webcamImage: WebcamImage | null;
+  public allowCameraSwitch = true;
+  not_format: boolean = false;
+  not_size: boolean = false;
+  public showWebcam = false;
+
+  resetWebcamImage(): void {
+    this.webcamImage = null;
+    this.archivo.base64textString = '';
+    this.archivo.nombreArchivo = '';
+  }
+  file: File;
   stopCamera() {
     if (this.videoElement) {
       const stream = this.videoElement.nativeElement.srcObject as MediaStream;
@@ -303,4 +313,201 @@ export class RegistroComponent implements OnInit {
       this.defaultImage.nativeElement.style.display = "block";
     }
   }
+
+  show_option(option: string) {
+    console.log("hola");
+    this.actualizar_imagen = option;
+    if (option === 'take') {
+      this.showWebcam = true;
+    }
+  }
+
+  onPhotoSelected(event: any): void {
+    
+    if (event.target.files && event.target.files[0]) {
+      var files = event.target.files;
+      var file = files[0];
+
+      if (file) {
+        // Validar si el archivo seleccionado es una imagen
+        if (!file.type.startsWith('image/')) {
+          this.not_format = true;
+          console.log('Tipo de archivo no permitido. Solo se permiten imágenes.');
+          this.toastr.error('El archivo seleccionado no es una imagen', 'Error');
+          return;
+        }
+        // Validar si el archivo excede el tamaño máximo permitido de 1mb
+        if (file.size > 1024 * 1024) {
+          this.not_size = true;
+          console.log('El archivo es demasiado grande. Máximo 1 MB permitido.');
+          this.toastr.error('El tamaño de la imagen debe ser menor a 1MB', 'Error');
+          return;
+        }
+      }
+
+      // Almacenar el nombre del archivo/imagen en el json Archivo
+      this.archivo.nombreArchivo = file.name;
+
+      this.file = <File>event.target.files[0];
+      // image preview
+      const reader = new FileReader();
+      reader.onload = e => this.photoSelected = reader.result;
+      reader.readAsDataURL(this.file);
+
+      if (files && file) {
+        // Create a new instance of FileReader
+        const newReader = new FileReader();
+        newReader.onload = this._handleReaderLoaded.bind(this);
+        newReader.readAsBinaryString(file);
+      }
+    } else {
+      // Si no se selecciona ninguna imagen, mostrar la imagen por defecto y resetear valores del objeto Archivo
+      this.photoSelected = null;
+      this.archivo.base64textString = '';
+      this.archivo.nombreArchivo = '';
+      return;
+    }
+
+  }
+
+  // Codificar la imagen a base64
+  _handleReaderLoaded(readerEvent: any) {
+    var binaryString = readerEvent.target.result;
+    this.archivo.base64textString = btoa(binaryString);
+  }
+
+
+ uploadPhoto() {
+  console.log("hola");
+    console.log(this.archivo);
+    if (this.archivo.base64textString === '' || this.archivo.nombreArchivo === '' ) {
+      console.log('Selecciona una imagen antes de querer subir la imagen.');
+      this.toastr.error('Aún no haz seleccionado una imagen valida...', 'Error');
+      return;
+    }
+    console.log("hola");
+    /*this.auth.send_profile_img(this.archivo).subscribe({
+      next: (resultData) => { console.log(resultData); }, error: (error) => { console.log(error); }
+    });*/
+    
+    this.form.patchValue({
+      fotoUrl: this.archivo.nombreArchivo  // Asigna la imagen a fotoUrl
+    });
+
+    this.form.patchValue({
+      nombreArchivo: this.archivo.nombreArchivo  // Asigna la imagen a fotoUrl
+    });
+    this.form.patchValue({
+      base64textString: this.archivo.base64textString  // Asigna la imagen a fotoUrl
+    });
+
+  }
+
+
+  registrar(): any {
+    console.log(this.form.value);
+    this.email = this.form.value.email;
+    console.log(this.email);
+    if (this.form.valid) {
+      this.clienteService.consultarEmail(this.email).subscribe((resultData) => {
+        console.log(resultData.msg);
+        if (resultData.msg == "emailExist") {
+          this.toastr.warning("El correo ingresado ya existe.", "Alerta!!!");
+        }
+        if (resultData.msg == "emailNotExist") {
+          this.clienteService
+            .guardarCliente(this.form.value)
+            .subscribe((respuesta) => {
+              this.dialog
+                .open(MensajeEmergentesComponent, {
+                  data: `Usuario registrado exitosamente`,
+                })
+                .afterClosed()
+                .subscribe((cerrarDialogo: Boolean) => {
+                  if (cerrarDialogo) {
+                    this.router.navigateByUrl(
+                      `/recepcion/home`
+                    );
+                  } 
+                });
+            },
+            (error) => {
+              // Manejar errores de solicitud HTTP
+              if (error.status === 400) {
+                if (error.error && error.error.msg === 'error_tipo_archivo_no_soportado') {
+                  // Manejar el error específico 'error_tipo_archivo_no_soportado'
+                  console.error('Error: Tipo de archivo no soportado');
+                  this.toastr.error("Error: Tipo de archivo no soportado");
+                } else {
+                  // Otro tipo de error 400
+                  console.error('Error 400: Bad Request');
+                  this.toastr.error("Error: no se pudo agregar usuario. Intente de nuevo");
+                }
+              } else {
+                // Otro tipo de error diferente a 400
+                console.error('Error: Otro tipo de error');
+                this.toastr.error("Error: no se pudo agregar usuario. Intente de nuevo");
+              }
+            }
+            
+            );
+        }
+        
+      });
+    } else {
+      // El formulario no es válido, muestra un mensaje de error
+      this.message = "Por favor, complete todos los campos requeridos.";
+    }
+  }
+
+  /*registrar(): any {
+    console.log(this.form.value);
+    this.email = this.form.value.email;
+    console.log(this.email);
+  
+    if (this.form.valid) {
+      this.clienteService.consultarEmail(this.email).subscribe((resultData) => {
+        console.log(resultData.msg);
+        if (resultData.msg == "emailExist") {
+          this.toastr.warning("El correo ingresado ya existe.", "Alerta!!!");
+        }
+        if (resultData.msg == "emailNotExist") {
+          this.clienteService.guardarCliente(this.form.value).subscribe(
+            (respuesta) => {
+              // El registro fue exitoso
+              this.dialog
+                .open(MensajeEmergentesComponent, {
+                  data: `Usuario registrado exitosamente`,
+                })
+                .afterClosed()
+                .subscribe((cerrarDialogo: Boolean) => {
+                  if (cerrarDialogo) {
+                    this.router.navigateByUrl(`/recepcion/home`);
+                  }
+                });
+            },
+            (error) => {
+              // Manejar errores de solicitud HTTP
+              if (error.status === 400) {
+                if (error.error && error.error.msg === 'error_tipo_archivo_no_soportado') {
+                  // Manejar el error específico 'error_tipo_archivo_no_soportado'
+                  console.error('Error: Tipo de archivo no soportado');
+                } else {
+                  // Otro tipo de error 400
+                  console.error('Error 400: Bad Request');
+                }
+              } else {
+                // Otro tipo de error diferente a 400
+                console.error('Error: Otro tipo de error');
+              }
+            }
+          );
+        }
+      });
+    } else {
+      this.message = "Por favor, complete todos los campos requeridos.";
+    }
+  }*/
+  
+
 }

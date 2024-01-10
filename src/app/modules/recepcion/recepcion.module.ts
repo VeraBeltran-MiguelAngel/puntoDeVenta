@@ -44,6 +44,7 @@ import { ListarProductosPipe } from './components/pipes/productos/lista-proveedo
 import { VerCorteComponent } from './components/ver-corte/ver-corte.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { RegistroComponent } from './components/registro/registro.component';
+import {WebcamModule} from 'ngx-webcam';
 
 @NgModule({
   declarations: [
@@ -74,7 +75,8 @@ import { RegistroComponent } from './components/registro/registro.component';
     ReactiveFormsModule,
     FlexLayoutModule,
     MatPaginatorModule,
-    MatMenuModule
+    MatMenuModule,
+    WebcamModule
 
   ],
   providers: [TablaEmergenteService], //*si no colocas el servicio no se mostrara la tabla emergente ni el resto de contenido todo estara en blanco

@@ -48,17 +48,10 @@
     font-family: 'Arial', sans-serif;
   }
   
-
-
-
-
-
-
-
-
-
-
-
+  .button-container {
+    display: flex;
+    justify-content: center;
+  }
 
   input[type="file"] {
     display: none;
@@ -70,7 +63,8 @@
     border-radius: 6px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-
+    margin-left: 50px;
+ 
    /* margin: 10px;
     background-color: #FD9727;
     color: white;
@@ -103,3 +97,81 @@
 
 
 
+
+
+
+  /* Estilos generales */
+.content_up_picture {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.content_up_picture img {
+  width: 350px;
+  height: 350px;
+  cursor: pointer;
+  border-radius: 10%;
+}
+
+.content_up_picture form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.content_up_picture button {
+  margin-top: 10px;
+}
+
+/* Estilos de imagen seleccionada */
+.content_up_picture p {
+  color: green;
+  font-weight: bold;
+}
+
+/* Estilos de errores */
+.content_up_picture strong {
+  font-weight: bold;
+}
+
+/* Estilos de la sección de botones */
+.card-body {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.card-body button {
+  margin-top: 10px;
+}
+
+/* Estilos de la sección de opciones */
+.content_profile_img {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.content_show_img {
+  margin-bottom: 10px;
+}
+
+/* Estilos de las opciones de menú */
+.content_take_picture h5 {
+  margin-bottom: 10px;
+}
+
+/* Estilos de la webcam */
+.content_take_picture .snapshot {
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* Estilos del botón de descartar foto */
+.content_take_picture button.btn-danger {
+  margin-top: 10px;
+}
+
+/* Opcional: Estilos para ajustar el tamaño de la webcam */
+.snapshot img {
+  max-width: 100%;
+  height: auto;
+}

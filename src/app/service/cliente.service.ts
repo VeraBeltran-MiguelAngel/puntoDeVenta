@@ -9,15 +9,22 @@ import { Cliente } from '../modules/recepcion/components/models/Cliente';
   providedIn: 'root'
 })
 export class ClienteService {
+  httpHeaders = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
 
   API: string = 'https://localhost/plan/usuarios.php'
-  //URLServices: String = "https://olympus.arvispace.com/conPrincipal/registro.php"; //http://localhost/plan/registro.php/ https://olympus.arvispace.com/conPrincipal/registro.php
-  URLServices: string = 'https://localhost/plan/registros.php'
+ URLServices: String = "https://olympus.arvispace.com/puntoDeVenta/conf/registros.php"; //http://localhost/plan/registro.php/ https://olympus.arvispace.com/conPrincipal/registro.php
+  //URLServices: string = 'https://localhost/plan/registros.php'
+  //apiUrl: string = 'https://localhost/plan/registros.php?insertar=1'
+  apiUrl: string = 'https://olympus.arvispace.com/puntoDeVenta/conf/registros.php?insertar=1'
 
   constructor(private clienteHttp:HttpClient) {
   }
   private dataSubject = new BehaviorSubject<any>(null);
   data$ = this.dataSubject.asObservable();
+
+  guardarCliente(data: any): Observable<any> {
+    return this.clienteHttp.post<any>(this.apiUrl, data);
+  }
 
   sendData(data: any) {
     this.dataSubject.next(data);
