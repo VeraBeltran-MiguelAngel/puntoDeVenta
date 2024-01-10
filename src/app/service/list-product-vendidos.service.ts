@@ -8,7 +8,7 @@ import { HttpParams } from '@angular/common/http';
 })
 export class ListProductVendidosService {
 
-  URLServices: string = "https://olympus.arvispace.com/puntoDeVenta/conf/listadoProductosVendidos.php";   //http://localhost/plan/listadoProductosVendidos.php/     //https://olympus.arvispace.com/puntoDeVenta/conf/listadoProductosVendidos.php    
+  URLServices: string = "http://localhost/plan/listadoProductosVendidosV2.php/";   //http://localhost/plan/listadoProductosVendidos.php/     //https://olympus.arvispace.com/puntoDeVenta/conf/listadoProductosVendidos.php    
   constructor(private clienteHttp:HttpClient) { }
 
   obtenerListaProduct(dateInicio: any, dateFin:any):Observable<any>{
@@ -17,4 +17,8 @@ export class ListProductVendidosService {
     return this.clienteHttp.get(this.URLServices, { params });
     //return this.clienteHttp.get(this.URLServices+"?consultar");
   }
+
+  topVentasMes():Observable<any>{
+    return this.clienteHttp.get(this.URLServices+"?topProductos=");
+  }  
 }
