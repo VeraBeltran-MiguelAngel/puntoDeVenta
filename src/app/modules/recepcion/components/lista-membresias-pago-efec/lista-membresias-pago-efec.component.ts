@@ -11,15 +11,24 @@ import { MensajeListaComponent } from '../ListaClientes/mensaje-cargando.compone
 import { listarClientesService } from 'src/app/service/listarClientes.service';
 import { ClienteService } from 'src/app/service/cliente.service';
 import { HuellaService } from 'src/app/service/huella.service';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  FormGroupDirective,
-  NgForm,
-  Validators,
-} from '@angular/forms';
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
+import { jsPDF } from 'jspdf';
+import 'jspdf-autotable';
+import { DatePipe } from '@angular/common';
+import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
+
+interface ClientesActivos {
+  ID: number;
+  Nombre: string;
+  Sucursal: string;
+  Membresia: string;
+  Info_Membresia: string;
+  Fecha_Inicio: string;
+  Fecha_Fin: string;
+  Status: string;
+}
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(
@@ -39,19 +48,24 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   selector: 'app-lista-membresias-pago-efec',
   templateUrl: './lista-membresias-pago-efec.component.html',
   styleUrls: ['./lista-membresias-pago-efec.component.css'],
+  providers: [DatePipe],
 })
+
 export class ListaMembresiasPagoEfecComponent implements OnInit {
   
   form: FormGroup;
   matcher = new MyErrorStateMatcher();
   clientePago: any;
-  clienteActivo: any;
+  //clienteActivo: any;
   clienteReenovacion: any;
   cliente: any;
-  //dataSource: any[] = []; // Inicializa tu fuente de datos
+  clienteActivo: ClientesActivos[] = [];   //clienteActivo debe tener el tipo adecuado (en este caso, un array de ClientesActivos)
   dataSource: any; // instancia para matTableDatasource
   dataSourceActivos: any;
   dataSourceReenovacion: any;
+  fechaInicio: Date = new Date(); // Inicializa como una nueva fecha
+  fechaFin: Date = new Date();    // Inicializa como una nueva fecha
+  id: any;
   //titulos de columnas de la tabla de pago online
   displayedColumns: string[] = [
     'ID',
@@ -69,9 +83,9 @@ export class ListaMembresiasPagoEfecComponent implements OnInit {
     'Nombre',
     'Sucursal',
     'Membresia',
-    'Info_Membresia',
-    'Fecha_Inicio',
-    'Fecha_Fin',
+    'Info Membresia',
+    'Fecha Inicio',
+    'Fecha Fin',
     'Status',
   ];
 
@@ -95,11 +109,8 @@ export class ListaMembresiasPagoEfecComponent implements OnInit {
 
   //paginator es una variable de la clase MatPaginator
   @ViewChild('paginatorPagoOnline', { static: true }) paginator!: MatPaginator;
-  @ViewChild('paginatorActivos', { static: true })
-  paginatorActivos!: MatPaginator;
-  @ViewChild('paginatorReenovacionMem', { static: true })
-  paginatorReenovacion!: MatPaginator;
-  id: any;
+  @ViewChild('paginatorActivos', { static: true }) paginatorActivos!: MatPaginator;
+  @ViewChild('paginatorReenovacionMem', { static: true }) paginatorReenovacion!: MatPaginator;
 
   constructor(
     private pagoService: PagoMembresiaEfectivoService,
@@ -109,7 +120,8 @@ export class ListaMembresiasPagoEfecComponent implements OnInit {
     private toastr: ToastrService,
     private ListarClientesService: listarClientesService,
     private huellasService: HuellaService,
-    private clienteService: ClienteService
+    private clienteService: ClienteService,
+    private datePipe: DatePipe,
   ) {
     this.form = this.fb.group({
       idUsuario: [''],
@@ -137,22 +149,93 @@ export class ListaMembresiasPagoEfecComponent implements OnInit {
       this.dataSource.paginator = this.paginator;
     });
 
-    this.pagoService.obtenerActivos().subscribe((response) => {
+    /*this.pagoService.obtenerActivos(this.formatDate(this.fechaInicio),
+                                    this.formatDate(this.fechaFin
+                                    ).subscribe((response) => {
       console.log(response);
       this.clienteActivo = response;
       this.dataSourceActivos = new MatTableDataSource(this.clienteActivo);
       this.dataSourceActivos.paginator = this.paginatorActivos;
-    });
+    });*/
 
     this.pagoService.clientesMemReenovar().subscribe((data) => {
       console.log(data);
       this.clienteReenovacion = data;
-      this.dataSourceReenovacion = new MatTableDataSource(
-        this.clienteReenovacion
-      );
+      this.dataSourceReenovacion = new MatTableDataSource(this.clienteReenovacion);
       this.dataSourceReenovacion.paginator = this.paginatorReenovacion;
     });
+
+    this.updateDateLogs();  // Actualiza las fechas iniciales al inicio
   }
+
+  ngDoCheck(): void {
+    // Verifica si las fechas han cambiado y actualiza los logs
+    if (this.fechaInicio !== this.fechaInicioAnterior || this.fechaFin !== this.fechaFinAnterior) {
+      this.updateDateLogs();
+    }
+  }
+
+  onFechaInicioChange(event: any): void {
+    // Manejar el cambio de la fecha de inicio
+    console.log('Fecha de inicio cambiada:', this.formatDate(event));
+  }
+
+  onFechaFinChange(event: any): void {
+    // Manejar el cambio de la fecha de fin
+    console.log('Fecha de fin cambiada:', this.formatDate(event));
+  }
+
+  private formatDate(date: Date): string {
+    return this.datePipe.transform(date, 'yyyy-MM-dd') || '';
+  }
+
+  private updateDateLogs(): void {
+    this.fechaInicioAnterior = this.fechaInicio;
+    this.fechaFinAnterior = this.fechaFin;
+  
+    //console.log('Fecha de inicio seleccionada:', this.formatDate(this.fechaInicio));
+    //console.log('Fecha de fin seleccionada:', this.formatDate(this.fechaFin));
+  
+    this.pagoService.obtenerActivos(
+      this.formatDate(this.fechaInicio),
+      this.formatDate(this.fechaFin)
+    ).subscribe(
+      response => {
+        console.log(response);
+  
+        if (response.msg == 'No hay resultados') {
+          // Si no hay datos, resetea la tabla
+          this.clienteActivo = [];
+          this.dataSourceActivos = new MatTableDataSource(this.clienteActivo);
+          this.dataSourceActivos.paginator = this.paginatorActivos;
+          //console.log('No hay clientes activos en este rango de fechas.');
+          this.toastr.info('No hay clientes activos en este rango de fechas.', 'Info!!!');
+
+        } else if(response){
+          // Si hay datos, actualiza la tabla
+          this.clienteActivo = response;
+          this.dataSourceActivos = new MatTableDataSource(this.clienteActivo);
+          this.dataSourceActivos.paginator = this.paginatorActivos;
+          this.toastr.success('Datos encontrados.', 'Success!!!');
+        }
+      },
+      error => {
+        console.error('Error en la solicitud:', error);
+        // Manejo de errores adicional si es necesario
+        this.clienteActivo = [];
+        this.dataSourceActivos = new MatTableDataSource(this.clienteActivo);
+        this.dataSourceActivos.paginator = this.paginatorActivos;
+        //console.log('Ocurrio un error.');
+        this.toastr.error('Ocurrio un error.', 'Error!!!');
+      },
+      () => {
+        console.log('La solicitud se completó.');
+      }
+    );
+  }
+
+  private fechaInicioAnterior: Date | null = null;
+  private fechaFinAnterior: Date | null = null;
 
   //Filtrar la informacion que escribe el usuario
   applyFilter(event: Event) {
@@ -190,7 +273,9 @@ export class ListaMembresiasPagoEfecComponent implements OnInit {
           }
 
           // Agregar y Actualizar la fila a la tabla dos (dataSourceActivos)
-          this.pagoService.obtenerActivos().subscribe((respuesta) => {
+          this.pagoService.obtenerActivos(this.formatDate(this.fechaInicio),
+                                          this.formatDate(this.fechaFin)
+                                          ).subscribe((respuesta) => {
             console.log(respuesta);
             this.clienteActivo = respuesta;
             // Actualizar la fuente de datos de la segunda tabla (dataSourceActivos)
@@ -245,7 +330,9 @@ export class ListaMembresiasPagoEfecComponent implements OnInit {
           }
 
           // Agregar y Actualizar la fila a la tabla dos (dataSourceActivos)
-          this.pagoService.obtenerActivos().subscribe((respuesta) => {
+          this.pagoService.obtenerActivos(this.formatDate(this.fechaInicio),
+                                          this.formatDate(this.fechaFin)
+                                          ).subscribe((respuesta) => {
             console.log(respuesta);
             this.clienteActivo = respuesta;
             // Actualizar la fuente de datos de la segunda tabla (dataSourceActivos)
@@ -260,9 +347,9 @@ export class ListaMembresiasPagoEfecComponent implements OnInit {
     // Suscríbete al evento afterClosed() para manejar el caso en que se cierra el diálogo
     dialogRef.afterClosed().subscribe((cancelDialog: boolean) => {
       if (cancelDialog) {
-        // Lógica cuando se cierra el diálogo de forma cancelada
+      
       } else {
-        // Lógica cuando se cierra el diálogo de otra manera
+        
       }
     });
   }
@@ -286,7 +373,9 @@ export class ListaMembresiasPagoEfecComponent implements OnInit {
           }
 
           // Agregar y Actualizar la fila a la tabla dos (dataSourceActivos)
-          this.pagoService.obtenerActivos().subscribe((response) => {
+          this.pagoService.obtenerActivos(this.formatDate(this.fechaInicio),
+                                          this.formatDate(this.fechaFin)
+                                          ).subscribe((response) => {
             console.log(response);
             this.clienteActivo = response;
             // Actualizar la fuente de datos de la segunda tabla (dataSourceActivos)
@@ -378,5 +467,106 @@ export class ListaMembresiasPagoEfecComponent implements OnInit {
         
       },
     });
+  }
+
+  //Descarga el archivo en excel
+  descargarExcel(): void {
+    // Verifica si hay datos para exportar
+    if (!this.dataSourceActivos || !this.dataSourceActivos.filteredData || this.dataSourceActivos.filteredData.length === 0) {
+      this.toastr.error('No hay datos para exportar.', 'Error!!!');
+      //console.warn('No hay datos para exportar a Excel.');
+      return;
+    }
+
+    // Mapea la información de this.productosVendidos a un arreglo bidimensional
+    const datos = [
+      ['ID', 'Nombre', 'Sucursal', 'Membresia', 'Info Membresia', 'Fecha Inicio', 'Fecha Fin', 'Status'],
+      ...this.dataSourceActivos.filteredData.map((activos: ClientesActivos) => [
+        activos.ID,
+        activos.Nombre,
+        activos.Sucursal,
+        activos.Membresia,
+        activos.Info_Membresia,
+        activos.Fecha_Inicio,  // La propiedad debe tener el nombre correcto
+        activos.Fecha_Fin,
+        activos.Status
+      ])
+    ];
+
+    // Crear un objeto de libro de Excel
+    const workbook = XLSX.utils.book_new();
+    const hojaDatos = XLSX.utils.aoa_to_sheet(datos);
+    // Establecer propiedades de formato para las columnas
+    hojaDatos['!cols'] = [
+      // Se le asigna un ancho a cada columna comenzando con la A
+      { wch: 5 },
+      { wch: 25 },
+      { wch: 20 },
+      { wch: 20 },
+      { wch: 25 },
+      { wch: 10 },
+      { wch: 10 },
+      { wch: 10 }
+    ];
+    // Añadir la hoja de datos al libro de Excel
+    XLSX.utils.book_append_sheet(workbook, hojaDatos, 'Datos');
+
+    // Crear un Blob con el contenido del libro de Excel
+    const blob = XLSX.write(workbook, { bookType: 'xlsx', type: 'binary' });
+
+    // Convertir el Blob a un array de bytes
+    const arrayBuffer = new ArrayBuffer(blob.length);
+    const view = new Uint8Array(arrayBuffer);
+    for (let i = 0; i < blob.length; i++) {
+      view[i] = blob.charCodeAt(i) & 0xFF;
+    }
+
+    // Crear un Blob con el array de bytes y guardarlo como archivo
+    const newBlob = new Blob([arrayBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    saveAs(newBlob, 'Clientes Activos.xlsx');
+  }
+
+
+  
+  //Descarga el archivo en PDF
+  descargarPDF(): void {
+    // Verifica si hay datos para exportar
+    if (!this.dataSourceActivos || !this.dataSourceActivos.filteredData || this.dataSourceActivos.filteredData.length === 0) {
+      this.toastr.error('No hay datos para exportar.', 'Error!!!');
+      console.warn('No hay datos filtrados para exportar a PDF.');
+      return;
+    }
+  
+    // Crear un objeto jsPDF
+    const pdf = new (jsPDF as any)();  // Utilizar 'as any' para evitar problemas de tipo
+
+    // Encabezado del PDF con las fechas
+    pdf.text(`Reporte de los clientes activos`, 10, 10);
+    
+    // Contenido del PDF
+    const datos = this.dataSourceActivos.filteredData.map((activos: ClientesActivos) => [
+      activos.ID,
+      activos.Nombre,
+      activos.Sucursal,
+      activos.Membresia,
+      activos.Info_Membresia,
+      activos.Fecha_Inicio,
+      activos.Fecha_Fin,
+      activos.Status
+    ]);
+  
+    // Añadir filas al PDF con encabezado naranja
+    pdf.autoTable({
+      head: [['ID', 'Nombre', 'Sucursal', 'Membresia', 'Info Membresia', 'Fecha Inicio', 'Fecha Fin', 'Status']],
+      body: datos,
+      startY: 20,  // Ajusta la posición inicial del contenido
+      headStyles: {
+        fillColor: [249, 166, 64],  // Color naranja RGB
+        textColor: [255, 255, 255]  // Color blanco para el texto
+      }
+    });
+  
+    // Descargar el archivo PDF
+    pdf.save('Clientes Activos.pdf');
   }
 }

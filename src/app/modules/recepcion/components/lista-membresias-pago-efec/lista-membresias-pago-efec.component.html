@@ -6,6 +6,48 @@
         <mat-tab label="Clientes activos"> 
             <br>
             <h2>Lista de clientes con status activo</h2>
+
+            <div class="grid-input-date" >
+              <div style="display: flex; justify-content: flex-end;">
+                  <mat-form-field>
+                      <mat-label>Fecha Inicio</mat-label>
+                      <input matInput [matDatepicker]="pickerInicio" (ngModelChange)="onFechaInicioChange($event)" [(ngModel)]="fechaInicio" readonly>  
+                      <mat-hint>MM/DD/YYYY</mat-hint>
+                      <mat-datepicker-toggle matIconSuffix [for]="pickerInicio"></mat-datepicker-toggle>
+                      <mat-datepicker #pickerInicio></mat-datepicker>
+                  </mat-form-field>
+              </div>
+      
+              <div></div>
+      
+              <div style="display: flex; justify-content: flex-start;">
+                  <mat-form-field>
+                      <mat-label>Fecha Fin</mat-label>
+                      <input matInput [matDatepicker]="pickerFin" (ngModelChange)="onFechaFinChange($event)" [(ngModel)]="fechaFin" readonly>
+                      <mat-hint>MM/DD/YYYY</mat-hint>
+                      <mat-datepicker-toggle matIconSuffix [for]="pickerFin"></mat-datepicker-toggle>
+                      <mat-datepicker #pickerFin></mat-datepicker>
+                  </mat-form-field>
+              </div>
+              
+              <div></div>
+              
+              <div style="display: flex; justify-content: flex-end;">
+      
+                <button class="mat-button" mat-button [matMenuTriggerFor]="menu">
+                  <mat-icon style="font-size: 22px;">download</mat-icon>
+                  Descargar Reporte
+                </button>
+                <mat-menu #menu="matMenu">
+                  <button mat-menu-item (click)="descargarExcel()">.xlsx</button>
+                  <button mat-menu-item (click)="descargarPDF()">.pdf</button>
+      
+                </mat-menu>
+      
+              </div>
+            </div>
+            <br>
+
             <mat-form-field class="full-width">
                 <mat-label>Buscar</mat-label>
                 <input matInput (keyup)="applyFilterActivos($event)"placeholder="Buscar" #input/>
@@ -27,13 +69,13 @@
                       <ng-container *ngIf="column === 'Membresia'">
                         {{ prod.Membresia }}
                       </ng-container>
-                      <ng-container *ngIf="column === 'Info_Membresia'">
+                      <ng-container *ngIf="column === 'Info Membresia'">
                         {{ prod.Info_Membresia }}
                       </ng-container>
-                      <ng-container *ngIf="column === 'Fecha_Inicio'">
+                      <ng-container *ngIf="column === 'Fecha Inicio'">
                         {{ prod.Fecha_Inicio }}
                       </ng-container>
-                      <ng-container *ngIf="column === 'Fecha_Fin'">
+                      <ng-container *ngIf="column === 'Fecha Fin'">
                         {{ prod.Fecha_Fin }}
                       </ng-container>
                       <ng-container *ngIf="column === 'Status'">
@@ -87,11 +129,12 @@
                   </ng-container>
                   <ng-container *ngIf="column === 'Dinero recibido'">
                     <mat-form-field>
-                      <input matInput [(ngModel)]="updMem.moneyRecibido" type="number" min="0" placeholder="0"/>  <!--revisar el ngModel-->
+                      <input matInput [(ngModel)]="updMem.moneyRecibido" type="number" min="0" placeholder="0"/>
                     </mat-form-field>
                   </ng-container>
                   <ng-container *ngIf="column === 'Pagar'">
-                    <button mat-raised-button (click)="realizarPago(updMem)" class="button-pay">Pagar</button> <!--Revisar el click para ver si cambiar la variable de prod-->
+                    <button mat-raised-button (click)="realizarPago(updMem)" style="background-color: #F9A640;
+                    color: #000000;">Pagar</button>
                   </ng-container>
                   <ng-container *ngIf="column === 'Actualizar'">
                     <button mat-fab class="button-icon" (click)="abrirEmergente(updMem)" aria-label="Example icon button with a home icon">
@@ -144,7 +187,8 @@
                         </mat-form-field>
                     </ng-container>
                     <ng-container *ngIf="column === 'Pagar'">
-                        <button mat-raised-button (click)="realizarCalculo(prod)" class="button-pay">Pagar</button> 
+                        <button mat-raised-button (click)="realizarCalculo(prod)" style="background-color: #F9A640;
+                        color: #000000;">Pagar</button> 
                     </ng-container>
                   </td>
                 </ng-container>
@@ -221,7 +265,8 @@
               </mat-error>
             </mat-form-field>
             <br>
-            <button type="submit" id="btn_guardar"class="mat-button" mat-raised-button>Enviar instrucion a torniquete</button>
+            <button type="submit" id="btn_guardar" style="background-color: #F9A640;
+            color: #000000;" mat-raised-button>Enviar instrucción a torniquete</button>
           </form>
         </mat-tab>
     </mat-tab-group>

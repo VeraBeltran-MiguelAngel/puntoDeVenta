@@ -205,7 +205,7 @@ export class ProductosVendidosComponent implements OnInit, DoCheck{
   descargarPDF(): void {
     // Verifica si hay datos para exportar
     if (!this.dataSource || !this.dataSource.filteredData || this.dataSource.filteredData.length === 0) {
-      this.toastr.error('No hay información para exportar.', 'Error!!!');
+      this.toastr.error('No hay datos para exportar.', 'Error!!!');
       console.warn('No hay datos filtrados para exportar a PDF.');
       return;
     }

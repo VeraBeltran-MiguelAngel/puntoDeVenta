@@ -22,8 +22,8 @@ table {
 }
 
 .button-icon{
-    background-color: #ffffff;
-    color: #F9A640;
+    background-color: #F9A640;
+    color: #000000;
     border: #ffffff;
 
 }
@@ -61,8 +61,8 @@ table {
   }
 
   .mat-button {
-    background-color: #F9A640; /* Cambia este color según tus preferencias */
-    color: #ffffff; /* Cambia este color según tus preferencias */
+    background-color: #F9A640;
+    color: #ffffff;
 }
 
 .grid-inputs{
@@ -74,3 +74,8 @@ table {
     overflow-x: auto; /* Permite desplazamiento horizontal */
     max-width: 100%;  /* Evita que la tabla sea más ancha que el contenedor */
   }
+
+  .grid-input-date{
+    display: grid;
+    grid-template-columns: 25% 10% 25% 10% 30%   
+}

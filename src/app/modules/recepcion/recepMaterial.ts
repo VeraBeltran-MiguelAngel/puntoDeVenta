@@ -13,6 +13,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 @NgModule({
   exports: [
     MatToolbarModule, //menu navegacion
@@ -25,6 +27,8 @@ import { MatButtonModule } from '@angular/material/button';
     MatIconModule,//iconos
     MatSelectModule, //listas desplegables
     MatButtonModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
 })
 export class RecepMaterialModule {}

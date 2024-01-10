@@ -8,7 +8,7 @@ import { HttpParams } from '@angular/common/http';
 })
 export class PagoMembresiaEfectivoService {
 
-  URLServices: string = "https://olympus.arvispace.com/puntoDeVenta/conf/pagoEfectivoMembresia.php/";   //http://localhost/plan/pagoEfectivoMembresia.php/     //https://olympus.arvispace.com/puntoDeVenta/conf/pagoEfectivoMembresia.php/     
+  URLServices: string = "http://localhost/plan/pagoEfectivoMembresiaV2.php/";   //http://localhost/plan/pagoEfectivoMembresia.php/     //https://olympus.arvispace.com/puntoDeVenta/conf/pagoEfectivoMembresia.php/     
   constructor(private clienteHttp:HttpClient) { }
 
   obternerDataMem(){
@@ -21,8 +21,13 @@ export class PagoMembresiaEfectivoService {
     return this.clienteHttp.get(this.URLServices, { params });
   }
 
-  obtenerActivos(){
+  /*obtenerActivos(){
     return this.clienteHttp.get(this.URLServices+"?consultar");
+  }*/
+
+  obtenerActivos(inicioDate: any, finDate: any): Observable<any>{
+    const params = new HttpParams().set('fechaInicio',inicioDate).set('fechaFin',finDate);
+    return this.clienteHttp.get(this.URLServices, {params});
   }
 
   clientesMemReenovar(){
