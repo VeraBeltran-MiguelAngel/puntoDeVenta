@@ -1,10 +1,10 @@
-<h1 mat-dialog-title>Cerrar caja</h1>
+<h1 mat-dialog-title>Eliminar</h1>
 <div mat-dialog-content>
     <p>{{mensaje}}</p>
 </div>
 <div mat-dialog-actions fxLayoutAlign="center center">
-    <button style="background-color: rgb(0, 0, 0); border-color: rgb(0, 0, 0); color: blanchedalmond; width: 100px; margin-right: 20px; border-radius: 5px;" mat-button (click)="cerrarDialogo()">Cancelar</button>
-<button style="background-color: blue; border-color: blue; color: blanchedalmond; width: 100px; border-radius: 5px;" (click)="confirmado()" cdkFocusInitial>Aceptar</button>
+    <button mat-button class="button-success" style="color:#000000" (click)="confirmado()"><mat-icon>check_circle</mat-icon>Aceptar</button>
+    <button mat-button class="button-cancel" style="color: #ffffff" (click)="cerrarDialogo()"><mat-icon>cancel</mat-icon>Cancelar</button>
 
 </div>
 

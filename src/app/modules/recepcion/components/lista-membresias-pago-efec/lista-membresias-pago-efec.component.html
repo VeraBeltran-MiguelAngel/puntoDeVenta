@@ -133,10 +133,10 @@
                     </mat-form-field>
                   </ng-container>
                   <ng-container *ngIf="column === 'Pagar'">
-                    <button mat-raised-button (click)="realizarPago(updMem)" style="background-color: #F9A640; color: #000000;">Pagar</button>
+                    <button mat-raised-button (click)="realizarPago(updMem)" style="background-color: #F9A640; color: #000000;">Pagar<mat-icon>attach_money</mat-icon></button>
                   </ng-container>
                   <ng-container *ngIf="column === 'Actualizar'">
-                    <button mat-fab class="button-icon" (click)="abrirEmergente(updMem)" aria-label="Example icon button with a home icon">
+                    <button mat-icon-button color="primary" (click)="abrirEmergente(updMem)" aria-label="Example icon button with a home icon">
                       <mat-icon class="icon-size">edit</mat-icon>
                     </button>
                   </ng-container>
@@ -187,7 +187,7 @@
                     </ng-container>
                     <ng-container *ngIf="column === 'Pagar'">
                         <button mat-raised-button (click)="realizarCalculo(prod)" style="background-color: #F9A640;
-                        color: #000000;">Pagar</button> 
+                        color: #000000;">Pagar<mat-icon>attach_money</mat-icon></button> 
                     </ng-container>
                   </td>
                 </ng-container>
@@ -265,7 +265,7 @@
             </mat-form-field>
             <br>
             <button type="submit" id="btn_guardar" style="background-color: #F9A640;
-            color: #000000;" mat-raised-button>Enviar instrucción a torniquete</button>
+            color: #000000;" mat-raised-button>Registrar huella<mat-icon>fingerprint</mat-icon></button>
           </form>
         </mat-tab>
     </mat-tab-group>

@@ -5,6 +5,7 @@ import { Producto } from '../modules/recepcion/components/models/producto';
 import { ListaProductos } from '../modules/admin/components/models/listaProductos';
 import { AuthService } from './auth.service';
 import { Inventario } from '../modules/admin/components/models/inventario';
+import { HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -79,6 +80,15 @@ export class ProductosService {
 
   clearProductosSeleccionados() {
     this.productosSeleccionados.next([]);
+  }
+
+  /*borrarProductoInventario(inventarioID:any):Observable<any>{
+    return this.clienteHttp.get(this.API+"?borrar="+inventarioID)
+  }*/
+
+  borrarProductoInventario(idInv: any, usuaId: any): Observable<any>{
+    const params = new HttpParams().set('invenID',idInv).set('userID',usuaId);
+    return this.clienteHttp.get(this.API, {params});
   }
 
 }

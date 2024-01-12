@@ -10,15 +10,22 @@ import { HttpHeaders } from '@angular/common/http';
 })
 export class HuellaService {
 
-  URLServices: string = "http://192.168.100.43/json";  //http://192.168.100.37  //http://localhost/plan/huella.php     //https://olympus.arvispace.com/puntoDeVenta/conf/huella.php    
+  URLServices: string = "http://192.168.1.212/prueba";  //http://192.168.100.43/json     http://192.168.100.37  //http://localhost/plan/huella.php     //https://olympus.arvispace.com/puntoDeVenta/conf/huella.php    
   constructor(private clienteHttp:HttpClient) { }
+
+  /*private headers = new HttpHeaders({
+    'Content-Type': 'application/json',
+    
+  }); */ 
+
+  httpHeaders = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
 
   registroHuella(id:any):Observable<any>{
     return this.clienteHttp.get(this.URLServices+"?NewHuella="+id);
   }  
 
   insertarInstruccion(dato: any):Observable<any>{
-    return this.clienteHttp.post(this.URLServices,dato);
+    return this.clienteHttp.post(this.URLServices,dato, { headers: this.httpHeaders });
                                                 /*+"?insertar=1" <- Nota: Colocarlo al cambiarlo a un servicio de php*/
   }
 }

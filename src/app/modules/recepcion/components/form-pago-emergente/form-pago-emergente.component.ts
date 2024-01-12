@@ -56,32 +56,36 @@ export class FormPagoEmergenteComponent implements OnInit{
     }
   
   successDialog(): void {
-    if(this.moneyRecibido >= this.precio){
-      const PrecioCalcular = this.moneyRecibido - this.precio ;
-      console.log(PrecioCalcular);
-  
-      this.membresiaService.actualizacionMemebresia(this.data.idCliente, this.membresiaSeleccionada).subscribe((dataResponse: any)=> {
-      console.log(dataResponse.msg)
+    if(this.membresiaSeleccionada != undefined){
+      if(this.moneyRecibido >= this.precio){
+        const PrecioCalcular = this.moneyRecibido - this.precio ;
+        console.log(PrecioCalcular);
+      
+        this.membresiaService.actualizacionMemebresia(this.data.idCliente, this.membresiaSeleccionada).subscribe((dataResponse: any)=> {
+        console.log(dataResponse.msg)
 
-      this.actualizarTablas.emit(true);
-  
-      this.dialogo.close(true);
-  
-      this.dialog.open(MensajeEmergenteComponent, {
-        data: `Pago exitoso, el cambio es de: $${PrecioCalcular}`,
-      })
-      .afterClosed()
-      .subscribe((cerrarDialogo: Boolean) => {
-        if (cerrarDialogo) {
-          
-        } else {
+        this.actualizarTablas.emit(true);
+        
+        this.dialogo.close(true);
+        
+        this.dialog.open(MensajeEmergenteComponent, {
+          data: `Pago exitoso, el cambio es de: $${PrecioCalcular}`,
+        })
+        .afterClosed()
+        .subscribe((cerrarDialogo: Boolean) => {
+          if (cerrarDialogo) {
 
-        }
+          } else {
+
+          }
+        });
       });
-    });
-  
-    }else{
-      this.toastr.error('No alcanza para pagar esta membresia', 'Error!!!');
+    
+      }else{
+        this.toastr.error('No alcanza para pagar esta membresia', 'Error!!!');
+      }
+    } else {
+      this.toastr.warning('Selecciona una membresía', 'Alerta!!!');
     }
   }
 }

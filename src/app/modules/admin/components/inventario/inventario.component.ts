@@ -4,6 +4,11 @@ import { AuthService } from 'src/app/service/auth.service';
 import { ProductosService } from 'src/app/service/productos.service';
 import { Inventario } from '../models/inventario';
 import { MatTableDataSource } from '@angular/material/table';
+import { ToastrService } from "ngx-toastr";
+import { MatDialog } from "@angular/material/dialog";
+import { MensajeEliminarComponent } from 'src/app/modules/recepcion/components/mensaje-eliminar/mensaje-eliminar.component';
+import { TestService } from 'src/app/service/test.service';
+//import { UsuarioidService } from 'src/app/service/usuarioid.service';
 
 @Component({
   selector: 'app-inventario',
@@ -25,13 +30,18 @@ export class InventarioComponent implements OnInit {
   listInventarioData: Inventario[] = [];
   dataSource: any; // instancia para matTableDatasource
   ubicacion: string;
+  message: string = "";
 
   //paginator es una variable de la clase MatPaginator
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
   constructor(
     private auth: AuthService,
-    private productoService: ProductosService
+    private productoService: ProductosService,
+    private toastr: ToastrService,
+    public dialog: MatDialog,
+    public testService:TestService,
+    //public iduserService: UsuarioidService,
   ) {}
 
   ngOnInit(): void {
@@ -42,8 +52,46 @@ export class InventarioComponent implements OnInit {
       this.dataSource= new MatTableDataSource(this.listInventarioData);
       this.dataSource.paginator = this.paginator;
       
+      /*this.iduserService.idUsuario$.subscribe((idUsuario) => {
+        console.log('ID de Usuario en este componente:', idUsuario);
+        // Puedes hacer lo que necesites con el idUsuario aquí
+      });*/
     });
   }
+
+  /*eliminar(idInventario: number, cantidad: number): void {
+    //console.log(idInventario);
+    if(cantidad == 0){
+      this.dialog.open(MensajeEliminarComponent, {
+        data: `¿Desea eliminar este producto?`,
+      })
+      .afterClosed()
+      .subscribe((confirmado: Boolean) => {
+        if (confirmado) {
+          this.iduserService.idUsuario$.subscribe((idUsuario) =>{
+            console.log('ID de Usuario en este componente:', idUsuario);
+
+            this.productoService.borrarProductoInventario(idInventario,idUsuario).subscribe((data) => {
+              if(data.msg == 'Info'){
+                this.toastr.success('El producto fue eliminado del inventario.', 'Éxito');
+              }
+              //window.location.reload();    
+              this.ngOnInit();
+            });
+        
+          },
+          (error) => {
+            console.log("Error al eliminar:", error);
+            this.toastr.error('Error al eliminar', 'Error');
+          });
+        } else {
+
+        }
+      });
+    } else{
+      this.toastr.error(`Aún hay ${cantidad} productos para vender.`, 'Error');
+    }
+  }*/
 
   /**
    * metodo para filtrar la informacion que escribe el usaurio

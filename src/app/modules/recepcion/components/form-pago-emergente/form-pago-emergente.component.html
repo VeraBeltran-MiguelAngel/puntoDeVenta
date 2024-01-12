@@ -19,7 +19,7 @@
 
             <div class="column">
                 <mat-form-field appearance="outline">
-                    <label for="membresiaSelect">Membresía</label>
+                    <mat-label for="membresiaSelect">Membresía</mat-label>
                     <mat-select id="membresiaSelect" name="membresiaSelect" [(ngModel)]="membresiaSeleccionada" (ngModelChange)="onMembresiaChange()"> <!---id="membresiaSelect"-->
                         <mat-option *ngFor="let membresia of membresias" [value]="membresia.IDmembresia">
                         {{ membresia.Membresia }}
@@ -46,10 +46,10 @@
                 </mat-form-field>
             </div>
             <div class="column" mat-dialog-actions fxLayoutAlign="center center">
-                <button class="button-pay" mat-button (click)="successDialog()" >Pagar</button>
+                <button style="background-color: #F9A640" mat-button (click)="successDialog()"><mat-icon>attach_money</mat-icon>Pagar</button>
             </div>
             <div class="column" mat-dialog-actions fxLayoutAlign="center center">
-                <button class="button-cancel" mat-button (click)="cancelDialogo()" >Cerrar</button>
+                <button  style="background-color: #000000; color: #ffffff" mat-button (click)="cancelDialogo()"><mat-icon>cancel</mat-icon>Cerrar</button>
             </div>
         </div>
       </form>
