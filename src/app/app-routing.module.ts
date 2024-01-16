@@ -32,6 +32,15 @@ const routes: Routes = [
         (m) => m.RecepcionModule
       ),
   },
+  {
+    path: 'sup-admin',
+    canActivate: [authGuard, hasRoleGuard],
+    data: {
+      rol: 'SuperAdmin',
+    },
+    loadChildren: () =>
+      import('./modules/sup-admin/sup-admin.module').then((m) => m.SuperAdminModule),
+  },
   { path: '**', component: NotFoundComponent },
 ];
 

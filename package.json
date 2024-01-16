@@ -34,6 +34,7 @@
     "ngx-toastr": "^17.0.2",
     "ngx-webcam": "^0.4.1",
     "popper.js": "^1.16.1",
+    "primeng": "^17.3.2",
     "quagga": "^0.6.16",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

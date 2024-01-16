@@ -1,0 +1,17 @@
+/**propiedades body **/
+.body {
+    margin: 0;
+    position: relative;
+    padding-bottom: 139px;
+    min-height: 100vh;
+}
+
+.container {
+    margin-bottom: 30px;
+}
+
+.btn-gym {
+    background: #FD9727; 
+    color: white;
+    text-decoration: none;
+}

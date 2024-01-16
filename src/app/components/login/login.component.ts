@@ -41,6 +41,9 @@ export class LoginComponent implements OnInit {
         case 'Recepcionista':
           this.router.navigate(['/recepcion']);
           break;
+        case 'SuperAdmin':
+          this.router.navigate(['/supAdmin']);
+          break;
       }
     }
   }
@@ -69,6 +72,10 @@ export class LoginComponent implements OnInit {
             case 'Recepcionista':
               messageExito = 'Bienvenido recepcionista';
               this.router.navigate(['/recepcion']);
+              break;
+            case 'SuperAdmin':
+              messageExito = 'Bienvenido Súper Administrador';
+              this.router.navigate(['/sup-admin']);
               break;
             default:
               messageError = 'Tu cuenta no tiene permisos suficientes';

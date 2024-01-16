@@ -1,0 +1,34 @@
+/**propiedades footer logo**/
+.logo_f {
+    padding-top: 30px;
+    max-width: 50%;
+}
+
+/**propiedades btn redes sociales **/
+.btn_follow {
+    margin: 5px;
+}
+
+/**propiedades footer**/
+footer {
+    background-color: #434343;
+    color: white;
+    min-height: auto;
+    width: 100%;
+}
+
+  /**propiedades de los iconos google y facebook**/
+fa-icon {
+    font-size: x-large;
+}
+
+
+/**propiedades bootstrap**/
+#cr {
+    font-size: smaller;
+    color: white;
+}
+
+#tag_a {
+    color: white;
+}
