@@ -1,0 +1,23 @@
+/* Estilos para el contenedor de la tabla */
+.table-container {
+    overflow-x: auto; /* Agrega una barra de desplazamiento horizontal si es necesario */
+    max-width: 100%; /* Evita que la tabla se desborde del contenedor */
+  }
+  
+  /* Estilos para la tabla */
+  table {
+    width: 90%; /* Ocupa todo el ancho del contenedor */
+    border-collapse: collapse; /* Combina los bordes de las celdas */
+  }
+  
+  /* Estilos para las celdas y filas */
+  th, td {
+    padding: 8px; /* Espaciado interno */
+    text-align: left; /* Alineación del texto a la izquierda */
+    white-space: nowrap; /* Evita el desbordamiento de texto */
+  }
+  
+  /* Estilos adicionales según sea necesario */
+  .example-full-width {
+    width: 100%;
+  }
