@@ -1,1 +1,7 @@
-<p>mensaje-emergentes works!</p>
+<h1 mat-dialog-title>Confirmación</h1>
+<div mat-dialog-content>
+    <p>{{mensaje}}</p>
+</div>
+<div mat-dialog-actions fxLayoutAlign="center center">
+    <button  mat-button (click)="cerrarDialogo()" >Cerrar</button>
+</div>

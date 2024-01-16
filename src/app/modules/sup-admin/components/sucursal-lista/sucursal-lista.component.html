@@ -1,1 +1,129 @@
-<p>sucursal-lista works!</p>
+<div class="container mt-4">
+    <h2 class="mb-3">Sucursales</h2>
+    <div style="text-align: right; margin-bottom: 50px;">
+        <button mat-raised-button routerLink="/admin/alta-sucursal" style="background-color: #fd9727; font-size: 16px;">
+        <mat-icon>add</mat-icon> AGREGAR SUCURSAL
+      </button>
+    </div>
+    <div style="margin-left: 70px;color:red;font-size: 20px;">{{message}}</div>
+    <div class="mb-3">
+        <mat-form-field class="example-full-width">
+            <mat-label>Nombre de la sucursal</mat-label>
+            <span matPrefix class="icon_search"><mat-icon>search</mat-icon></span>
+            <input matInput placeholder="Nombre de la sucursal" #txtSearch (keyup)="onSearchPokemon( txtSearch.value )">
+          </mat-form-field>
+    </div>
+    
+    <form>
+        <div  class="table-container">
+            <table mat-table  [dataSource]="gimnasio | listarSucursales: page: search">
+                <!-- Título Column -->
+                <ng-container matColumnDef="nombre">
+                    <th mat-header-cell *matHeaderCellDef>Nombre</th>
+                    <td mat-cell *matCellDef="let item">{{ item.nombreGym }}</td>
+                </ng-container>
+                <ng-container matColumnDef="direccion">
+                    <th mat-header-cell *matHeaderCellDef>Dirección</th>
+                    <td mat-cell *matCellDef="let item">
+                        {{ item.calle }} #{{ item.numExt }},
+                        <ng-container *ngIf="item.numInt">Interior {{ item.numInt }},</ng-container>
+                        {{ item.colonia }}, {{ item.codigoPostal }} {{ item.ciudad }}, {{ item.estado }}
+                    </td>
+                </ng-container>
+                <!-- Entrenador Column -->
+                <ng-container matColumnDef="telefono">
+                    <th mat-header-cell *matHeaderCellDef>Teléfono</th>
+                    <td mat-cell *matCellDef="let item">{{ item.telefono }}</td>
+                </ng-container>
+                <!-- Duración Column -->
+                <ng-container matColumnDef="tipo">
+                    <th mat-header-cell *matHeaderCellDef>Tipo</th>
+                    <td mat-cell *matCellDef="let item">{{ item.tipo }}</td>
+                </ng-container>
+                <ng-container matColumnDef="alberca">
+                    <th mat-header-cell *matHeaderCellDef>Casilleros</th>
+                    <td mat-cell *matCellDef="let item">
+                        <ng-container *ngIf="item.casilleros == 1; else noCasilleros">
+                            Sí
+                        </ng-container>
+                        <ng-template #noCasilleros>
+                            No
+                        </ng-template>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="gimnasio">
+                    <th mat-header-cell *matHeaderCellDef>Estacionamiento</th>
+                    <td mat-cell *matCellDef="let item">
+                        <ng-container *ngIf="item.estacionamiento == 1; else noEstacionamiento">
+                            Sí
+                        </ng-container>
+                        <ng-template #noEstacionamiento>
+                            No
+                        </ng-template>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="IDgimnasio">
+                    <th mat-header-cell *matHeaderCellDef>Regaderas</th>
+                    <td mat-cell *matCellDef="let item">
+                        <ng-container *ngIf="item.energia == 1; else noEnergia">
+                            Sí
+                        </ng-container>
+                        <ng-template #noEnergia>
+                            No
+                        </ng-template>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="ofertas">
+                    <th mat-header-cell *matHeaderCellDef>Bicicletero</th>
+                    <td mat-cell *matCellDef="let item">
+                        <ng-container *ngIf="item.bicicletero == 1; else noBicicletero">
+                            Sí
+                        </ng-container>
+                        <ng-template #noBicicletero>
+                            No
+                        </ng-template>
+                    </td>
+                </ng-container>
+                <!-- Edit and Delete Columns -->
+                <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef>Acciones</th>
+                    <td mat-cell *matCellDef="let item">
+                        <button mat-icon-button color="primary" routerLink="../../sup-admin/editar-sucursal/{{item.idGimnasio}}">
+                            <mat-icon>edit</mat-icon>
+                          </button>
+                        <!--<button mat-icon-button color="warn" (click)="borrarSucursal(item.idGimnasio)">
+                            <mat-icon>delete</mat-icon>
+                          </button>-->
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="horario">
+                    <th mat-header-cell style="margin: 0;" *matHeaderCellDef>Horario</th>
+                    <td mat-cell *matCellDef="let item">
+                        <!--<button mat-raised-button style="background-color: #fd9727; font-size: 14px; margin-right: 10px;" (click)="agregarHorario(item.idGimnasio)">+Agregar horario</button>-->
+                        <button mat-raised-button style="background-color: #0a0a0a; font-size: 14px; color: white;" (click)="verHorario(item.idGimnasio)">Ver horario</button>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let item; columns: displayedColumns; let i = index"></tr>
+            </table>
+            <div style="text-align: right; margin-bottom: 50px;">
+                <button mat-icon-button color="primary" (click)="prevPage()">
+                  <mat-icon>navigate_before</mat-icon>
+                </button>
+                <button mat-icon-button color="primary" (click)="nextPage()">
+                  <mat-icon>navigate_next</mat-icon>
+                </button>
+              </div>
+            <!--<div style="text-align: right; margin-bottom: 50px;">
+                <button mat-icon-button color="primary" (click)="prevPage()">
+                    <mat-icon>navigate_before</mat-icon>
+                </button>
+    
+                <button mat-icon-button color="primary" (click)="nextPage()">
+                    <mat-icon>navigate_next</mat-icon>
+                </button>  
+              </div>-->
+        </div>
+    </form>
+    <br/>
+    </div>

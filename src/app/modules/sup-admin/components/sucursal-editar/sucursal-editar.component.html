@@ -1,1 +1,136 @@
-<p>sucursal-editar works!</p>
+<br/>
+<mat-label class="large-text" style="font-family: Arial; font-size: 30px; margin-left: 100px;">Sucursales:</mat-label>
+<br/>
+<br/>
+<form [formGroup]="formularioSucursales" class="responsive-form">
+	<div class="mi-div-con-borde responsive-div">
+		<div style="color:red">{{message}}</div>
+		<br/>
+		<div class="row">
+			<div class="col-sm-6">
+				<p>
+					<!--<mat-label>Estatus</mat-label>
+					<mat-slide-toggle formControlName="estatus">{{formularioSucursales.get('estatus').value ? 'Activo' : 'Inactivo'}}</mat-slide-toggle>-->			
+				</p>
+				<p>
+					<label for="nombreColonia" class="large-text" style="margin-right: 35px; margin-left: 45px;">Nombre:</label>
+					<mat-form-field appearance="outline" class="inputs_properties" style="margin-left: 9px;" required>
+						<mat-label>Nombre</mat-label>
+						<input type="text" matInput placeholder="Nombre" autocomplete="off" id="nombreGym" formControlName="nombreGym" />
+					</mat-form-field>
+				</p>
+				<p>
+					<label for="telefono" class="large-text" style="margin-right: 28px; margin-left: 45px;">Telefono :</label>
+					<mat-form-field appearance="outline" class="inputs_properties" style="margin-left: 9px;" required>
+						<mat-label>Telefono</mat-label>
+						<input type="text" placeholder="telefono" matInput autocomplete="off" id="telefono" formControlName="telefono" />
+						<mat-error *ngIf="formularioSucursales.get('telefono')?.hasError('pattern') && !formularioSucursales.get('telefono')?.hasError('required')">
+							<strong class="txt_msg">** Formato no válido...</strong>
+						</mat-error>
+					</mat-form-field>
+				</p>
+
+				<p>
+					<label for="idFranquicia" class="large-text" style="margin-right: 24px; margin-left: 45px;">Sucursal:</label>
+					<mat-form-field style="width: 450px; height: 90px;" style="margin-left: 30px;" required>
+						<mat-label style="font-family: Arial; font-size: 18px;">Seleccionar</mat-label>
+						<mat-select id="idFranquicia" formControlName="Franquicia_idFranquicia">
+							<mat-option *ngFor="let opcion of franquicia" [value]="opcion.value"> {{ opcion.label }}</mat-option>
+						</mat-select>
+					</mat-form-field>
+				</p>
+
+				<br />
+			</div>
+			<div class="col-sm-6">
+				<p>
+					<label for="tipo" class="large-text" style="margin-right: 50px; margin-left: 45px;">Tipo:</label>
+					<mat-form-field style="height: 90px;" autocomplete="off" required>
+						<mat-label style="font-family: Arial; font-size: 18px;">Seleccionar</mat-label>
+						<mat-select id="tipo" formControlName="tipo">
+							<mat-option value="Externo" style="font-family: Arial; font-size: 18px;">Externo</mat-option>
+							<mat-option value="Interno" style="font-family: Arial; font-size: 18px;">Interno</mat-option>
+						</mat-select>
+					</mat-form-field>
+				</p>
+				<p><label style="margin-right: 40px; margin-left: 45px;" class="large-text">DISPONIBLE:</label></p>
+				<p>
+					<label style="margin-left: 45px;" for="casilleros" class="large-text">Casilleros:</label>
+					<mat-radio-group style="margin-left: 70px;" formControlName="casilleros" id="casilleros" class="custom-radio-group" color="warn" required>
+						<mat-radio-button value="1" class="custom-radio-button">Sí</mat-radio-button>
+						<mat-radio-button value="0" class="custom-radio-button">No</mat-radio-button>
+					</mat-radio-group>
+				</p>
+				<p>
+					<label style="margin-left: 45px;" for="estacionamiento" class="large-text">Estacionamiento:</label>
+					<mat-radio-group style="margin-left: 10px;" id="estacionamiento" formControlName="estacionamiento" class="custom-radio-group" color="warn" required>
+						<mat-radio-button value="1" class="custom-radio-button">Sí</mat-radio-button>
+						<mat-radio-button value="0" class="custom-radio-button">No</mat-radio-button>
+					</mat-radio-group>
+				</p>
+				<p>
+					<label style="margin-left: 45px;" for="regaderas" class="large-text">Regaderas:</label>
+					<mat-radio-group style="margin-left: 62px;" id="regaderas" formControlName="regaderas" class="custom-radio-group" color="warn" required>
+						<mat-radio-button value="1" class="custom-radio-button">Sí</mat-radio-button>
+						<mat-radio-button value="0" class="custom-radio-button">No</mat-radio-button>
+					</mat-radio-group>
+				</p>
+				<p>
+					<label style="margin-left: 45px;" for="bicicletero" class="large-text">Bicicletero:</label>
+					<mat-radio-group style="margin-left: 68px;" id="bicicletero" formControlName="bicicletero" class="custom-radio-group" color="warn" required>
+						<mat-radio-button value="1" class="custom-radio-button">Sí</mat-radio-button>
+						<mat-radio-button value="0" class="custom-radio-button">No</mat-radio-button>
+					</mat-radio-group>
+				</p>
+				<br />
+				<br />
+			</div>
+
+			<div class="col-sm-12">
+				<!--------------------------------------------------------->
+				<p>
+					<label for="direccion" class="large-text" style="margin-right: 28px; margin-left: 45px;">Dirección :</label>
+				</p>
+				<p>
+					<mat-form-field appearance="outline" class="inputs_properties" style="margin-left: 32px; margin-right: 1px;" required>
+						<mat-label>Estado</mat-label>
+						<input type="text" placeholder="Estado" matInput autocomplete="off" id="estado" formControlName="estado" />
+					</mat-form-field>
+					<mat-form-field appearance="outline" class="inputs_properties" style="margin-left: 32px;" required>
+						<mat-label>Ciudad</mat-label>
+						<input type="text" placeholder="ciudad" matInput autocomplete="off" id="ciudad" formControlName="ciudad" />
+					</mat-form-field>
+					<mat-form-field appearance="outline" class="inputs_properties" style="margin-left: 32px;" required>
+						<mat-label>Colonia</mat-label>
+						<input type="text" placeholder="colonia" matInput autocomplete="off" id="colonia" formControlName="colonia" />
+					</mat-form-field>
+				</p>
+				<p>
+					<mat-form-field appearance="outline" class="inputs_properties" style="margin-left: 30px;" required>
+						<mat-label>Calle</mat-label>
+						<input type="text" placeholder="calle" matInput autocomplete="off" id="calle" formControlName="calle" />
+					</mat-form-field>
+					<mat-form-field appearance="outline" class="inputs_properties" style="margin-left: 30px; width: 170px;" required>
+						<mat-label>Codigo postal</mat-label>
+						<input type="text" placeholder="codigoPostal" matInput autocomplete="off" id="codigoPostal" formControlName="codigoPostal" />
+					</mat-form-field>
+					<mat-form-field appearance="outline" class="inputs_properties" style="margin-left: 30px; width: 170px;" required>
+						<mat-label>numExt</mat-label>
+						<input type="text" placeholder="numExt" matInput autocomplete="off" id="numExt" formControlName="numExt" />
+					</mat-form-field>
+					<mat-form-field appearance="outline" class="inputs_properties" style="margin-left: 30px; width: 170px;" required>
+						<mat-label>numInt</mat-label>
+						<input type="text" placeholder="numInt" matInput autocomplete="off" id="numInt" formControlName="numInt" />
+					</mat-form-field>
+					
+				</p>
+			</div>
+		</div>
+
+		<div style="margin: auto; display: block; text-align: center;">
+			<button mat-raised-button type="submit" (click)="actualizar()" style="background-color: #fd9727; font-size: 20px; margin-top: 50px;;height: 40px; width: 120px;">Aceptar</button>
+			<button mat-raised-button routerLink="/admin/lista-sucursales" style="background-color: #000000; font-size: 20px;margin-left: 100px; margin-top: 50px;;height: 40px; width: 120px;color:white">Cancelar</button>
+		</div>
+	</div>
+	<br/><br/><br/>
+</form>
