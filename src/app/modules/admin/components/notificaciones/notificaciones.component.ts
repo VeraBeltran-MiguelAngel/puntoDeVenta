@@ -59,7 +59,7 @@ export class NotificacionesComponent implements OnInit {
         data: `Enviando notificación...`
       });
 
-      this.noti.enviarMail(this.auth.getIdGym(),nombre, texto, archivo).subscribe(
+      this.noti.enviarMail(nombre, texto, archivo).subscribe(
         (respuesta) => {
           // Cerrar el diálogo después de haber procesado la respuesta
           dialogRef.close();

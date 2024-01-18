@@ -18,13 +18,14 @@ import 'jspdf-autotable';
 import { DatePipe } from '@angular/common';
 import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
+import { EmergenteInfoClienteComponent } from '../emergente-info-cliente/emergente-info-cliente.component';
 
 interface ClientesActivos {
   ID: number;
   Nombre: string;
   Sucursal: string;
   Membresia: string;
-  Info_Membresia: string;
+  Precio: string;
   Fecha_Inicio: string;
   Fecha_Fin: string;
   Status: string;
@@ -83,10 +84,14 @@ export class ListaMembresiasPagoEfecComponent implements OnInit {
     'Nombre',
     'Sucursal',
     'Membresia',
-    'Info Membresia',
+    'Precio',
     'Fecha Inicio',
     'Fecha Fin',
     'Status',
+    'Dinero Recibido',
+    'Pagar',
+    'Actualizar',
+    'Info Cliente'
   ];
 
   //titulos de columnas de la tabla Reenovacion de membresias
@@ -105,6 +110,7 @@ export class ListaMembresiasPagoEfecComponent implements OnInit {
   ];
   dineroRecibido: number; // =0
   moneyRecibido: number; // =0
+  cash: number; // =0
   IDvalid: number;
 
   //paginator es una variable de la clase MatPaginator
@@ -253,6 +259,83 @@ export class ListaMembresiasPagoEfecComponent implements OnInit {
     this.dataSourceReenovacion.filter = filterValue.trim().toLowerCase();
   }
 
+  pagarMismaMembresia(prod: any): void{
+    if (prod.cash >= prod.Precio) {
+      prod.PrecioCalcular = prod.cash - prod.Precio;
+      console.log(prod.PrecioCalcular)
+      console.log(prod.ID)
+      console.log(prod.idDetMem)
+
+      this.pagoService
+        .idPagoSucursal(prod.ID, prod.idDetMem)
+        //.pagoMemOpcion1(prod.ID)
+        .subscribe((dataResponse: any) => {
+          console.log(dataResponse.msg);
+
+          // Proceso de actualizacion de datos
+          const index = this.dataSourceActivos.data.indexOf(prod);
+          if (index !== -1) {
+            this.dataSourceActivos.data.splice(index, 1);
+            this.dataSourceActivos._updateChangeSubscription(); // Notificar a la tabla sobre el cambio
+          }
+
+          // Agregar y Actualizar la fila a la tabla dos (dataSourceActivos)
+          this.pagoService.obtenerActivos(this.formatDate(this.fechaInicio),
+                                          this.formatDate(this.fechaFin)
+                                          ).subscribe((respuesta) => {
+            console.log(respuesta);
+            this.clienteActivo = respuesta;
+            // Actualizar la fuente de datos de la segunda tabla (dataSourceActivos)
+            this.dataSourceActivos.data = this.clienteActivo.slice();
+            // Notificar a la tabla sobre el cambio
+            this.dataSourceActivos._updateChangeSubscription();
+          });
+
+          this.dialog
+            .open(MensajeEmergenteComponent, {
+              data: `Pago exitoso, el cambio es de: $${prod.PrecioCalcular}`,
+            })
+            .afterClosed()
+            .subscribe((cerrarDialogo: Boolean) => {
+              if (cerrarDialogo) {
+                // Recargar la página actual
+                //location.reload();
+                //this.router.navigateByUrl(`/index/`);
+              } else {
+              }
+            });
+        });
+    } else {
+      this.toastr.error('No alcanza para pagar esta membresia', 'Error!!!');
+    }
+  }
+
+  abrirInfoCliente(prod: any): void{ 
+    this.dialog
+            .open(EmergenteInfoClienteComponent, {
+              data: {
+                idCliente: `${prod.ID}`,
+                nombre: `${prod.Nombre}`,
+                sucursal: `${prod.Sucursal}`,
+                membresia: `${prod.Membresia}`,
+                precio: `${prod.Precio}`,
+                duracion: `${prod.Duracion}`,
+                idSucursal: `${prod.Gimnasio_idGimnasio}`,
+                infoMembresia: `${prod.Info_Membresia}`
+              },
+              //data: `Mi nombre es: ${prod.Nombre}`,
+            })
+            .afterClosed()
+            .subscribe((cerrarDialogo: Boolean) => {
+              if (cerrarDialogo) {
+                // Recargar la página actual
+                //location.reload();
+                //this.router.navigateByUrl(`/index/`);
+              } else {
+              }
+            });
+  }
+
   //Se resta el dinero recibido del precio para el apartado de actualizacion de membresia
   realizarPago(updMem: any): void {
     if (updMem.moneyRecibido >= updMem.Precio) {
@@ -303,17 +386,17 @@ export class ListaMembresiasPagoEfecComponent implements OnInit {
     }
   }
 
-  abrirEmergente(updMem: any) {
+  abrirEmergente(prod: any) {
     // Abre el diálogo y almacena la referencia
     const dialogRef = this.dialog.open(FormPagoEmergenteComponent, {
       data: {
-        idCliente: `${updMem.ID}`,
-        nombre: `${updMem.Nombre}`,
-        sucursal: `${updMem.Sucursal}`,
-        membresia: `${updMem.Membresia}`,
-        precio: `${updMem.Precio}`,
-        duracion: `${updMem.Duracion}`,
-        idSucursal: `${updMem.Gimnasio_idGimnasio}`,
+        idCliente: `${prod.ID}`,
+        nombre: `${prod.Nombre}`,
+        sucursal: `${prod.Sucursal}`,
+        membresia: `${prod.Membresia}`,
+        precio: `${prod.Precio}`,
+        duracion: `${prod.Duracion}`,
+        idSucursal: `${prod.Gimnasio_idGimnasio}`,
       },
     });
 
@@ -323,10 +406,10 @@ export class ListaMembresiasPagoEfecComponent implements OnInit {
         if (actualizar) {
           // Realiza las operaciones de actualización necesarias aquí
           // Eliminar la fila de la tabla uno
-          const index = this.dataSourceReenovacion.data.indexOf(updMem);
+          const index = this.dataSourceActivos.data.indexOf(prod);
           if (index !== -1) {
-            this.dataSourceReenovacion.data.splice(index, 1);
-            this.dataSourceReenovacion._updateChangeSubscription(); // Notificar a la tabla sobre el cambio
+            this.dataSourceActivos.data.splice(index, 1);
+            this.dataSourceActivos._updateChangeSubscription(); // Notificar a la tabla sobre el cambio
           }
 
           // Agregar y Actualizar la fila a la tabla dos (dataSourceActivos)
@@ -480,13 +563,13 @@ export class ListaMembresiasPagoEfecComponent implements OnInit {
 
     // Mapea la información de this.productosVendidos a un arreglo bidimensional
     const datos = [
-      ['ID', 'Nombre', 'Sucursal', 'Membresia', 'Info Membresia', 'Fecha Inicio', 'Fecha Fin', 'Status'],
+      ['ID', 'Nombre', 'Sucursal', 'Membresia', 'Precio', 'Fecha Inicio', 'Fecha Fin', 'Status'],
       ...this.dataSourceActivos.filteredData.map((activos: ClientesActivos) => [
         activos.ID,
         activos.Nombre,
         activos.Sucursal,
         activos.Membresia,
-        activos.Info_Membresia,
+        activos.Precio,
         activos.Fecha_Inicio,  // La propiedad debe tener el nombre correcto
         activos.Fecha_Fin,
         activos.Status
@@ -503,7 +586,7 @@ export class ListaMembresiasPagoEfecComponent implements OnInit {
       { wch: 25 },
       { wch: 20 },
       { wch: 20 },
-      { wch: 25 },
+      { wch: 10 },
       { wch: 10 },
       { wch: 10 },
       { wch: 10 }
@@ -523,7 +606,7 @@ export class ListaMembresiasPagoEfecComponent implements OnInit {
 
     // Crear un Blob con el array de bytes y guardarlo como archivo
     const newBlob = new Blob([arrayBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-    saveAs(newBlob, 'Clientes Activos.xlsx');
+    saveAs(newBlob, 'Clientes.xlsx');
   }
 
   private formatDateV2(date: Date): string {
@@ -547,7 +630,7 @@ export class ListaMembresiasPagoEfecComponent implements OnInit {
     const fechaFin = this.formatDateV2(this.fechaFin);
 
     // Encabezado del PDF con las fechas
-    pdf.text(`Reporte de los clientes activos (${fechaInicio} - ${fechaFin})`, 10, 10);
+    pdf.text(`Reporte de clientes (${fechaInicio} - ${fechaFin})`, 10, 10);
     
     // Contenido del PDF
     const datos = this.dataSourceActivos.filteredData.map((activos: ClientesActivos) => [
@@ -555,7 +638,7 @@ export class ListaMembresiasPagoEfecComponent implements OnInit {
       activos.Nombre,
       activos.Sucursal,
       activos.Membresia,
-      activos.Info_Membresia,
+      activos.Precio,
       activos.Fecha_Inicio,
       activos.Fecha_Fin,
       activos.Status
@@ -563,7 +646,7 @@ export class ListaMembresiasPagoEfecComponent implements OnInit {
   
     // Añadir filas al PDF con encabezado naranja
     pdf.autoTable({
-      head: [['ID', 'Nombre', 'Sucursal', 'Membresia', 'Info Membresia', 'Fecha Inicio', 'Fecha Fin', 'Status']],
+      head: [['ID', 'Nombre', 'Sucursal', 'Membresia', 'Precio', 'Fecha Inicio', 'Fecha Fin', 'Status']],
       body: datos,
       startY: 20,  // Ajusta la posición inicial del contenido
       headStyles: {
@@ -573,6 +656,6 @@ export class ListaMembresiasPagoEfecComponent implements OnInit {
     });
   
     // Descargar el archivo PDF
-    pdf.save('Clientes Activos.pdf');
+    pdf.save('Clientes.pdf');
   }
 }

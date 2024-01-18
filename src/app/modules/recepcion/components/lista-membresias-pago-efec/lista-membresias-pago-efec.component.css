@@ -29,8 +29,16 @@ table {
 }
 
 .icon-size{
-    font-size: 27px;
+    font-size: 25px;
 }
+
+.activo-icon {
+    color: rgb(13, 235, 13);
+  }
+  
+  .inactivo-icon {
+    color: red;
+  }
 
 
 .search-container {

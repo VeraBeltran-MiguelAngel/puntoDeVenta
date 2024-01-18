@@ -46,6 +46,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { RegistroComponent } from './components/registro/registro.component';
 import { EmergenteHistorialProductosComponent } from './components/emergente-historial-productos/emergente-historial-productos.component';
 import {WebcamModule} from 'ngx-webcam';
+import { EmergenteInfoClienteComponent } from './components/emergente-info-cliente/emergente-info-cliente.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,8 @@ import {WebcamModule} from 'ngx-webcam';
     ListarProductosPipe,
     VerCorteComponent,
     RegistroComponent,
-    EmergenteHistorialProductosComponent
+    EmergenteHistorialProductosComponent,
+    EmergenteInfoClienteComponent
   ],
   imports: [
     CommonModule,

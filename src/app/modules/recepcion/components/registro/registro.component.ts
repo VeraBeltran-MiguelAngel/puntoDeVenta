@@ -70,6 +70,9 @@ export class RegistroComponent implements OnInit {
     { value: "Zacatecas", viewValue: "Zacatecas" },
   ];
   hide = true;
+  responseData: any = {};
+  correo: any;
+  idClient : any;
   form: FormGroup;
   message: string = "";
   idMembresia: any;
@@ -418,18 +421,29 @@ export class RegistroComponent implements OnInit {
           this.clienteService
             .guardarCliente(this.form.value)
             .subscribe((respuesta) => {
+
               this.dialog
                 .open(MensajeEmergentesComponent, {
-                  data: `Usuario registrado exitosamente`,
-                })
-                .afterClosed()
-                .subscribe((cerrarDialogo: Boolean) => {
-                  if (cerrarDialogo) {
-                    this.router.navigateByUrl(
-                      `/recepcion/home`
-                    );
-                  } 
-                });
+                data: `Usuario registrado exitosamente`,
+              })
+              .afterClosed()
+              .subscribe((cerrarDialogo: Boolean) => {
+                if (cerrarDialogo) {
+                  
+                  this.clienteService.consultarDataPago(this.form.value.email).subscribe(respuesta =>{
+                  console.log(respuesta)
+                  //this.idClient=respuesta;
+
+                    this.responseData=respuesta;
+                      this.clienteService.idPagoSucursal(this.responseData.ID_Cliente).subscribe((resultado)=> {
+
+                        this.router.navigateByUrl(`/recepcion/home`);
+                      });
+                      //console.log(resultado.msg);
+                  });  
+                } 
+              });
+            
             },
             (error) => {
               // Manejar errores de solicitud HTTP

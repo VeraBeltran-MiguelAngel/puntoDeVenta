@@ -16,6 +16,7 @@ export class ClienteService {
   //URLServices: string = 'https://localhost/plan/registros.php'
   //apiUrl: string = 'https://localhost/plan/registros.php?insertar=1'
   apiUrl: string = 'https://olympus.arvispace.com/puntoDeVenta/conf/registros.php?insertar=1'
+  URL: string = "https://olympus.arvispace.com/conPrincipal/formaPago.php/";
 
   constructor(private clienteHttp:HttpClient) {
   }
@@ -24,6 +25,14 @@ export class ClienteService {
 
   guardarCliente(data: any): Observable<any> {
     return this.clienteHttp.post<any>(this.apiUrl, data);
+  }
+
+  idPagoSucursal(id:any):Observable<any>{
+    return this.clienteHttp.get(this.URL+"?consuProcAlmac="+id);
+  }
+
+  consultarDataPago(id:any):Observable<any>{
+    return this.clienteHttp.get(this.URL+"?consultar="+id);
   }
 
   sendData(data: any) {

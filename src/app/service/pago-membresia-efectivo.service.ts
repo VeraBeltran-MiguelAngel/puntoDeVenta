@@ -8,7 +8,7 @@ import { HttpParams } from '@angular/common/http';
 })
 export class PagoMembresiaEfectivoService {
 
-  URLServices: string = "https://olympus.arvispace.com/puntoDeVenta/conf/pagoEfectivoMembresia.php/ ";   //http://localhost/plan/pagoEfectivoMembresiaV2.php/     //https://olympus.arvispace.com/puntoDeVenta/conf/pagoEfectivoMembresia.php/     
+  URLServices: string = "https://olympus.arvispace.com/puntoDeVenta/conf/pagoEfectivoMembresia.php/";   //http://localhost/plan/pagoEfectivoMembresiaV2.php/     //https://olympus.arvispace.com/puntoDeVenta/conf/pagoEfectivoMembresia.php/     
   constructor(private clienteHttp:HttpClient) { }
 
   obternerDataMem(){

@@ -1,0 +1,28 @@
+<h1 mat-dialog-title>Confirmación</h1>
+<div mat-dialog-content>
+    <img [src]="cliente.imagenUrl" class="size_image" alt="Imagen del Cliente no disponible">
+    <div class="grid">
+        <div class="column"> 
+            <h3 style="font-weight: bold;">Nombre:</h3> {{ data.nombre }}
+        </div>
+
+        <div class="column"> 
+            <h3 style="font-weight: bold;">Sucursal:</h3> {{ data.sucursal }}
+        </div>
+
+        <div class="column"> 
+            <h3 style="font-weight: bold;">Membresia:</h3> {{ data.membresia }}
+        </div>
+
+        <div class="column"> 
+            <h3 style="font-weight: bold;">Duración:</h3> {{ this.duracion }}
+        </div>
+
+        <div class="column"> 
+            <h3 style="font-weight: bold;">Información de la membresia:</h3> {{ data.infoMembresia }}
+        </div>
+    </div>
+</div>
+<div mat-dialog-actions fxLayoutAlign="center center">
+    <button class="button-pay" mat-button (click)="cerrarDialogo()" >Cerrar</button>
+</div>

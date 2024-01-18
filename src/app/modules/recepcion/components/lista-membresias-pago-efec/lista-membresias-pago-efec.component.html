@@ -55,8 +55,8 @@
             <div  class="table-container">
             <table mat-table [dataSource]="dataSourceActivos" class="mat-elevation-z8">
                 <ng-container [matColumnDef]="column" *ngFor="let column of displayedColumnsActivos">
-                  <th mat-header-cell *matHeaderCellDef>{{ column }}</th>
-                  <td mat-cell *matCellDef="let prod">
+                  <th mat-header-cell *matHeaderCellDef style="text-align: center;">{{ column }}</th>
+                  <td mat-cell *matCellDef="let prod" style="text-align: center;">
                     <ng-container *ngIf="column === 'ID'">
                         {{ prod.ID }}
                       </ng-container>
@@ -69,8 +69,8 @@
                       <ng-container *ngIf="column === 'Membresia'">
                         {{ prod.Membresia }}
                       </ng-container>
-                      <ng-container *ngIf="column === 'Info Membresia'">
-                        {{ prod.Info_Membresia }}
+                      <ng-container *ngIf="column === 'Precio'">
+                        {{ prod.Precio }}
                       </ng-container>
                       <ng-container *ngIf="column === 'Fecha Inicio'">
                         {{ prod.Fecha_Inicio }}
@@ -79,7 +79,28 @@
                         {{ prod.Fecha_Fin }}
                       </ng-container>
                       <ng-container *ngIf="column === 'Status'">
-                        {{ prod.Status }}
+                        <p>{{ prod.Status }}</p>
+                        <mat-icon [ngClass]="{'icon-size': true, 'activo-icon': prod.Status === 'Activo', 'inactivo-icon': prod.Status !== 'Activo'}">
+                          {{ prod.Status === 'Activo' ? 'toggle_on' : 'toggle_off' }}
+                        </mat-icon>
+                      </ng-container>
+                      <ng-container *ngIf="column === 'Dinero Recibido'">
+                        <mat-form-field>
+                          <input matInput [(ngModel)]="prod.cash" [disabled]="prod.Status === 'Activo'" type="number" min="0" placeholder="0"/> <!--[(ngModel)]="updMem.moneyRecibido"-->
+                        </mat-form-field>
+                      </ng-container>
+                      <ng-container *ngIf="column === 'Pagar'">
+                        <button mat-raised-button (click)="pagarMismaMembresia(prod)" [disabled]="prod.Status === 'Activo'" style="background-color: #F9A640; color: #000000;">Pagar<mat-icon>attach_money</mat-icon></button>   <!---(click)="pagarMismaMembresia(prod)"-->
+                      </ng-container>
+                      <ng-container *ngIf="column === 'Actualizar'">
+                        <button mat-icon-button (click)="abrirEmergente(prod)" [disabled]="prod.Status === 'Activo'" color="primary">  <!--(click)="abrirEmergente(updMem)"-->
+                          <mat-icon class="icon-size">edit</mat-icon>
+                        </button>
+                      </ng-container>
+                      <ng-container *ngIf="column === 'Info Cliente'">
+                        <button mat-icon-button (click)="abrirInfoCliente(prod)" color="primary">  <!--(click)="abrirEmergente(updMem)"-->
+                          <mat-icon class="icon-size">info</mat-icon>
+                        </button>
                       </ng-container>
                   </td>
                 </ng-container>
@@ -89,8 +110,8 @@
             </div>
               <mat-paginator #paginatorActivos [pageSizeOptions]="[5, 10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
         </mat-tab>
-
-        <!-- APARTADO 2, REENOVACION DE MEMBRESIA SOLICITADO DESDE SUCURSAL -->
+        <!--
+         APARTADO 2, REENOVACION DE MEMBRESIA SOLICITADO DESDE SUCURSAL 
         <mat-tab label="Reenovacion de membresia"> 
           <br>
             <h2>Reenovacion de membresia</h2>
@@ -147,9 +168,9 @@
             </table>
           </div>
             <mat-paginator #paginatorReenovacionMem [pageSizeOptions]="[5, 10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
-        </mat-tab>
+        </mat-tab>-->
 
-        <!-- APARTADO 3, PAGO DE MEMBRESIA ONLINE-->
+        <!-- APARTADO 3, PAGO DE MEMBRESIA ONLINE
         <mat-tab label="Pago membresia cliente online"> 
             <br>
             <h2>Pago de membresia en linea cliente nuevo</h2>
@@ -196,7 +217,7 @@
             </table>
             </div>
             <mat-paginator #paginatorPagoOnline [pageSizeOptions]="[5, 10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
-        </mat-tab>
+        </mat-tab>-->
 
         <mat-tab label="Registro de huella"> 
           <br>
