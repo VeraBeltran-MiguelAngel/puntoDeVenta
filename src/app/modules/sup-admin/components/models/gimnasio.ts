@@ -16,4 +16,5 @@ export class gimnasio{
     calle!:string;
     numExt!:string;
     numInt!:string;
+    estatus!:number;
 }

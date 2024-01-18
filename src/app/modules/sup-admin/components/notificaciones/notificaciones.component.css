@@ -1,0 +1,151 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-image: url(../../../../../assets/img/img_login.jpg);
+    background-size: cover;
+    background-position: center;
+    height: 940px;
+  }
+
+  form {
+    width: 80%; /* Ajusta el ancho relativo del formulario */
+    max-width: 500px; /* Establece un ancho máximo */
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 30px;
+    padding: 30px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    margin: 0 auto; /* Centra horizontalmente */
+
+   
+  }
+
+  h1 {
+    text-align: center;
+    color: #f3eeee;
+    margin-bottom: 30px;
+  }
+
+  label {
+    font-size: 18px;
+    color: #444;
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  input[type="email"],
+  input[type="text"],
+  textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+  }
+
+  button {
+    padding: 15px 25px;
+    background-color: #FF6B6B;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+  }
+
+  button:hover {
+    background-color: #FF8C8C;
+  }
+
+
+  input[type="file"]::file-selector-button {
+    border: 2px solid #7c7c7c;
+    padding: 0.2em 0.4em;
+    border-radius: 0.2em;
+    background-color: #ffffff;
+    transition: 1s;
+    width: 150px;
+  }
+  
+  input[type="file"]::file-selector-button:hover {
+    background-color: #FF8C8C;
+    border: 2px solid #FF8C8C;
+  }
+
+  /* Estilos para los radio buttons */
+.radio-buttons {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Estilo base para el input radio */
+  .radio input {
+    position: absolute;
+    opacity: 0;
+  }
+  
+  /* Estilo del contenedor del radio button */
+  .radio {
+    position: relative;
+    cursor: pointer;
+    padding-left: 25px;
+    margin-bottom: 10px;
+  }
+  
+  /* Estilo del radio button visible */
+  .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    border: 1px solid #2196F3;
+  }
+  
+  /* Estilo del radio button seleccionado */
+  .radio input:checked ~ .checkmark {
+    background-color: #2196F3;
+    border: 1px solid #2196F3;
+  }
+  
+  /* Estilo del punto central del radio button */
+  .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+  
+  /* Estilo del punto central del radio button seleccionado */
+  .radio input:checked ~ .checkmark:after {
+    display: block;
+  }
+  
+  /* Estilo del punto central */
+  .radio .checkmark:after {
+    top: 50%;
+    left: 50%;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: white;
+    transform: translate(-50%, -50%);
+  }
+  
+  .titulo-notificacion {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333; /* Color del texto */
+    text-align: center; /* Centrado del texto */
+    margin-bottom: 20px; /* Espacio inferior */
+    border-bottom: 2px solid #ccc; /* Línea decorativa */
+    padding-bottom: 10px; /* Espaciado entre el texto y la línea */
+  }

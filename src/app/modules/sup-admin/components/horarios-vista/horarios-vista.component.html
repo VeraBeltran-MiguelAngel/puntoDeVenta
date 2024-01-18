@@ -1,1 +1,32 @@
-<p>horarios-vista works!</p>
+
+<label style="margin: auto; display: block; text-align: center; font-size: 20px; font-weight: bold;">HORARIOS DEL GIMNASIO</label>
+<div style="margin: auto; display: block; text-align: center; color: red; font-size: 20px;">{{ message }}</div>
+<br/>
+<div  style="text-align: right;">
+  <!--<button *ngIf="!message" style="background-color: rgb(0, 0, 0); margin-right: 30px;"  (click)="borrarPlan(this.idGimnasio) ">Eliminar</button>
+  <button *ngIf="!message" style="background-color: #fd9727;margin-right: 30px;" (click)="verHorario(this.idGimnasio)">Editar</button>-->
+  <button style = "background-color: #000000;margin-right: 90px;" (click)="cerrarDialogo()">Cerrar</button>
+</div>
+
+
+<br/>
+<table class="divf">
+  <thead>
+    <tr>
+      <th>Día Semana</th>
+      <th>Hora Entrada</th>
+      <th>Hora Salida</th>
+      <!-- Agrega más encabezados según tus datos -->
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let horario of datosHorario">
+      <td>{{ horario.diaSemana }}</td>
+      <td>{{ horario.horaEntrada }}</td>
+      <td>{{ horario.horaSalida }}</td>
+      <!-- Agrega más celdas según tus datos -->
+    </tr>
+  </tbody>
+</table>
+<br/>
+<br/>
