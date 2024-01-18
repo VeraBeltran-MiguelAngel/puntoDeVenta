@@ -1,0 +1,49 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Formulario de Correo</title>
+</head>
+<body>
+
+
+  <!-- Agregar ngForm para que Angular maneje el formulario -->
+  <form id="emailForm"  [formGroup]="form" (ngSubmit)="onSubmit()">
+   <h2 class="titulo-notificacion">Nueva notificación</h2>
+    <label for="nombre">Seleccione un rol de destino para su notificación:</label><br>
+    <div class="radio-buttons">
+        <div>
+        <label class="radio">
+          <input type="radio"  value="Clientes"  formControlName="opcion">
+          <span class="checkmark"></span>
+          Clientes
+        </label>
+        </div>
+
+
+    <div>
+        <label class="radio">
+          <input type="radio"  value="Trabajadores"  formControlName="opcion">
+          <span class="checkmark"></span>
+          Trabajadores
+        </label>
+    </div>
+     </div> 
+      
+      <br>
+     <label for="nombre">Asunto:</label><br> <!-- Corregir el ID a 'nombre' -->
+     <input type="text" id="nombre" name="nombre" formControlName="nombre" required><br><br>
+
+     <label for="texto">Mensaje:</label><br>
+     <textarea id="texto" name="texto" rows="4" formControlName="texto" required></textarea><br><br>
+
+     <!--<input type="file" id="archivo" name="archivo" (change)="cargarImagen($event)" accept="image/*">-->
+
+
+    <!-- Usar el tipo 'submit' para el botón -->
+    <button type="submit">Enviar</button>
+  </form>
+</body>
+</html>
+<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>

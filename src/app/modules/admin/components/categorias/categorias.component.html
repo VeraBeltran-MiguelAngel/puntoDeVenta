@@ -2,13 +2,13 @@
   <h2 class="mb-3">Lista de categorias</h2>
 
   <div style="text-align: right; margin-bottom: 50px">
-    <!-- <button
+     <button
       mat-raised-button
-      routerLink="/admin/alta-colaborador"
+      routerLink="/admin/alta-categoria"
       style="background-color: #fd9727; font-size: 16px; margin-right: 100px"
     >
       <mat-icon>add</mat-icon>AGREGAR CATEGORIA
-    </button> -->
+    </button> 
   </div>
 
   <h3>Ingresa el valor de una columna</h3>
@@ -22,19 +22,48 @@
     />
   </mat-form-field>
   <div  class="table-container">
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-    <ng-container
-      [matColumnDef]="column"
-      *ngFor="let column of displayedColumns"
-    >
-      <th mat-header-cell *matHeaderCellDef>{{ column }}</th>
-      <td mat-cell *matCellDef="let prod">
-        {{ prod[column] }}
-      </td>
-    </ng-container>
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let emprow; columns: displayedColumns"></tr>
-  </table>
+
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <ng-container matColumnDef="nombre">
+        <th mat-header-cell *matHeaderCellDef>Nombre</th>
+        <td mat-cell *matCellDef="let categoria">{{ categoria.nombre }}</td>
+      </ng-container>
+    
+      <ng-container matColumnDef="descripcion">
+        <th mat-header-cell *matHeaderCellDef>Descripcion</th>
+        <td mat-cell *matCellDef="let categoria">{{ categoria.descripcion }}</td>
+      </ng-container>
+    
+      <ng-container matColumnDef="estatus">
+        <th mat-header-cell *matHeaderCellDef>Estatus</th>
+        <td mat-cell *matCellDef="let categoria">
+          {{ categoria.estatus == "1" ? "Categoria activa" : "Categoria inactiva" }}
+        </td>
+      </ng-container>
+    
+      <ng-container matColumnDef="fechaCreacion">
+        <th mat-header-cell *matHeaderCellDef>Fecha Creacion</th>
+        <td mat-cell *matCellDef="let categoria">{{ categoria.fechaCreacion }}</td>
+      </ng-container>
+    
+      <ng-container matColumnDef="acciones">
+        <th mat-header-cell *matHeaderCellDef>Acciones</th>
+        <td mat-cell *matCellDef="let categoria">
+          <button mat-icon-button color="primary" routerLink="/admin/editar-categoria/{{ categoria.idCategoria }}">
+            <mat-icon>edit</mat-icon>
+          </button>
+    
+          <div class="toggle-container">
+            <input type="checkbox" id="toggle{{categoria.idCategoria}}" class="toggle-checkbox" [checked]="categoria.estatus == '1'" (change)="toggleCheckbox(categoria.idCategoria, categoria.estatus)">
+            <label for="toggle{{categoria.idCategoria}}" class="toggle-label"></label>
+          </div>
+        </td>
+      </ng-container>
+    
+      <tr mat-header-row *matHeaderRowDef="['nombre', 'descripcion', 'estatus', 'fechaCreacion', 'acciones']"></tr>
+      <tr mat-row *matRowDef="let categoria; columns: ['nombre', 'descripcion', 'estatus', 'fechaCreacion', 'acciones']"></tr>
+    </table>
+    
   </div>
   <mat-paginator
     [pageSizeOptions]="[5, 10, 15, 20]"

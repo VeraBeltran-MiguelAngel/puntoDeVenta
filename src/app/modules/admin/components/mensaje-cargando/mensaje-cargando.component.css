@@ -1,0 +1,22 @@
+.dialog-title {
+    text-align: center;
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .dialog-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .loading-image {
+    width: 200px;
+    margin: auto;
+    display: block;
+    text-align: center;
+    border-radius: 8px; /* Agregar bordes redondeados */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Agregar sombra para resaltar */
+  }
+  

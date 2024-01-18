@@ -7,7 +7,11 @@ import { Observable } from 'rxjs';
 })
 export class notificaciones {
   // API: string = 'http://localhost/EnviarMail/nuevaContra.php/';
+
+  //API: string ='http://localhost/pruebamail/EnviarMail/enviarNotiSucursalCliente.php';
+
   API: string ='http://localhost/pruebamail/EnviarMail/enviarNotificacion.php';
+
   APITra: string ='http://localhost/pruebamail/EnviarMail/enviarNotificacionTrabajador.php';
   //para guardar los headers que manda el API
   /*API: string = 'https://olympus.arvispace.com/puntoDeVenta/EnviarMail/enviarNotificacion.php/';
@@ -21,12 +25,19 @@ export class notificaciones {
    * @param email
    * @returns
    */
+
+ // enviarMail(id:any,nombre: string, texto: string, archivo: File): Observable<any> {
+
   enviarMail(nombre: string, texto: string, archivo: File): Observable<any> {
     const formData = new FormData();
     formData.append('nombre', nombre);
     formData.append('texto', texto);
     formData.append('archivo', archivo);
+
+   // return this.clienteHttp.post(this.API + '?enviarEmail='+id, formData);
+
     return this.clienteHttp.post(this.API + '?enviarEmail', formData);
+
   }
 
   enviarMailTrabajadores(nombre: string, texto: string, archivo: File): Observable<any> {

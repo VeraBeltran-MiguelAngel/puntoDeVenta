@@ -1,0 +1,45 @@
+<!-- En tu archivo HTML -->
+<div *ngIf="horarioExistente">
+    <br/>
+    <p style="margin: auto; display: block; text-align: center; font-size: 20px; font-weight: bold;">¡USTED YA AGREGO UN HORARIO!</p>
+    <img src="assets/img/tiempo.gif" style="width: 380px; margin: auto; display: block; text-align: center;" alt="tiempo">
+    <br>
+    <div style="margin: auto; display: block; text-align: center;">
+    <button style ="background-color: #000000; margin-right: 30px;" (click)="cancelar()">Cerrar</button>
+    <button style ="background-color: #fd9727; " >Ver horario</button>
+  </div>
+  
+  </div>
+  <div *ngIf="!horarioExistente">
+  <label  style="margin: auto; display: block; text-align: center; font-size: 20px; font-weight: bold;">AGREGA EL HORARIO DE TU GIMNASIO</label>
+  <form [formGroup]="formularioHorarios" >
+      <div formArrayName="horarios">
+         
+          <table>
+              <thead>
+                <tr>
+                  <th>Día de la Semana</th>
+                  <th>Hora de Entrada</th>
+                  <th>Hora de Salida</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let horario of getHorariosControls(); let i = index" [formGroupName]="i">
+                  <td *ngIf="horario.get('diaSemana') !== null">{{ horario.get('diaSemana')?.value }}</td>
+                  <td><input type="time" formControlName="horaEntrada" /></td>
+                  <td><input type="time" formControlName="horaSalida" /></td>
+                </tr>
+              </tbody>
+            </table>
+      </div>
+      <br/>
+     <div style="margin: auto; display: block; text-align: center;">
+      <button  style=" background-color: #4f9c1c; margin-right: 30px;" (click)="enviarHorario()">Enviar</button>
+      <button style ="background-color: #000000; " (click)="cancelar()">Cancelar</button>
+    </div>
+    <br/>
+    </form>
+  </div>
+    
+    
+  

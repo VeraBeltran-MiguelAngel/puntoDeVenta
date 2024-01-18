@@ -49,27 +49,39 @@
         
        </ul>
     </div>
+
     <div class="card" style="font-size: 18px;">
-       <table style="margin-top: 30px; margin-bottom: 30px;" class="horario-table" *ngIf="datosHorario && datosHorario.length > 0; else noHorario">
-          <thead>
-             <tr>
-                <th>Día Semana</th>
-                <th>Hora Entrada</th>
-                <th>Hora Salida</th>
-                <!-- Agrega más encabezados según tus datos -->
-             </tr>
-          </thead>
-          <tbody>
-             <tr *ngFor="let horario of datosHorario">
-                <td>{{ horario.diaSemana }}</td>
-                <td>{{ horario.horaEntrada }}</td>
-                <td>{{ horario.horaSalida }}</td>
-                <!-- Agrega más celdas según tus datos -->
-             </tr>
-          </tbody>
-       </table>
-    </div>
-    <ng-template #noHorario>
-       <p>{{ message }}</p>
-    </ng-template>
+      <ng-container *ngIf="datosHorario && datosHorario.length > 0; else noHorario">
+          <table style="margin-top: 30px; margin-bottom: 30px;" class="horario-table">
+              <thead>
+                  <tr>
+                      <th>Día Semana</th>
+                      <th>Hora Entrada</th>
+                      <th>Hora Salida</th>
+                      <!-- Agrega más encabezados según tus datos -->
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let horario of datosHorario">
+                      <td>{{ horario.diaSemana }}</td>
+                      <td>{{ horario.horaEntrada }}</td>
+                      <td>{{ horario.horaSalida }}</td>
+                      <!-- Agrega más celdas según tus datos -->
+                  </tr>
+              </tbody>
+          </table>
+      </ng-container>
+      <ng-template #noHorario>
+          <p style="text-align: center; margin-top: 20px;">Horario no disponible</p>
+          <div style="display: flex; justify-content: center;">
+            <button mat-raised-button style="background-color: #fd9727; width: 190px; font-size: 16px; margin-bottom: 30px;" (click)="agregarHorario(id)">
+                <mat-icon>add</mat-icon> Agregar horario
+            </button>
+            <br><br>   <br><br>  
+         </div>
+         <br><br>  
+               
+      </ng-template>
+  </div>
+  
  </div>

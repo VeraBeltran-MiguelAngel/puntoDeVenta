@@ -48,3 +48,47 @@
   
   
   
+
+
+   .toggle-container {
+    float: left;
+    margin-right: 10px;
+  }
+  
+  .toggle-checkbox {
+    display: none; /* Oculta el checkbox nativo */
+  }
+  
+  .toggle-label {
+    display: inline-block;
+    width: 40px;
+    height: 20px;
+    background-color: #ccc;
+    border-radius: 10px;
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .toggle-label:before {
+    content: '';
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    background-color: #fff;
+    border-radius: 50%;
+    top: 1px;
+    left: 1px;
+    transition: transform 0.3s ease;
+  }
+  
+  /* Estilo para el toggle button cuando está activo */
+  .toggle-checkbox:checked + .toggle-label:before {
+    transform: translateX(20px);
+  }
+  
+  .toggle-checkbox:checked + .toggle-label {
+    background-color: #4CAF50; /* Color de fondo cuando está activo */
+    left: 0; /* Mantiene la "bolita" a la izquierda cuando está activo */
+  }
+ 
+ 

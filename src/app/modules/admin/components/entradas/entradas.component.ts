@@ -1,5 +1,6 @@
 import { DatePipe } from '@angular/common'; //para obtener fecha del sistema
 import { Component, OnInit } from '@angular/core';
+import { producto } from 'src/app/modules/sup-admin/components/models/producto';
 import {
   FormBuilder,
   FormControl,
@@ -49,6 +50,7 @@ export class EntradasComponent implements OnInit {
   fechaRegistro: string; //fecha de ingreso del producto
   //Variables para guardar las lista de productos
   listaProductos: any;
+  listaProducto: producto[] = [];
   idProducto: number;
 
   //guardar lista proveedores y id
@@ -73,7 +75,7 @@ export class EntradasComponent implements OnInit {
     this.form = this.fb.group({
       idGym: [this.id],
       idProducto: ['', Validators.compose([Validators.required])],
-      idProveedor: ['', Validators.compose([Validators.required])],
+      idProveedor: [1],
       idUsuario: [this.idUsuario],
       fechaEntrada: [this.fechaRegistro],
       cantidad: [
@@ -196,4 +198,37 @@ export class EntradasComponent implements OnInit {
       });
     }
   }
+
+  tablaDatos: any[] = [];
+
+  // Método para agregar datos a la tabla
+  agregarATabla() {
+    // Verificar si el formulario y sus controles no son nulos
+    if (this.form && this.form.get('idProducto') && this.form.get('idProveedor') && this.form.get('cantidad')) {
+       const idProductoSeleccionado = this.form.get('idProducto')!.value;
+       console.log('ID Producto Seleccionado:', idProductoSeleccionado);
+       console.log('Lista de Productos:', this.listaProductos);
+       const productoSeleccionado = this.listaProductos.find((producto: any) => producto.idProducto === idProductoSeleccionado);
+
+
+       console.log('Producto Seleccionado:', productoSeleccionado);
+ 
+       if (productoSeleccionado) {
+          const nuevoDato = {
+             nombreProducto: productoSeleccionado.nombre,
+             idProveedor: this.form.get('idProveedor')!.value,
+             cantidad: this.form.get('cantidad')!.value,
+             fechaEntrada: new Date().toLocaleDateString(),
+             // Otras propiedades según tus campos
+          };
+ 
+          this.tablaDatos.push(nuevoDato);
+          this.form.reset(); // Puedes reiniciar el formulario después de agregar los datos
+       } else {
+          console.warn('Producto no encontrado en listaProductos');
+       }
+    }
+ }
+ 
+ 
 }

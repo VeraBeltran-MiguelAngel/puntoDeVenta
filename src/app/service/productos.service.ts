@@ -15,8 +15,9 @@ export class ProductosService {
   private productosSeleccionados = new BehaviorSubject<Producto[]>([]);
   
   // API: string = 'https://apimocha.com/productosgym/listar'
-  //API: string ='http://localhost/plan/productosv3.php/';
- API: string ='https://olympus.arvispace.com/puntoDeVenta/conf/productosv2.php/';
+  API: string ='http://localhost/plan/productosv2.php/';
+ //API: string ='https://olympus.arvispace.com/puntoDeVenta/conf/productosv2.php/';
+ API2: string =  'https://olympus.arvispace.com/panelAdmin/conf/joinDetalleProducto.php';
 
   constructor(private clienteHttp: HttpClient, private auth: AuthService) {}
 
@@ -31,10 +32,15 @@ export class ProductosService {
     );
   }
 
+  actualizarProducto(id: any, datosP: any): Observable<any> {
+    const url = `${this.API}?actualizar=${id}`;
+    return this.clienteHttp.post(url, datosP);
+  }
+
   /**
    * Metodo pra listar los productos de la franquicia para  el admin
    */
-  getProductosAdmin(): Observable<ListaProductos[]> {
+ /* getProductosAdmin(): Observable<ListaProductos[]> {
     return this.clienteHttp
       .get<ListaProductos[]>(this.API + '?listaProductosAdmin')
       .pipe(
@@ -43,7 +49,7 @@ export class ProductosService {
             let varArrayProductos = respuesta as ListaProductos[];
             return varArrayProductos.map((respuesta: ListaProductos) => {
               respuesta.estatus =
-                respuesta.estatus === '1' ? 'Activado' : 'Desactivado';
+                respuesta.estatus == '1' ? 'Activado' : 'Desactivado';
               return respuesta;
             });
           }
@@ -60,6 +66,15 @@ export class ProductosService {
    * Metodo para listar los productos del inventario dependiendo de la sucursal
    * @returns
    */
+
+  getProductosAdmin(): Observable<ListaProductos[]> {
+    return this.clienteHttp.get<ListaProductos[]>(this.API + '?listaProductosAdmin');
+  }
+
+  consultarProductoId(id:any):Observable<any>{
+    return this.clienteHttp.get(this.API+"?listaProductoGym="+id);
+  }
+
   obternerInventario(): Observable<Inventario[]> {
     return this.clienteHttp.get<Inventario[]>(this.API + '?listaInventario');
   }
@@ -89,6 +104,15 @@ export class ProductosService {
   borrarProductoInventario(idInv: any, usuaId: any): Observable<any>{
     const params = new HttpParams().set('invenID',idInv).set('userID',usuaId);
     return this.clienteHttp.get(this.API, {params});
+  }
+  consultarProductosJ(idProducto: number | null): Observable<any[]> {
+    const url = `${this.API2}?idProducto=${idProducto}`;
+    return this.clienteHttp.get<any[]>(url);
+  }
+
+  updateProductoStatus(id: number, estado: { estatus: number }): Observable<any> {
+    console.log("status",estado,"id",id);
+    return this.clienteHttp.post(this.API+"?actualizarEstatus="+id,estado);;
   }
 
 }
