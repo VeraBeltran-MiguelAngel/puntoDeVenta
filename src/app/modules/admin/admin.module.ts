@@ -45,6 +45,16 @@ import { MembresiasEditarComponent } from './components/membresias-editar/membre
 import { MensajeEmergentesComponent } from './components/mensaje-emergentes/mensaje-emergentes.component';
 import { ConfiguracionComponent } from './components/configuracion/configuracion.component';
 import { VerConfiguracionComponent } from './components/ver-configuracion/ver-configuracion.component';
+import { HorariosComponent } from './components/horarios/horarios.component';
+import { CrearProductoComponent } from './components/crearProducto/crearProducto.component';
+import { ToastModule } from 'primeng/toast';
+import { FileUploadModule } from 'primeng/fileupload'; 
+import { MensajeEliminarComponent } from './components/mensaje-eliminar/mensaje-eliminar.component';
+import { AltaCategoriaComponent } from './components/alta-categoria/alta-categoria.component';
+import { EditarCategoriaComponent } from './components/editar-categoria/editar-categoria.component';
+import { EditarProductoComponent } from './components/editar-producto/editar-producto.component';
+import { NotificacionesComponent } from './components/notificaciones/notificaciones.component';
+import { MensajeCargandoComponent } from './components/mensaje-cargando/mensaje-cargando.component';
 @NgModule({
   declarations: [
     AdminDashboardComponent,
@@ -66,7 +76,15 @@ import { VerConfiguracionComponent } from './components/ver-configuracion/ver-co
     MembresiasEditarComponent,
     MensajeEmergentesComponent,
     ConfiguracionComponent,
-    VerConfiguracionComponent
+    VerConfiguracionComponent,
+    HorariosComponent,
+    CrearProductoComponent,
+    MensajeEliminarComponent,
+    AltaCategoriaComponent,
+    EditarCategoriaComponent,
+    EditarProductoComponent,
+    NotificacionesComponent,
+    MensajeCargandoComponent
   ],
   imports: [
     CommonModule,
@@ -74,7 +92,9 @@ import { VerConfiguracionComponent } from './components/ver-configuracion/ver-co
     FontAwesomeModule,
     ReactiveFormsModule,
     FormsModule,
-    AdminMaterialModule 
+    AdminMaterialModule,
+    ToastModule,
+    FileUploadModule
   ],
 })
 export class AdminModule {

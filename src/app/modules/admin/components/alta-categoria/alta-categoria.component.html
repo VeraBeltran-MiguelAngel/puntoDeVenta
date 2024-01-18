@@ -1,0 +1,58 @@
+
+<br/><br/>
+<mat-label class="large-text" style="font-family: Arial; font-size: 30px;margin-left: 150px;">Categoría:</mat-label>
+<br/>
+<br/>
+
+<form [formGroup]="formularioCategoria">
+    <div class="mi-div-con-borde responsive-div">
+    <div style="color:red">{{message}}</div>
+        <br/>
+        <div class="row">
+            <div class="col-sm-6">
+                <p>
+                    <label for="nombre" class="large-text" style="margin-right: 75px;margin-left: 45px;">Nombre:</label>
+                    <mat-form-field appearance="outline" class="inputs_properties" style="margin-right: 35px;" required>
+                        <mat-label>Nombre</mat-label>
+                        <input type="text" matInput placeholder="Bebidas" autocomplete="off" id="nombre" formControlName="nombre">
+                    </mat-form-field>
+                </p>  
+                <p>
+                    <label for="fechaCreacion" class="large-text" style="margin-right: 8px;margin-left: 45px;">Fecha creación:</label>
+                    <mat-form-field appearance="outline" class="inputs_properties" style="margin-right: 35px;" required>
+                        <mat-label>Fecha creación</mat-label>
+                        <input type="date" placeholder="2003" matInput autocomplete="off" id="fechaCreacion" formControlName="fechaCreacion">
+                    </mat-form-field>
+                </p> 
+                
+                <br/>
+            </div>
+            <div class="col-sm-6">  
+                <p>
+                    <label for="estatus" class="large-text" style="margin-right: 63px;margin-left: 45px;">Estatus:</label>
+                    <mat-form-field style="width: 220px;height: 90px;" autocomplete="off" required>
+                        <mat-label style="font-family: Arial; font-size: 18px;">Seleccionar</mat-label>
+                        <mat-select id="estatus" formControlName="estatus">
+                            <mat-option value="1" style="font-family: Arial; font-size: 18px;">Activo</mat-option>
+                            <mat-option value="0" style="font-family: Arial; font-size: 18px;">Inactivo</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </p>
+                 
+                <p>
+                    <label for="descripcion" class="large-text" style="display: inline-block; margin-right: 25px; vertical-align: top; margin-left: 45px;">Descripción:</label>
+                    <mat-form-field style="display: inline-block; width: 220px; height: 110px;" required>
+                        <mat-label>Descripción</mat-label>
+                        <textarea class="textarea" matInput rows="4" placeholder="Descripción breve de la categoria" cols="50" style="display: inline-block; width: 100%;height: 100%;" id="descripcion" formControlName="descripcion"> </textarea>
+                    </mat-form-field>
+                </p>
+                    
+            </div>
+        </div>
+        <div style="display: flex; justify-content: center;">
+            <button mat-stroked-button type="submit" (click)="enviar()" style="background-color: #fd9727; font-size: 20px; margin-top: 17px; height: 40px; margin-right: 90px;">Aceptar</button>
+            <button mat-stroked-button (click)="cancelar()" style="background-color: #000000; font-size: 20px; margin-top: 17px; height: 40px;color: white;">Cancelar</button>
+          </div>          
+    </div>
+</form>
+<br/><br/><br/><br/>

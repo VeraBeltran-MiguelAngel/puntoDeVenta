@@ -59,17 +59,32 @@
           <th mat-header-cell *matHeaderCellDef>Ofertas</th>
           <td mat-cell *matCellDef="let item">{{ item.ofertas}}</td>
         </ng-container>
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>Estatus</th>
+          <td mat-cell *matCellDef="let item">
+            <span *ngIf="item.status == 1; else inactivo">Membresía activa</span>
+            <ng-template #inactivo>Membresía inactiva</ng-template>
+          </td>
+        </ng-container>
         <ng-container matColumnDef="actions">
           <th mat-header-cell *matHeaderCellDef>Acciones</th>
           <td mat-cell *matCellDef="let item">
             <button mat-icon-button color="primary" routerLink="../../admin/editarMembresias/{{item.idMem}}">
               <mat-icon>edit</mat-icon>
             </button>
-            <button mat-icon-button color="warn" (click)="borrarPlan(item.idMem)">
+            
+            <!--<div class="toggle-container">
+              <input type="checkbox" id="toggle{{item.idMem}}" class="toggle-checkbox" [checked]="item.status == 1" (change)="toggleCheckbox(item.idMem,item.status)">
+              <label for="toggle{{item.idMem}}" class="toggle-label"></label>
+            </div>-->
+            
+            
+            <!--<button mat-icon-button color="warn" (click)="borrarPlan(item.idMem)">
               <mat-icon>delete</mat-icon>
-            </button>
+            </button>-->
           </td>
         </ng-container>
+        
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let item; columns: displayedColumns; let i = index"></tr>
       </table>

@@ -5,9 +5,9 @@
      </h2>
      <div class="content_margin">
         <div class="form_data">
-           <form [formGroup]="form" (ngSubmit)="registrar()">
+           <form [formGroup]="form" (ngSubmit)="registrar()" (keyup.enter)="agregarATabla()" >
            <div class="row">
-              <div class="col-sm-6">
+             <!-- <div class="col-sm-6">
                  <p>
                     <label style="margin-right: 36px;">Gimnasio:</label>
                     <mat-form-field appearance="outline">
@@ -22,11 +22,11 @@
                           />
                     </mat-form-field>
                  </p>
-              </div>
-              <div class="col-sm-6">
+              </div>-->
+              <div class="col-sm-12">
                  <p>
                     <label style="margin-right: 46px;">Productos:</label>
-                    <mat-form-field appearance="outline" >
+                    <mat-form-field appearance="outline" style="width: 80%;" >
                        <mat-label>Productos</mat-label>
                        <mat-select
                        id="idProducto"
@@ -48,7 +48,7 @@
                  </p>
               </div>
            </div>
-           <div class="row">
+           <!--<div class="row">
             <div class="col-sm-6">
                 <p>
                   <label style="margin-right: 15px;">Proveedores:</label>
@@ -74,7 +74,7 @@
                 </p>
             </div>
            
-            <div class="col-sm-6">
+           <div class="col-sm-6">
                  <p>
                     <label style="margin-right: 15px;">Clave usuario:</label>
                     <mat-form-field appearance="outline">
@@ -90,7 +90,7 @@
                     </mat-form-field>
                  </p>
             </div>
-           </div>
+           </div>-->
 
            <div class="row">
            <div class="col-sm-6">
@@ -113,7 +113,7 @@
               <p>
                  <label style="margin-right: 55px;">Cantidad:</label>
                  <mat-form-field appearance="outline">
-                  <mat-label>Cantidad de producto a ingresar</mat-label>
+                  <mat-label>Cantidad de producto</mat-label>
                   <input
                      type="number"
                      min="0"
@@ -171,7 +171,7 @@
 
            <div style="margin: auto; display: block; text-align: center;">
           
-           <button type="submit" mat-raised-button id="btn_guardar" style="background-color: #fd9727; font-size: 20px; margin-top: 50px; height: 40px; width: 100px; color: black">
+           <!--<button type="submit" mat-raised-button id="btn_guardar" style="background-color: #fd9727; font-size: 20px; margin-top: 50px; height: 40px; width: 100px; color: black">
            Guardar
            </button>
            <button
@@ -181,9 +181,34 @@
               routerLink="../home"
               >
            Cancelar
-           </button>
+           </button>-->
           </div>
            </form>
+
+
+
+           <table class="table">
+            <thead>
+               <tr>
+                  <th>Producto</th>
+                  <th>Cantidad</th>
+                  <th>Fecha</th>
+                  <!-- Agrega más columnas según tus campos -->
+               </tr>
+            </thead>
+            <tbody>
+               <tr *ngFor="let dato of tablaDatos">
+                  <td>{{ dato.nombreProducto }}</td>
+                  <td>{{ dato.cantidad }}</td>
+                  <td>{{ dato.fechaEntrada }}</td>
+                  <!-- Agrega más columnas según tus campos -->
+               </tr>
+            </tbody>
+         </table>
+         
+         <!-- Botón para agregar datos a la tabla -->
+         <button type="button" mat-raised-button (click)="agregarATabla()">Agregar</button>
+         
         </div>
      </div>
   </div>

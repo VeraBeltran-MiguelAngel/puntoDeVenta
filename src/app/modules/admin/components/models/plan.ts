@@ -1,5 +1,5 @@
 export class plan{
-    idMem!:string;
+    idMem!:number;
     titulo!:string;
     detalles!:string;
     entrenador!:string;
@@ -9,5 +9,7 @@ export class plan{
     canchaAcc!:string;
     albercaAcc!:string;
     gymAcc!:string;
+    status!:number;
     Gimnasio_idGimnasio !:number;
+    
 }

@@ -15,7 +15,12 @@ import { MembresiasAgregarComponent } from './components/membresias-agregar/memb
 import { MembresiasEditarComponent } from './components/membresias-editar/membresias-editar.component';
 import { ConfiguracionComponent } from './components/configuracion/configuracion.component';
 import { VerConfiguracionComponent } from './components/ver-configuracion/ver-configuracion.component';
-
+import { HorariosComponent } from './components/horarios/horarios.component';
+import { CrearProductoComponent } from './components/crearProducto/crearProducto.component';
+import { AltaCategoriaComponent } from './components/alta-categoria/alta-categoria.component';
+import { EditarCategoriaComponent } from './components/editar-categoria/editar-categoria.component';
+import { EditarProductoComponent } from './components/editar-producto/editar-producto.component';
+import { NotificacionesComponent } from './components/notificaciones/notificaciones.component';
 const routes: Routes = [
   {
     path: '',
@@ -34,7 +39,12 @@ const routes: Routes = [
       { path: 'editarMembresias/:id', component: MembresiasEditarComponent},
       { path: 'configuracion', component: ConfiguracionComponent},
       { path: 'verConfiguracion', component: VerConfiguracionComponent},
-
+      { path: 'agregarHorario', component:HorariosComponent},
+      { path: 'crearProducto', component:CrearProductoComponent},
+      { path: 'alta-categoria', component:AltaCategoriaComponent},
+      { path: 'editar-categoria/:id', component:EditarCategoriaComponent},
+      { path: 'editar-producto/:id', component:EditarProductoComponent},
+      { path: 'notificacion', component:NotificacionesComponent},
       {
         path: 'validarTransferencia',
         component: ValidarTransferenciaComponent,

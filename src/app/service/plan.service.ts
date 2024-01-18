@@ -7,8 +7,9 @@ import { plan } from '../modules/admin/components/models/plan';
   providedIn: 'root'
 })
 export class PlanService {
-
-  API: string = "https://olympus.arvispace.com/puntoDeVenta/conf/Membresia.php";  
+ 
+  API: string ="http://localhost/plan/membresia.php";
+  //API: string = "https://olympus.arvispace.com/puntoDeVenta/conf/Membresia.php";  
   
   constructor(private clienteHttp:HttpClient) {
   }
@@ -37,5 +38,9 @@ export class PlanService {
     return this.clienteHttp.post(this.API+"?actualizar="+id,datosPlan);
   }  
 
+  updateMembresiaStatus(id: number, estado: { status: number }): Observable<any> {
+    console.log("status",estado,"id",id);
+    return this.clienteHttp.post(this.API+"?actualizarEstatus="+id,estado);;
+  }
 
 }

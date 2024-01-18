@@ -1,0 +1,98 @@
+.mi-div-con-borde {
+  height: 750px; /* Altura */
+  background-color: #ffffff;
+  border: 1px solid #000;
+  color: #000000; /* Color del texto */
+  font-size: 18px; /* Tamaño de fuente */
+  border-radius: 20px;
+  font-family: Arial, sans-serif;
+}
+.responsive-div {
+  width: 100%; /* El div ocupa todo el ancho disponible */
+  height: 100%;
+  max-width: 1000px; /* Ancho máximo para evitar que se extienda demasiado en pantallas grandes */
+  max-height: 9000px;
+  margin: 0 auto; /* Centra el div horizontalmente en la pantalla */
+  padding: 20px; /* Agrega espaciado interno si es necesario */
+  /* Otros estilos personalizados para tu div */
+}
+
+.grid-menu{
+  display: grid;
+  grid-template-columns: 85%;
+}
+
+.full-width {
+  font-size: 14px;
+  width: 100%;
+}
+
+table {
+  width: 100%;
+}
+
+/* Estilos para .large-text */
+.large-text {
+  font-size: 20px;
+}
+
+
+/**propiedades contenedor formulario**/
+.form_data {
+  margin: auto;
+  text-align: left;
+  padding-bottom: 15px;
+}
+
+/**propiedades contendor margen**/
+.content_margin {
+  width: 100%;
+  margin: auto;
+  /* background-color: aqua; */
+}
+
+.large-text {
+  font-size: 20px;
+}
+
+/**propiedades por inputs **/
+.inputs_properties {
+  width: 250px;
+  padding: 10px;
+
+}
+
+/**propiedades del resumen de los productos seleccionados para la transferencia **/
+.resumen {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-top: 20px;
+  background-color: #f9f9f9;
+}
+
+/**propiedades btn aceptar-guardar**/
+#btn_guardar {
+  width: 290px;
+  height: 45px;
+  margin: 10px 7px;
+  background: #FD9727; 
+  color: white;
+  font-size: larger;
+}
+
+/**propiedades botones  header - toolbar**/
+.btn {
+  margin: 10px;
+  width: auto; /* Ancho automático para ajustarse al contenido */
+  height: 45px;
+  border-radius: 15px;
+  background: #df7e54;
+  color: black;
+  display: flex; /* Usa un modelo de caja flexible para alinear elementos internos */
+  align-items: center; /* Alinea los elementos verticalmente al centro */
+  padding: 0 15px; /* Agrega relleno horizontal para espacio interno */
+}
+
+.btn fa-icon {
+  margin-right: 8px; /* Ajusta el espacio entre el ícono y el texto */
+}
