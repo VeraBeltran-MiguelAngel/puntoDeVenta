@@ -21,3 +21,18 @@
   .example-full-width {
     width: 100%;
   }
+
+  .check_circle {
+    color: green;
+  }
+
+  .cancel {
+    color: red;
+  }
+
+  .buton_location {
+    width: 100%;
+    border: none;
+  }
+
+  

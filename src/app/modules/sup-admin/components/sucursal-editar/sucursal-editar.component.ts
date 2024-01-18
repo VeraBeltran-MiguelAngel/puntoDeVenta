@@ -5,6 +5,10 @@ import { GimnasioService } from 'src/app/service/gimnasio.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MensajeEmergentesComponent } from '../mensaje-emergentes/mensaje-emergentes.component';
 import { franquiciaService } from 'src/app/service/franquicia.service';
+import { MensajeEliminarComponent } from '../mensaje-eliminar/mensaje-eliminar.component';
+import { DialogRef } from '@angular/cdk/dialog';
+import { faCameraRetro } from '@fortawesome/free-solid-svg-icons';
+
 
 @Component({
   selector: 'app-sucursal-editar',
@@ -13,7 +17,9 @@ import { franquiciaService } from 'src/app/service/franquicia.service';
 })
 export class SucursalEditarComponent implements OnInit {
 
-  estatus: number = 0;
+  estatusAlert: boolean = false;
+  estatus: boolean = false;
+  //estatus: number = 0;
   formularioSucursales: FormGroup;
   gimnasio: any;
   franquicia: any;
@@ -48,7 +54,8 @@ export class SucursalEditarComponent implements OnInit {
       estacionamiento: ["", Validators.required],
       regaderas: ["", Validators.required],
       bicicletero: ["", Validators.required],
-      estatus: [""]
+      estatus: [false]
+      //estatus: [0]
     });
   }
 
@@ -85,21 +92,88 @@ export class SucursalEditarComponent implements OnInit {
           estacionamiento: respuesta[0]['estacionamiento'],
           regaderas: respuesta[0]['regaderas'],
           bicicletero: respuesta[0]['bicicletero'],
-          estatus: respuesta[0]['estatus'],
+          estatus: respuesta[0]['estatus'] == 1,
+          //estatus: respuesta[0]['estatus'],
         }); 
         console.log("solo la respuesta: ", respuesta);
-        this.estatus = this.formularioSucursales.value.estatus;
-        console.log("solo el estatus: ", this.estatus);
-        //console.log("datos del gimnasio seleccionado: ", this.formularioSucursales.value);
+        //this.estatus = this.formularioSucursales.value.estatus;
+        
       }
+        //FUNCIONA this.estatus = this.formularioSucursales.get('estatus')?.value;
+        this.estatus = this.formularioSucursales.get('estatus')?.value;
+        console.log("solo el estatus: ", this.estatus);
+        if(!this.estatus){
+         // this.formularioSucursales.disable();
+         this.formularioSucursales.get('nombreGym')?.disable();
+         this.formularioSucursales.get('estado')?.disable();
+         this.formularioSucursales.get('ciudad')?.disable();
+         this.formularioSucursales.get('colonia')?.disable();
+         this.formularioSucursales.get('calle')?.disable();
+         this.formularioSucursales.get('codigoPostal')?.disable();
+         this.formularioSucursales.get('numExt')?.disable();
+         this.formularioSucursales.get('numInt')?.disable();
+         this.formularioSucursales.get('telefono')?.disable();
+         this.formularioSucursales.get('tipo')?.disable();
+         this.formularioSucursales.get('Franquicia_idFranquicia')?.disable();
+        this.formularioSucursales.get('casilleros')?.disable();
+        this.formularioSucursales.get('estacionamiento')?.disable();
+        this.formularioSucursales.get('regaderas')?.disable();
+        this.formularioSucursales.get('bicicletero')?.disable();
+        } else {
+          this.formularioSucursales.enable();
+        }
       },
       (error) => {
         console.log("Error al consultar: ", error);
       }
     );
+
+    this.gimnasioService.botonEstado.subscribe((estado) => {
+      if (estado) {
+        const formularioValues = this.formularioSucursales.value;
+        formularioValues.estatus = formularioValues.estatus ? 1 : 0;
+        this.gimnasioService.actualizarPlan(this.elID, this.formularioSucursales.value).subscribe(() => {
+          this.dialog.open(MensajeEmergentesComponent, {
+            data: 'Sucursal actualizada exitosamente',
+          })
+          /*.afterClosed()
+          .subscribe((cerrarDialogo: Boolean) => {
+            if (cerrarDialogo) {
+              this.router.navigateByUrl("/sup-admin/lista-sucursales");
+            } else {
+            }
+          });*/
+        });
+        // Deshabilita los campos del formulario aquí
+        this.formularioSucursales.get('nombreGym')?.disable();
+         this.formularioSucursales.get('estado')?.disable();
+         this.formularioSucursales.get('ciudad')?.disable();
+         this.formularioSucursales.get('colonia')?.disable();
+         this.formularioSucursales.get('calle')?.disable();
+         this.formularioSucursales.get('codigoPostal')?.disable();
+         this.formularioSucursales.get('numExt')?.disable();
+         this.formularioSucursales.get('numInt')?.disable();
+         this.formularioSucursales.get('telefono')?.disable();
+         this.formularioSucursales.get('tipo')?.disable();
+         this.formularioSucursales.get('Franquicia_idFranquicia')?.disable();
+        this.formularioSucursales.get('casilleros')?.disable();
+        this.formularioSucursales.get('estacionamiento')?.disable();
+        this.formularioSucursales.get('regaderas')?.disable();
+        this.formularioSucursales.get('bicicletero')?.disable();
+        this.formularioSucursales.get('estatus')?.enable();
+      } else {
+        // Habilita los campos del formulario aquí
+        this.formularioSucursales.enable();
+        console.log("estoy conectado a boton estado jejejejej");
+        this.formularioSucursales.get('estatus')?.setValue(true);
+      }
+    });
   }
 
   actualizar() {
+    const formularioValues = this.formularioSucursales.value;
+    formularioValues.estatus = formularioValues.estatus ? 1 : 0;
+
     console.log(this.formularioSucursales.value);
     this.gimnasioService.actualizarPlan(this.elID, this.formularioSucursales.value).subscribe(() => {
       this.dialog.open(MensajeEmergentesComponent, {
@@ -114,8 +188,35 @@ export class SucursalEditarComponent implements OnInit {
         });
     });
   }
+
+  onToggleChange(event: any) {
+    if (!event.checked && this.estatus) {
+      this.borrarSucursal(this.elID);
+      console.log("Seguro?");
+      console.log("desactivado");
+      /*this.formularioSucursales.get('nombreGym')?.disable();
+      this.formularioSucursales.get('codigoPostal')?.disable();*/
+      // Agrega aquí todos los campos que quieras deshabilitar
+      if(this.estatusAlert){
+        this.formularioSucursales.enable();
+      }else {
+        this.formularioSucursales.disable();
+      }
+    } else {
+      console.log("activado");
+      this.formularioSucursales.enable();
+      //this.formularioSucursales.get('codigoPostal')?.enable();
+      // Agrega aquí todos los campos que quieras habilitar
+    }
+  }
+
+  borrarSucursal(idGimnasio: any) {
+    console.log(idGimnasio);
+    this.dialog.open(MensajeEliminarComponent,{
+      data: `¿Deseas desactivar esta sucursal?`,
+    })
 }
 
-
+}
 
 
