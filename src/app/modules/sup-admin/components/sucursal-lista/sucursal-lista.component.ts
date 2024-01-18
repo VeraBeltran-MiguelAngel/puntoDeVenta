@@ -30,7 +30,7 @@ export class SucursalListaComponent implements OnInit {
     public dialog: MatDialog,
   ){}
 
-  displayedColumns: string[] = ['nombre','direccion','telefono', 'tipo',  'alberca', 'ofertas', 'gimnasio', 'IDgimnasio', 'actions', 'horario'];
+  displayedColumns: string[] = ['estatus','nombre','direccion','telefono', 'tipo',  'alberca', 'ofertas', 'gimnasio', 'IDgimnasio', 'actions', 'horario', 'ubicacion'];
 
 
   ngOnInit(): void {
@@ -43,7 +43,7 @@ export class SucursalListaComponent implements OnInit {
   borrarSucursal(idGimnasio: any) {
     console.log(idGimnasio);
     this.dialog.open(MensajeEliminarComponent,{
-      data: `¿Desea eliminar esta membresía?`,
+      data: `¿Deseas desactivar esta sucursal?`,
     })
     .afterClosed()
     .subscribe((confirmado: boolean) => {
@@ -105,5 +105,10 @@ changePage(newPage: number) {
 // Método para cambiar la cadena de búsqueda
 changeSearchString(newSearchString: string) {
   this.searchString = newSearchString;
+}
+
+verUbicacion(item: any) {
+  const direccion = `${item.calle}+${item.numExt}+${item.colonia}+${item.codigoPostal}+${item.ciudad}+${item.estado}`;
+  window.open(`https://www.google.com/maps/search/?api=1&query=${direccion}`, '_blank');
 }
 }

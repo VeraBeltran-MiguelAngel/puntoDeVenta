@@ -9,8 +9,10 @@
 		<div class="row">
 			<div class="col-sm-6">
 				<p>
-					<!--<mat-label>Estatus</mat-label>
-					<mat-slide-toggle formControlName="estatus">{{formularioSucursales.get('estatus').value ? 'Activo' : 'Inactivo'}}</mat-slide-toggle>-->			
+					<mat-label>Estatus</mat-label>
+					<mat-slide-toggle formControlName="estatus"(change)="onToggleChange($event)">
+						{{ formularioSucursales.get('estatus')?.value ? 'Activo' : 'Inactivo' }}
+					  </mat-slide-toggle>								  
 				</p>
 				<p>
 					<label for="nombreColonia" class="large-text" style="margin-right: 35px; margin-left: 45px;">Nombre:</label>
@@ -129,7 +131,7 @@
 
 		<div style="margin: auto; display: block; text-align: center;">
 			<button mat-raised-button type="submit" (click)="actualizar()" style="background-color: #fd9727; font-size: 20px; margin-top: 50px;;height: 40px; width: 120px;">Aceptar</button>
-			<button mat-raised-button routerLink="/admin/lista-sucursales" style="background-color: #000000; font-size: 20px;margin-left: 100px; margin-top: 50px;;height: 40px; width: 120px;color:white">Cancelar</button>
+			<button mat-raised-button routerLink="/sup-admin/lista-sucursales" style="background-color: #000000; font-size: 20px;margin-left: 100px; margin-top: 50px;;height: 40px; width: 120px;color:white">Cancelar</button>
 		</div>
 	</div>
 	<br/><br/><br/>
