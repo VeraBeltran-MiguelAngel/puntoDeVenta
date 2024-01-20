@@ -6,6 +6,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 //incluir librerias de material que necesitara el modulo recepcion
 import { RecepMaterialModule } from './recepMaterial';
+import { VentasComponent } from './components/ventas/home.component';
 
 import {
   FaIconLibrary,
@@ -70,7 +71,8 @@ import { EmergenteCargarFotoComponent } from './components/emergente-cargar-foto
     RegistroComponent,
     EmergenteHistorialProductosComponent,
     EmergenteInfoClienteComponent,
-    EmergenteCargarFotoComponent
+    EmergenteCargarFotoComponent,
+    VentasComponent
   ],
   imports: [
     CommonModule,

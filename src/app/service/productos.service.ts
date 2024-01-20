@@ -26,9 +26,9 @@ export class ProductosService {
    * para el recepcionista
    * @returns
    */
-  obternerProductos(): Observable<Producto[]> {
+  obternerProductos(id:any): Observable<Producto[]> {
     return this.clienteHttp.get<Producto[]>(
-      this.API + '?listaProductosRecepcion'
+      this.API + '?listaProductosRecepcion'+id
     );
   }
 

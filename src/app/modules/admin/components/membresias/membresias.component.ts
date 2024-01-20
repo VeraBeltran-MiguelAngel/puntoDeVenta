@@ -46,7 +46,7 @@ export class MembresiasComponent implements OnInit {
     public dialog: MatDialog
   ){}
 
-  displayedColumns: string[] = ['title', 'details','price','duration', 'trainer','cancha','alberca','ofertas','gimnasio','status','actions'];
+  displayedColumns: string[] = ['title', 'details','price','duration', 'trainer','cancha','alberca','ofertas','gimnasio','actions'];
 
   ngOnInit(): void {
     this.planService.consultarPlanId(this.auth.getIdGym()).subscribe(respuesta => {
