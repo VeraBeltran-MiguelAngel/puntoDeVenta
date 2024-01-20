@@ -128,7 +128,7 @@ export class SucursalEditarComponent implements OnInit {
       }
     );
 
-    this.gimnasioService.botonEstado.subscribe((estado) => {
+    /*this.gimnasioService.botonEstado.subscribe((estado) => {
       if (estado) {
         const formularioValues = this.formularioSucursales.value;
         formularioValues.estatus = formularioValues.estatus ? 1 : 0;
@@ -142,9 +142,8 @@ export class SucursalEditarComponent implements OnInit {
               this.router.navigateByUrl("/sup-admin/lista-sucursales");
             } else {
             }
-          });*/
+          });
         });
-        // Deshabilita los campos del formulario aquí
         this.formularioSucursales.get('nombreGym')?.disable();
          this.formularioSucursales.get('estado')?.disable();
          this.formularioSucursales.get('ciudad')?.disable();
@@ -167,7 +166,7 @@ export class SucursalEditarComponent implements OnInit {
         console.log("estoy conectado a boton estado jejejejej");
         this.formularioSucursales.get('estatus')?.setValue(true);
       }
-    });
+    });*/
   }
 
   actualizar() {
