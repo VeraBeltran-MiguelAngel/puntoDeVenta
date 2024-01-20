@@ -52,7 +52,7 @@ export class TablaProductosTransferenciaComponent implements OnInit {
     });
 
     //llenar la tabla de productos
-    this.productoService.obternerProductos().subscribe((respuesta) => {
+    this.productoService.obternerProductos(1).subscribe((respuesta) => {
       // console.log(respuesta);
       this.productData = respuesta;
       this.dataSource = new MatTableDataSource(this.productData);

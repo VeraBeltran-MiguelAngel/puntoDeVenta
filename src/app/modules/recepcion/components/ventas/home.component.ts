@@ -47,7 +47,7 @@ interface Cliente {
   templateUrl: "./home.component.html",
   styleUrls: ["./home.component.css"],
 })
-export class HomeComponent implements OnInit {
+export class VentasComponent implements OnInit {
   formularioCaja: FormGroup;
   productosArray: FormArray;
   formularioDetalleVenta: FormGroup;
@@ -169,11 +169,11 @@ export class HomeComponent implements OnInit {
   }
 
   ngAfterViewInit(): void {
-    this.productoService.obternerProductos(2).subscribe((respuesta) => {
+    this.productoService.obternerProductos(1).subscribe((respuesta) => {
       this.productData = respuesta;
       this.dataSource = new MatTableDataSource(this.productData);
       this.dataSource.paginator = this.paginator; // Asignación del paginador aquí
-     // console.log(this.paginator,"this.paginator");
+      console.log(this.paginator,"this.paginator");
     });
   }
   
@@ -474,6 +474,60 @@ export class HomeComponent implements OnInit {
   }
 
   imprimirResumen() {
+    console.log("total", this.totalAPagar <= this.dineroRecibido);
+    if (this.totalAPagar <= this.dineroRecibido) {
+      const userId = this.auth.getIdUsuario(); //ID del usuario actual
+      const lastInsertedIdString = localStorage.getItem(`lastInsertedId_${userId}`); // Obtener el último ID insertado para ese usuario
+      const lastInsertedId = lastInsertedIdString? parseInt(lastInsertedIdString, 10): null;
+      const fechaActual = new Date();
+      const offset = fechaActual.getTimezoneOffset(); // Obtiene el offset en minutos
+      fechaActual.setMinutes(fechaActual.getMinutes() - offset);
+      const fechaVenta = fechaActual.toISOString().replace("T", " ").split(".")[0];
+      const idCliente = this.cliente?.ID_Cliente || null; // Acceder al ID del cliente seleccionado
+      const totalAPagar = this.selectedProducts.reduce(
+        (total, producto) => total + producto.precio * producto.cantidad,0);
+      // Enviar datos de ventas
+      const datosVentas = {
+        Cliente_ID_Cliente: idCliente,
+        Caja_idCaja: lastInsertedId,
+        fechaVenta: fechaVenta,
+        total: totalAPagar,
+      };
+      this.ventasService.agregarVentas(datosVentas).subscribe((response) => {
+        const lastInsertedId3 = response.lastInsertedId3;
+        // Enviar detalles de ventas
+        const detallesVenta = this.selectedProducts.map((producto) => {
+          return {
+            Ventas_idVentas: lastInsertedId3,
+            Producto_idProducto: producto.id,
+            nombreProducto: producto.nombre,
+            cantidadElegida: producto.cantidad,
+            precioUnitario: producto.precio,
+            Gimnasio_idGimnasio: this.auth.getIdGym(),
+            importe: producto.cantidad * producto.precio,
+          };
+        });
+        console.log("Detalles de venta", detallesVenta);
+        this.DetalleVenta.agregarVentaDetalle(detallesVenta).subscribe(
+          (response) => {
+            console.log("Detalles de ventas guardados correctamente");
+          }
+        );
+        this.dialog.open(MensajeEmergenteComponent, {
+            data: `Productos registrados correctamente`,
+          })
+          .afterClosed()
+          .subscribe((cerrarDialogo: Boolean) => {
+            if (cerrarDialogo) {
+              this.resetearValores();
+            } else {
+            }
+          });
+      });
+    } else {
+      this.toastr.error("Ingresa el pago");
+    }
+    ///////////////////////
     if (this.totalAPagar <= this.dineroRecibido) {
       const totalCantidad = this.selectedProducts.reduce(
         (total, producto) => producto.cantidad,

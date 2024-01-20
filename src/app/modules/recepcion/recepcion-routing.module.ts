@@ -7,6 +7,7 @@ import { InventariosComponent } from './components/inventarios/inventarios.compo
 import { TransferenciasComponent } from './components/transferencias/transferencias.component';
 import { VerCorteComponent } from './components/ver-corte/ver-corte.component';
 import { RegistroComponent } from './components/registro/registro.component';
+import { VentasComponent } from './components/ventas/home.component';
 const routes: Routes = [
   {
     path: '',
@@ -20,6 +21,7 @@ const routes: Routes = [
       { path: 'inventarios', component: InventariosComponent },
       { path: 'transferencias', component: TransferenciasComponent },
       { path: 'registro', component: RegistroComponent },
+      { path: 'Ventas', component: VentasComponent },
     ],
   },
 ];
