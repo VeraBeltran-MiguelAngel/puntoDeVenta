@@ -8,8 +8,8 @@ import { plan } from '../modules/admin/components/models/plan';
 })
 export class PlanService {
  
-  API: string ="http://localhost/plan/membresia.php";
-  //API: string = "https://olympus.arvispace.com/puntoDeVenta/conf/Membresia.php";  
+  //API: string ="http://localhost/plan/membresia.php";
+  API: string = "https://olympus.arvispace.com/puntoDeVenta/conf/Membresia.php";  
   
   constructor(private clienteHttp:HttpClient) {
   }

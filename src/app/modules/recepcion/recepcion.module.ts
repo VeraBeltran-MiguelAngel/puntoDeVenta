@@ -47,6 +47,7 @@ import { RegistroComponent } from './components/registro/registro.component';
 import { EmergenteHistorialProductosComponent } from './components/emergente-historial-productos/emergente-historial-productos.component';
 import {WebcamModule} from 'ngx-webcam';
 import { EmergenteInfoClienteComponent } from './components/emergente-info-cliente/emergente-info-cliente.component';
+import { EmergenteCargarFotoComponent } from './components/emergente-cargar-foto/emergente-cargar-foto.component';
 
 @NgModule({
   declarations: [
@@ -68,7 +69,8 @@ import { EmergenteInfoClienteComponent } from './components/emergente-info-clien
     VerCorteComponent,
     RegistroComponent,
     EmergenteHistorialProductosComponent,
-    EmergenteInfoClienteComponent
+    EmergenteInfoClienteComponent,
+    EmergenteCargarFotoComponent
   ],
   imports: [
     CommonModule,

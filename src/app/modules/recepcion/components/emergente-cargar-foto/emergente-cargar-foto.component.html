@@ -1,0 +1,72 @@
+<h1 mat-dialog-title>Tomar foto de perfil</h1>
+<div mat-dialog-content>
+
+   <!-- Contenido seccion foto de perfil -->
+   <div class="card-body content_profile_img">
+    <!--<legend>Foto de perfil</legend>-->
+    <!-- Contenedor correspondiente a opciones subir foto-->
+        <!--<h5>Subir imagen.</h5>-->
+    <div class="grid-boton-select">
+        <button mat-button  (click)="mostrarInformacion('boton2')" (click)="triggerSnapshot()">WebCam</button>
+        <button mat-button  (click)="mostrarInformacion('boton1')">Seleccionar Foto</button>
+    </div>
+    <div *ngIf="mostrarInfo === 'boton1'">
+        <form (submit)="uploadPhoto()">
+           <p class="py-4" *ngIf="!photoSelected">Selecciona una imagen.</p>
+           <input accept="image/*" type="file" name="image" class="d-none" (change)="onPhotoSelected($event)" #photoInput>
+           <img [src]="photoSelected || 'assets/img/tomar-foto.png'" class="img-fluid" alt="No image"
+               (click)="photoInput.click()">
+           <p *ngIf="photoSelected"><strong>Imagen seleccionada correctamente.</strong></p>
+           <p *ngIf="not_size"><strong style="color: red;">La imagen excede el peso permitido (1mb).</strong></p>
+           <p *ngIf="not_format"><strong style="color: red;">El archivo que intentas subir no tiene un formato valido..</strong></p>
+
+            <div class="contenedor-botones">
+                <button class="btn btn-primary btn-block">
+                    Guardar Foto
+                </button>
+            </div>
+        </form>
+    </div>
+    
+    <!-- Contenedor correspondiente a tomar foto -->
+    <!--<div class="content_take_picture" *ngIf="actualizar_imagen === 'take'">
+        <h5>Tomar foto</h5>-->
+        <!-- Apertura de webcam-->
+    <div *ngIf="mostrarInfo === 'boton2'">
+        <form (submit)="uploadPhoto()">
+            <div *ngIf="showWebcam" class="mb-3 mt-3">
+                <webcam [height]="500" [width]="500" [trigger]="triggerObservable"
+                    (imageCapture)="handleImage($event)" *ngIf="showWebcam"
+                    [allowCameraSwitch]="allowCameraSwitch" [switchCamera]="nextWebcamObservable"
+                    [videoOptions]="videoOptions" [imageQuality]="1"
+                    (cameraSwitched)="cameraWasSwitched($event)" (initError)="handleInitError($event)">
+                </webcam>
+            </div>
+            <!-- Evento tomar foto-->
+            <div class="contenedor-botones">
+                <button (click)="triggerSnapshot()" class="btn btn-primary" *ngIf="!webcamImage">Tomar foto</button>
+            </div>
+
+            <!-- Mostrar foto tomada -->
+            <legend *ngIf="webcamImage">Foto tomada</legend>
+            <div class="snapshot" *ngIf="webcamImage" class="mt-3">
+                <h2>Nice one!</h2>
+                <img [src]="webcamImage.imageAsDataUrl" />
+            </div>
+            <!-- Descartar imagen tomada y volver a tomar otra imagen/foto -->
+            <br>
+            <div class="grid-boton-select">
+                <button class="btn btn-danger" (click)="resetWebcamImage()" *ngIf="webcamImage">
+                    Descartar foto
+                </button>
+                <button class="btn btn-primary btn-block" *ngIf="webcamImage">
+                    Guardar foto
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<!--</div>-->
+<div mat-dialog-actions fxLayoutAlign="center center">
+    <button class="button-pay" mat-button (click)="cerrarDialogo()" >Cerrar</button>
+</div>

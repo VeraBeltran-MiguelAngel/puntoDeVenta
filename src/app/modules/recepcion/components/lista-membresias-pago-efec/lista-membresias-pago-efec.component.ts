@@ -321,7 +321,8 @@ export class ListaMembresiasPagoEfecComponent implements OnInit {
                 precio: `${prod.Precio}`,
                 duracion: `${prod.Duracion}`,
                 idSucursal: `${prod.Gimnasio_idGimnasio}`,
-                infoMembresia: `${prod.Info_Membresia}`
+                infoMembresia: `${prod.Info_Membresia}`,
+                foto: `${prod.foto}`
               },
               //data: `Mi nombre es: ${prod.Nombre}`,
             })

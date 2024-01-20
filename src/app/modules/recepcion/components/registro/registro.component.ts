@@ -159,8 +159,7 @@ export class RegistroComponent implements OnInit {
       curp: ['', Validators.compose([ Validators.minLength(18), Validators.pattern(/^[A-ZÑ0-9]*[A-Z][A-ZÑ0-9]*$/)])],
       email: ['', Validators.compose([Validators.required, Validators.pattern(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)])],  
       pass: ['', Validators.compose([Validators.required, Validators.minLength(8)])],
-      tiene_huella:[''
-    ],
+      tiene_huella:[''],
       fotoUrl:['', Validators.required],
       peso:['', Validators.compose([Validators.pattern(/^(0|[1-9][0-9]*)$/), Validators.max(300)])],
       estatura:['', Validators.compose([Validators.pattern(/^(0|[1-9][0-9]*)$/), Validators.max(250)])],

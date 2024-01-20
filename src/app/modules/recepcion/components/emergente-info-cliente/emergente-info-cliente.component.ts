@@ -1,13 +1,8 @@
 import { Component, OnInit, Inject, EventEmitter, Output } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
+import { EmergenteCargarFotoComponent } from '../emergente-cargar-foto/emergente-cargar-foto.component';
 
-export interface Cliente {
-  nombre: string;
-  apellido: string;
-  imagenUrl: string;
-  // Otros campos del cliente...
-}
 
 @Component({
   selector: 'app-emergente-info-cliente',
@@ -16,10 +11,11 @@ export interface Cliente {
 })
 
 export class EmergenteInfoClienteComponent implements OnInit{
-  cliente: Cliente;
 
   duracion: any;
-  constructor(
+  photo: any;
+  img = 'https://';
+  constructor(public dialog: MatDialog,
     public dialogo: MatDialogRef<EmergenteInfoClienteComponent>,
     @Inject(MAT_DIALOG_DATA)  public data: any) { }   //public mensaje: string,
 
@@ -33,12 +29,26 @@ export class EmergenteInfoClienteComponent implements OnInit{
   ngOnInit() {
 
     this.duracion = this.data.duracion + ' ' + 'días';
-
-    this.cliente = {
-      nombre: 'Juan',
-      apellido: 'Pérez',
-      imagenUrl: 'https://www.fundacionaquae.org/wp-content/uploads/2018/10/proteger-a-los-animales-1024x654.jpg',
-      // Otros detalles...
-    };
+    this.photo = this.img+this.data.foto
   }
+
+
+  abrirDialogFoto(data: any): void {
+    this.dialogo.close(true);
+    this.dialog.open(EmergenteCargarFotoComponent, {
+      data: {
+        clienteID: `${data.idCliente}`
+      },
+    })
+    .afterClosed()
+    .subscribe((cerrarDialogo: Boolean) => {
+      if (cerrarDialogo) {
+
+      } else {
+
+      }
+    });
+  }
+
+  
 }

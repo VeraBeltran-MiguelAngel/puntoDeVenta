@@ -98,7 +98,7 @@
                         </button>
                       </ng-container>
                       <ng-container *ngIf="column === 'Info Cliente'">
-                        <button mat-icon-button (click)="abrirInfoCliente(prod)" color="primary">  <!--(click)="abrirEmergente(updMem)"-->
+                        <button mat-icon-button (click)="abrirInfoCliente(prod)" color="{{ prod.foto ? 'primary' : 'warn' }}">  <!--(click)="abrirEmergente(updMem)"-->
                           <mat-icon class="icon-size">info</mat-icon>
                         </button>
                       </ng-container>

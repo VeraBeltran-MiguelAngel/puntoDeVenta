@@ -1,6 +1,7 @@
 <h1 mat-dialog-title>Confirmación</h1>
 <div mat-dialog-content>
-    <img [src]="cliente.imagenUrl" class="size_image" alt="Imagen del Cliente no disponible">
+    <img [src]="photo" class="size_image" alt="Imagen del Cliente no disponible">
+    <!--<img src="../../../assets/img/user.png" class="size_image" alt="Imagen del Cliente no disponible">-->
     <div class="grid">
         <div class="column"> 
             <h3 style="font-weight: bold;">Nombre:</h3> {{ data.nombre }}
@@ -24,5 +25,6 @@
     </div>
 </div>
 <div mat-dialog-actions fxLayoutAlign="center center">
-    <button class="button-pay" mat-button (click)="cerrarDialogo()" >Cerrar</button>
+    <button mat-button (click)="abrirDialogFoto(data)" (click)="cerrarDialogo()">Tomar Foto</button>
+    <button mat-button (click)="cerrarDialogo()">Cerrar</button>
 </div>

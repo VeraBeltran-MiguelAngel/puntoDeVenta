@@ -1,0 +1,19 @@
+.img-fluid{
+    width: 100px; /* Establece el ancho deseado */
+    height: auto; /* Mantiene la proporción original */
+    display: block; /* Asegura que la imagen sea un bloque */
+    margin-left: auto; /* Establece el margen izquierdo a automático */
+    margin-right: auto; /* Establece el margen derecho a automático */
+}
+
+.grid-boton-select {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);  /* Dos columnas con el mismo ancho */
+    gap: 20px;  /* Espacio entre las columnas */
+}
+
+.contenedor-botones {
+    text-align: center;
+    height: 5vh; /* O ajusta según sea necesario */
+    line-height: 5vh;
+  }
