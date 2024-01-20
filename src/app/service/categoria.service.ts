@@ -9,8 +9,8 @@ import { Categorias } from '../modules/admin/components/models/categorias';
 })
 export class CategoriaService {
 
-  //API: string = 'https://olympus.arvispace.com/conPrincipal/categoria.php';
-  API: string = 'http://localhost/plan/categoria.php'
+  API: string = 'https://olympus.arvispace.com/conPrincipal/categoria.php';
+ // API: string = 'http://localhost/plan/categoria.php'
 
   constructor(private clienteHttp:HttpClient) {
   }

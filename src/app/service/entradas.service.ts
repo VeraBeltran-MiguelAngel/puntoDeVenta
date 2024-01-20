@@ -19,11 +19,10 @@ export class EntradasService {
    */
   agregarEntradaProducto(entradaProductos: EntradaProducto[]): Observable<any> {
     return this.clienteHttp.post(
-      this.API2 + '?registraEntrada',
+      this.API + '?registraEntrada',
       { entradaProductos }
     );
   }
-
 
   listaProductos(): Observable<ListaProductos> {
     return this.clienteHttp.get<ListaProductos>(this.API + '?listaProductos');
