@@ -15,8 +15,8 @@ export class ProductosService {
   private productosSeleccionados = new BehaviorSubject<Producto[]>([]);
   
   // API: string = 'https://apimocha.com/productosgym/listar'
-  API: string ='http://localhost/plan/productosv2.php/';
- //API: string ='https://olympus.arvispace.com/puntoDeVenta/conf/productosv2.php/';
+  //API: string ='http://localhost/plan/productosv2.php/';
+ API: string ='https://olympus.arvispace.com/puntoDeVenta/conf/productosv2.php/';
  API2: string =  'https://olympus.arvispace.com/panelAdmin/conf/joinDetalleProducto.php';
 
   constructor(private clienteHttp: HttpClient, private auth: AuthService) {}
