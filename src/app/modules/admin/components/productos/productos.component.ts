@@ -17,7 +17,6 @@ export class ProductosComponent implements OnInit {
     'codigo_de_barra',
     'nombre',
     'descripcion',
-    'precio de venta',
     'estatus',
     'categoria', 
 

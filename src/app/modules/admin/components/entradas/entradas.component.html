@@ -80,6 +80,70 @@
                </p>
              
             </div>
+<div class="row">
+         <div class="col-sm-6">
+            <p>
+               <label  style="margin-right: 10px;">Precio compra:</label>
+               <mat-form-field appearance="outline"  style="margin-right: 35px;width: 51%;" required>
+                 <mat-label>Precio de compra</mat-label>
+                 <input
+                   matInput
+                   placeholder="$"
+                   type="number"
+                   min="0"
+                   step="0.01"
+                   autocomplete="off"
+                   formControlName="precioCompra"
+                   id="precioCompra"
+                   [errorStateMatcher]="matcher"
+                 />
+   
+                 <mat-error
+                   *ngIf="
+                     form.get('precioCompra')?.hasError('pattern') &&
+                     !form.get('precioCompra')?.hasError('required')
+                   "
+                 >
+                   <strong class="txt_msg">**Solo se admiten dos decimales</strong>
+                 </mat-error>
+                 <mat-error *ngIf="form.get('precioCompra')?.hasError('required')"
+                   ><strong class="txt_msg">**Campo requerido</strong></mat-error
+                 >
+               </mat-form-field>
+             </p>
+         </div>
+         <div class="col-sm-6">
+            <P>
+               <label style="margin-right: 10px;">Precio venta:</label>
+               <mat-form-field appearance="outline"  style="margin-right: 35px;width: 50%;" required>
+                 <mat-label >Precio de venta</mat-label>
+                 <input
+                   matInput
+                   placeholder="$"
+                   type="number"
+                   min="0"
+                   step="0.01"
+                   autocomplete="off"
+                   formControlName="precioVenta"
+                   id="precioVenta"
+                   [errorStateMatcher]="matcher"
+                 />
+   
+                 <mat-error
+                   *ngIf="
+                     form.get('precioVenta')?.hasError('pattern') &&
+                     !form.get('precioVenta')?.hasError('required')
+                   "
+                 >
+                   <strong class="txt_msg">**Solo se admiten dos decimales</strong>
+                 </mat-error>
+                 <mat-error *ngIf="form.get('precioCompra')?.hasError('required')"
+                   ><strong class="txt_msg">**Campo requerido</strong></mat-error
+                 >
+               </mat-form-field>
+             </P>
+         </div>
+      </div>
             <div class="col-sm-2">
              <button type="button" mat-raised-button (click)="agregarATabla()" style="margin-top: 10px;background-color: #fd9727; width: 100%;"><mat-icon>add</mat-icon>Agregar</button>
            </div>
@@ -92,6 +156,8 @@
                    <th>Producto</th>
                    <th>Cantidad</th>
                    <th>Fecha</th>
+                   <th>Precio compra</th>
+                   <th>Precio venta</th>
                    <!-- Agrega más columnas según tus campos -->
                 </tr>
              </thead>
@@ -100,6 +166,8 @@
                    <td>{{ dato.nombreProducto }}</td>
                    <td>{{ dato.cantidad }}</td>
                    <td>{{ dato.fechaEntrada }}</td>
+                   <td>{{dato.precioCompra}}</td>
+                   <td>{{dato.precioVenta}}</td>
                    <!-- Agrega más columnas según tus campos -->
                 </tr>
              </tbody>

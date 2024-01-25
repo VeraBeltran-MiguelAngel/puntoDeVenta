@@ -87,6 +87,12 @@ export class EntradasComponent implements OnInit {
           Validators.pattern(/^[0-9]+$/), //solo numeros enteros
         ]),
       ],
+      precioVenta: [
+        '',
+        Validators.compose([
+          Validators.pattern(/^\d+(\.\d{0,2})?$/), //solo acepta dos decimales
+        ]),
+      ],
       precioCompra: [
         '',
         Validators.compose([
@@ -176,10 +182,17 @@ export class EntradasComponent implements OnInit {
  }
 
   agregarATabla() {
+    console.log("hola");
     // Verificar si el formulario y sus controles no son nulos
     if (this.form && this.form.get('idProducto') && this.form.get('idProveedor') && this.form.get('cantidad')) {
+      console.log("hola2");
       const idProductoSeleccionado = this.form.get('idProducto')!.value;
       console.log('ID Producto Seleccionado:', idProductoSeleccionado);
+      const idPrecioVenta = this.form.get('precioVenta')!.value;
+      console.log('ID idPrecioVenta Seleccionado:', idPrecioVenta);
+      const idPrecioCompra = this.form.get('precioCompra')!.value;
+      
+      
       console.log('Lista de Productos:', this.listaProductos);
       const productoSeleccionado = this.listaProductos.find((producto: any) => producto.idProducto === idProductoSeleccionado);
   
@@ -209,7 +222,8 @@ export class EntradasComponent implements OnInit {
             fechaEntrada: fechaFormateada,
             Gimnasio_idGimnasio: this.id,
             Usuarios_idUsuarios: this.idUsuario,
-            precioCompra: 0
+            precioCompra: idPrecioCompra,
+            precioVenta: idPrecioVenta
             // Otras propiedades según tus campos
           };
     

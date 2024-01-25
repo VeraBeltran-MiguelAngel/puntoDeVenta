@@ -26,12 +26,22 @@ export class ProductosService {
    * para el recepcionista
    * @returns
    */
-  obternerProductos(id:any): Observable<Producto[]> {
+
+
+  obternerProductos(id:any):Observable<any>{
+    return this.clienteHttp.get(this.API+"?listaProductosRecepcion="+id);
+  }
+  
+
+ /* obternerProductos(id:any): Observable<Producto[]> {
+    console.log("aca llega");
     return this.clienteHttp.get<Producto[]>(
+      
       this.API + '?listaProductosRecepcion'+id
     );
-  }
 
+  }
+*/
   actualizarProducto(id: any, datosP: any): Observable<any> {
     const url = `${this.API}?actualizar=${id}`;
     return this.clienteHttp.post(url, datosP);

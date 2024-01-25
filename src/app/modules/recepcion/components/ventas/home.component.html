@@ -24,7 +24,7 @@
       <br/>
       <form [formGroup]="formularioCaja">
          <div *ngIf="botonProductos && !mostrarLasVentas">
-            <br/><br/>
+          
            <!-- <h1>¿Deseas continuar?</h1>
             <div style="display: flex; justify-content: center;">
                <button style="background-color: rgb(240, 240, 240); color: rgb(0, 0, 0); padding: 10px 20px; 
@@ -58,10 +58,9 @@
             </div>-->
          </div>
       </form>
-      <br><br>
       <div>
-         <h1>CAJA</h1>
-     <!-- <div *ngIf="mostrarProductos && cerrarCaja">-->
+         <h1>VENTAS</h1>
+     <!-- <div *ngIf="mostrarProductos && cerrarCaja">
          <div class="search-label">
             <h2 style="margin-right: 15px;">Busca a tu cliente:</h2>
             <div class="search-container" (click)="abrirDialogo()">
@@ -84,7 +83,7 @@
                <h3>EMAIL:</h3>
                <input type="text" id="email" name="email" [value]="cliente.email || ''" disabled><br><br>
             </div>
-         </div>
+         </div>-->
  
          <h3>Ingresa el valor de una columna</h3>
          <mat-form-field class="full-width">
@@ -110,14 +109,14 @@
                      </mat-form-field>
                    </ng-container>
                    <ng-container *ngIf="column === 'acciones'">
-                     <mat-icon class="add-box-icon" (click)="validarYAgregarProducto(prod)">add_box</mat-icon>
+                     <button (click)="validarYAgregarProducto(prod)">Agregar<mat-icon class="add-box-icon" >add_box</mat-icon></button>
                    </ng-container>
                  </td>
                </ng-container>
                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                <tr mat-row *matRowDef="let productofila; columns: displayedColumns"></tr>
              </table>
-             <mat-paginator #paginator [pageSizeOptions]="[5, 10, 15, 20]" showFirstLastButtons></mat-paginator>
+             <mat-paginator #paginator [pageSizeOptions]="[4, 8, 12, 16,20,24,28,32,36,40]" showFirstLastButtons></mat-paginator>
 
 
          </div>

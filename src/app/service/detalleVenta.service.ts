@@ -10,7 +10,13 @@ export class DetalleVenta {
 
   //API: string = 'https://localhost/plan/detalle_venta.php'
  API: string = 'https://olympus.arvispace.com/puntoDeVenta/conf/detalle_venta.php'
+ API2: string = 'https://olympus.arvispace.com/puntoDeVenta/conf/estatus.php'
   constructor(private clienteHttp:HttpClient) {
+  }
+
+
+  obternerEstatus(){
+    return this.clienteHttp.get(this.API2)
   }
 
   obternerVentaDetalle(){
@@ -19,6 +25,7 @@ export class DetalleVenta {
   // Angular service method
   agregarVentaDetalle(datosVentaDetalle: detalleVenta[]): Observable<any> {
     // Iterar sobre cada elemento del array y realizar una solicitud por cada elemento
+    console.log("datosVentaDetalle", datosVentaDetalle);
     return forkJoin(
       datosVentaDetalle.map((detalle: detalleVenta) =>
         this.clienteHttp.post(this.API + '?insertar=1', detalle)
