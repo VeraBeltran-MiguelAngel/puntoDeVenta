@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, OnInit, ViewChild , Inject} from "@angular/core";
+
 import { MatTableDataSource } from "@angular/material/table"; //para controlar los datos del api y ponerlos en una tabla
 import { Producto } from "../models/producto";
 import { ProductosService } from "src/app/service/productos.service";
@@ -33,6 +34,11 @@ import { User } from "src/app/service/User";
 import { ChangeDetectorRef } from "@angular/core";
 import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatPaginator, PageEvent } from "@angular/material/paginator";
+import { interval, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { HomeComponent } from "../home/home.component";
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
 
 
 interface Cliente {
@@ -113,6 +119,8 @@ export class VentasComponent implements OnInit {
   @ViewChild('paginator', { static: true }) paginator!: MatPaginator;
 
   constructor(
+    public dialogo: MatDialogRef<HomeComponent>,
+    @Inject(MAT_DIALOG_DATA) public mensaje: string,
     private router: Router,
     public dialog: MatDialog,
     private auth: AuthService,
@@ -169,16 +177,36 @@ export class VentasComponent implements OnInit {
   }
 
   ngAfterViewInit(): void {
-    this.productoService.obternerProductos(1).subscribe((respuesta) => {
+    console.log(this.auth.getIdGym(), "this.auth.getIdGym()");
+    this.productoService.obternerProductos(this.auth.getIdGym()).subscribe((respuesta) => {
       this.productData = respuesta;
+      console.log("this.productData", this.productData);
       this.dataSource = new MatTableDataSource(this.productData);
       this.dataSource.paginator = this.paginator; // Asignación del paginador aquí
       console.log(this.paginator,"this.paginator");
     });
+
+   
+  
+  }
+
+  ejecutarServicio(): void {
+    // Llama a tu servicio aquí
+    this.DetalleVenta.obternerEstatus().subscribe((result) => {
+      console.log('Resultado del servicio:', result);
+    });
   }
   
+  private destroy$: Subject<void> = new Subject<void>();
 
   ngOnInit(): void {
+
+    interval(1000)
+    .pipe(takeUntil(this.destroy$))
+    .subscribe(() => {
+      this.ejecutarServicio();
+    });
+
     //ubicacion
     this.ubicacion = this.auth.getUbicacion();
     //datos de detalle venta
@@ -384,7 +412,7 @@ export class VentasComponent implements OnInit {
       // Enviar datos de ventas
       const datosVentas = {
         Cliente_ID_Cliente: idCliente,
-        Caja_idCaja: lastInsertedId,
+        Caja_idCaja: 1,
         fechaVenta: fechaVenta,
         total: totalAPagar,
       };
@@ -489,10 +517,12 @@ export class VentasComponent implements OnInit {
       // Enviar datos de ventas
       const datosVentas = {
         Cliente_ID_Cliente: idCliente,
-        Caja_idCaja: lastInsertedId,
+        Caja_idCaja: 1,
         fechaVenta: fechaVenta,
         total: totalAPagar,
       };
+
+      console.log(datosVentas, "datosVentas");
       this.ventasService.agregarVentas(datosVentas).subscribe((response) => {
         const lastInsertedId3 = response.lastInsertedId3;
         // Enviar detalles de ventas
@@ -510,6 +540,7 @@ export class VentasComponent implements OnInit {
         console.log("Detalles de venta", detallesVenta);
         this.DetalleVenta.agregarVentaDetalle(detallesVenta).subscribe(
           (response) => {
+            console.log("response",response);
             console.log("Detalles de ventas guardados correctamente");
           }
         );
@@ -527,6 +558,12 @@ export class VentasComponent implements OnInit {
     } else {
       this.toastr.error("Ingresa el pago");
     }
+
+
+
+    //this.DetalleVenta.obternerEstatus().subscribe();
+
+
     ///////////////////////
     if (this.totalAPagar <= this.dineroRecibido) {
       const totalCantidad = this.selectedProducts.reduce(
