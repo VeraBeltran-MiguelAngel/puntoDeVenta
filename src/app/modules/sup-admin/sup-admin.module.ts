@@ -60,7 +60,7 @@ import { HorariosVistaComponent } from './components/horarios-vista/horarios-vis
 import { HorarioEditarComponent } from './components/horario-editar/horario-editar.component';
 import { AltaProveedorComponent } from './components/alta-proveedor/alta-proveedor.component';
 import { ListaProveedorComponent } from './components/lista-proveedor/lista-proveedor.component';
-import { ListarProveedorPipe } from './components/pipes/proveedor/listar-proveedor.pipe';
+import { ListaProveedorPipe } from './components/pipes/proveedor/listar-proveedor.pipe';
 import { EditarProveedorComponent } from './components/editar-proveedor/editar-proveedor.component';
 import { ListaCategoriaComponent } from './components/lista-categoria/lista-categoria.component';
 import { AltaCategoriaComponent } from './components/alta-categoria/alta-categoria.component';
@@ -103,7 +103,7 @@ import { CrearProductoComponent } from './components/crearProducto/crearProducto
     HorarioEditarComponent,
     AltaProveedorComponent,
     ListaProveedorComponent,
-    ListarProveedorPipe,
+    ListaProveedorPipe,
     EditarProveedorComponent,
     ListaCategoriaComponent,
     AltaCategoriaComponent,

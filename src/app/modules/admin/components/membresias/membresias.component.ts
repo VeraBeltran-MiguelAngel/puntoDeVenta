@@ -10,6 +10,7 @@ import { GimnasioService } from 'src/app/service/gimnasio.service';
 import { AuthService } from 'src/app/service/auth.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { DialogSelectMembershipComponent } from '../dialog-select-membership/dialog-select-membership.component';
 
 
 
@@ -21,19 +22,14 @@ import { MatTableDataSource } from '@angular/material/table';
 export class MembresiasComponent implements OnInit {
 
   membresiaActiva: boolean ; // Inicializa según el estado de la membresía
-
-
-  
- 
-
- 
- membresias: plan[] = [];
+  membresias: plan[] = [];
   plan: plan[] = [];
   message: string = "";
   public sucursales: any;
   public page: number = 0;
   public search: string = '';
-  dataSource: any; 
+  dataSource: any;
+  services: any[] = [];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -46,11 +42,11 @@ export class MembresiasComponent implements OnInit {
     public dialog: MatDialog
   ){}
 
-  displayedColumns: string[] = ['title', 'details','price','duration', 'trainer','cancha','alberca','ofertas','gimnasio','actions'];
+  displayedColumns: string[] = ['title', 'details','price','duration','servicios','status','actions'];
 
   ngOnInit(): void {
     this.planService.consultarPlanId(this.auth.getIdGym()).subscribe(respuesta => {
-      console.log(respuesta);
+      console.log("la respuesta es: ",respuesta);
       this.plan = respuesta;
       this.dataSource = new MatTableDataSource(this.plan);
       this.dataSource.paginator = this.paginator; // Asigna el paginador a tu dataSource
@@ -163,5 +159,58 @@ export class MembresiasComponent implements OnInit {
       }
     );
   }*/
-  
+
+  openDialog(): void {
+    this.planService.optionShow.next(1);
+    this.planService.optionShow.subscribe((option) => {
+      console.log("mostraremos:", option);
+    });
+    const dialogRef = this.dialog.open(DialogSelectMembershipComponent, {
+      minWidth: '500px',
+      minHeight: '400px',
+      data: {name: '¿para quien es esta membresia?'}
+    });
+  }
+
+  openDialogService(idMem: number, tipo_membresia: number){
+    this.planService.optionShow.next(2);
+    this.planService.optionShow.subscribe((option) => {
+      console.log("mostraremos:", option);
+    });
+    this.planService.setDataToupdate(idMem, tipo_membresia);
+    const dialogRef = this.dialog.open(DialogSelectMembershipComponent, {
+      minWidth: '500px',
+      minHeight: '400px',
+      data: {name: 'Servicios de la membresia'}
+    });
+  }
+
+  openDialogEdit(idMem: number, tipo_membresia: number){
+    this.planService.optionShow.next(3);
+    this.planService.optionShow.subscribe((option) => {
+      console.log("mostraremos:", option);
+    })
+
+    //estos campos deben ser mostrados publicos
+    console.log("el id es: ", idMem);
+    console.log("el tipo es: ", tipo_membresia);
+    this.planService.setDataToupdate(idMem, tipo_membresia);
+    const dialogRef = this.dialog.open(DialogSelectMembershipComponent, {
+      minWidth: '500px',
+      minHeight: '400px',
+      data: {name: 'Editar membresia', id: idMem}
+    })
+  }
+
+  /*getServices(id: number){
+    console.log("id",id);
+    let item = this.plan.find((item) => item.idMem == id);
+    if(item){
+      this.services = item.servicios;
+      console.log("servicios",this.services);
+      this.planService.getServices(this.services);
+    }else {
+      console.log("no hay servicios");
+    }
+}*/
 }

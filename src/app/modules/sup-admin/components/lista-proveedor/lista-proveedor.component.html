@@ -1,1 +1,52 @@
-<p>lista-proveedor works!</p>
+<div class="container mt-4">
+ 
+    <div style="text-align: right; margin-bottom: 50px;">
+       <button mat-raised-button routerLink="../alta-proveedor" style="background-color: #fd9727; font-size: 16px;">
+          <mat-icon>add</mat-icon>
+          AGREGAR PROVEEDOR
+       </button>
+    </div>
+    <div class="mb-3">
+       <mat-form-field class="example-full-width">
+          <mat-label>Nombre del proveedor</mat-label>
+          <span matPrefix class="icon_search">
+             <mat-icon>search</mat-icon>
+          </span>
+          <input matInput placeholder="Nombre del proveedor" #txtSearch (keyup)="onSearchPokemon( txtSearch.value )">
+       </mat-form-field>
+    </div>
+    <div class="row">
+     <div  class="table-container">
+       <table class="table table-hover">
+          <thead>
+             <tr>
+                <th scope="col">Nombre</th>
+                <th scope="col">Razón Social</th>
+                <th scope="col">Teléfono</th>
+                <th scope="col">Acciones</th>
+             </tr>
+          </thead>
+          <tbody>
+           <tr *ngFor="let proveedor of proveedores | listarProveedor: page: search">
+                <td>{{ proveedor.nombre }} {{ proveedor.apPaterno}} {{ proveedor.apMaterno }} </td>
+                <td>{{ proveedor.razonSocial }} </td>
+                <td>{{ proveedor.telefono }} </td>
+                <td>
+                   <button mat-icon-button color="primary" routerLink="/admin/editar-proveedor/{{ proveedor.idProveedor}}">
+                      <mat-icon>edit</mat-icon>
+                   </button>
+                </td>
+             </tr>
+          </tbody>
+       </table>
+     </div>
+       <div style="text-align: right; margin-bottom: 50px;">
+        <button mat-icon-button color="primary" (click)="prevPage()">
+          <mat-icon>navigate_before</mat-icon>
+        </button>
+        <button mat-icon-button color="primary" (click)="nextPage()">
+          <mat-icon>navigate_next</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>

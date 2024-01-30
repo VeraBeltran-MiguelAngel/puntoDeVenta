@@ -1,1 +1,31 @@
-<p>product-management works!</p>
+<br />
+
+<h2 style="margin-left: 70px;">Gestiona los productos de la franquicia</h2>
+<br/>
+
+<div class="grid-menu" style="justify-content: center">
+  <mat-tab-group>
+    <mat-tab label="Proveedores">
+        <div class="datos">
+          <div class="content_margin">
+            <app-lista-proveedor></app-lista-proveedor>
+          </div>
+        </div>
+      </mat-tab>
+    <mat-tab label="Categorias">
+      <div class="datos">
+        <div class="content_margin">
+          <app-lista-categoria></app-lista-categoria>
+        </div>
+      </div>
+    </mat-tab>
+    <mat-tab label="Productos">
+      <div class="datos">
+        <div class="content_margin">
+          <app-lista-producto></app-lista-producto>
+        </div>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>
+
