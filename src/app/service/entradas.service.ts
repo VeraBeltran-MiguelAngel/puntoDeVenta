@@ -8,7 +8,7 @@ import { ListaProductos } from '../modules/admin/components/models/listaProducto
   providedIn: 'root',
 })
 export class EntradasService {
-  // API: string = 'http://localhost/productos/entradas.php/';
+  API2: string = 'http://localhost/plan/entradas.php/';
   API: string = 'https://olympus.arvispace.com/puntoDeVenta/conf/entradas.php';
   constructor(private clienteHttp: HttpClient) {}
 
@@ -17,15 +17,12 @@ export class EntradasService {
    * @param datosEntradaProducto datos del modelo
    * @returns un observable de tipo any
    */
-  agregarEntradaProducto(
-    datosEntradaProducto: EntradaProducto
-  ): Observable<any> {
+  agregarEntradaProducto(entradaProductos: EntradaProducto[]): Observable<any> {
     return this.clienteHttp.post(
-      this.API + '?resgistraEntrada',
-      datosEntradaProducto
+      this.API + '?registraEntrada',
+      { entradaProductos }
     );
   }
-
 
   listaProductos(): Observable<ListaProductos> {
     return this.clienteHttp.get<ListaProductos>(this.API + '?listaProductos');

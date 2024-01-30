@@ -15,8 +15,8 @@ export class ProductosService {
   private productosSeleccionados = new BehaviorSubject<Producto[]>([]);
   
   // API: string = 'https://apimocha.com/productosgym/listar'
-  API: string ='http://localhost/plan/productosv2.php/';
- //API: string ='https://olympus.arvispace.com/puntoDeVenta/conf/productosv2.php/';
+  //API: string ='http://localhost/plan/productosv2.php/';
+ API: string ='https://olympus.arvispace.com/puntoDeVenta/conf/productosv2.php/';
  API2: string =  'https://olympus.arvispace.com/panelAdmin/conf/joinDetalleProducto.php';
 
   constructor(private clienteHttp: HttpClient, private auth: AuthService) {}
@@ -26,12 +26,22 @@ export class ProductosService {
    * para el recepcionista
    * @returns
    */
-  obternerProductos(): Observable<Producto[]> {
-    return this.clienteHttp.get<Producto[]>(
-      this.API + '?listaProductosRecepcion'
-    );
-  }
 
+
+  obternerProductos(id:any):Observable<any>{
+    return this.clienteHttp.get(this.API+"?listaProductosRecepcion="+id);
+  }
+  
+
+ /* obternerProductos(id:any): Observable<Producto[]> {
+    console.log("aca llega");
+    return this.clienteHttp.get<Producto[]>(
+      
+      this.API + '?listaProductosRecepcion'+id
+    );
+
+  }
+*/
   actualizarProducto(id: any, datosP: any): Observable<any> {
     const url = `${this.API}?actualizar=${id}`;
     return this.clienteHttp.post(url, datosP);

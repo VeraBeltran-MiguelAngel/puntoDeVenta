@@ -1,0 +1,324 @@
+table {
+    width: 100%;
+}
+
+.full-width {
+    font-size: 14px;
+    width: 100%;
+}
+
+
+
+  /* Estilos para el contenedor principal */
+.resumen {
+    font-family: 'Arial', sans-serif;
+    margin: 20px auto;
+    padding: 20px;
+    width: 100%;
+    
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Estilos para el título principal */
+  .resumen h1 {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  /* Estilos para la lista de productos */
+  .resumen ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  /* Estilos para cada elemento de la lista de productos */
+  .resumen li {
+    margin-bottom: 10px;
+    color: #555;
+    font-size: 16px;
+  }
+  
+  /* Estilos para la sección del total */
+  .resumen .total {
+    margin-top: 30px;
+  }
+  
+  /* Estilos para los elementos de total */
+  .resumen h2 {
+    margin: 10px 0;
+    font-size: 20px;
+    font-weight: bold;
+  }
+  
+  /* Estilos para el campo de dinero recibido */
+  .resumen mat-form-field {
+    width: 100%;
+  }
+  
+  /* Estilos para el botón */
+  .resumen button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  /* Estilos para el botón al pasar el mouse por encima */
+  .resumen button:hover {
+    background-color: #0056b3;
+  }
+  
+
+  .open-cash-register {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 5px;
+    background-color: #a4c1e2; /* Color de fondo del botón */
+    color: #fff; /* Color del texto */
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+    width: 90%;
+  }
+  .close-cash-register {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 5px;
+    background-color: #000000; /* Color de fondo del botón */
+    color: #fff; /* Color del texto */
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+    width: 90%;
+  }
+
+
+  .ver-cash-register {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 5px;
+    background-color: #fd9727; /* Color de fondo del botón */
+    color: #fff; /* Color del texto */
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+    width: 90%;
+  }
+  
+  .ver-cash-register  .icon {
+    background-image: url('https://cdn-icons-png.flaticon.com/512/4696/4696938.png');
+    background-size: 40px; /* Tamaño de la imagen */
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 40px; /* Ancho de la imagen */
+    height: 40px; /* Altura de la imagen */
+    margin-right: 10px; /* Espacio entre la imagen y el texto */
+  }
+  
+  .open-cash-register  .icon {
+    background-image: url('https://cdn-icons-png.flaticon.com/512/4696/4696938.png');
+    background-size: 40px; /* Tamaño de la imagen */
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 40px; /* Ancho de la imagen */
+    height: 40px; /* Altura de la imagen */
+    margin-right: 10px; /* Espacio entre la imagen y el texto */
+  }
+
+
+  .close-cash-register  .icon {
+    background-image: url('https://cdn-icons-png.flaticon.com/512/463/463612.png');
+    background-size: 40px; /* Tamaño de la imagen */
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 40px; /* Ancho de la imagen */
+    height: 40px; /* Altura de la imagen */
+    margin-right: 10px; /* Espacio entre la imagen y el texto */
+  }
+  
+  .open-cash-register:hover {
+    opacity: 0.8;
+  }
+  
+  input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* Asegura que el padding no aumente el tamaño total */
+    transition: border-color 0.3s ease; /* Efecto de transición en el borde */
+  }
+  
+  /* Cambia el color del borde al enfocar el input */
+  input[type="text"]:focus {
+    outline: none; /* Quita el contorno al enfocar */
+    border-color: #007bff; /* Cambia el color del borde al enfocar */
+  }
+
+  input[type="number"]:focus {
+    outline: none; /* Quita el contorno al enfocar */
+    border-color: #007bff; /* Cambia el color del borde al enfocar */
+  }
+  
+  .number {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* Asegura que el padding no aumente el tamaño total */
+    transition: border-color 0.3s ease; /* Efecto de transición en el borde */
+  }
+
+  /* En tu archivo CSS */
+.search-container {
+  display: flex;
+  position: relative;
+  cursor: pointer;
+  background-color: #fff;
+  overflow: hidden;
+  align-items: center;
+}
+
+.search-input {
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 4px 8px;
+  margin-right: 4px;
+  width: calc(100% - 30px); /* ajusta el tamaño del input */
+  pointer-events: none; /* evita la interacción con el input */
+}
+.table-container {
+  overflow-x: auto; /* Permite desplazamiento horizontal */
+  max-width: 100%;  /* Evita que la tabla sea más ancha que el contenedor */
+}
+
+.search-icon {
+  width: 40px;
+  height: 40px;
+  margin-top: 10px;
+  pointer-events: none; /* evita la interacción con la imagen */
+  cursor: pointer;
+}
+
+.search-label {
+  display: flex;
+  align-items: center;
+}
+
+.search-label label {
+  margin-right: 10px; /* Espacio entre el label y el input */
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+  
+}
+
+/* Estilos para los inputs de fecha */
+.input-date {
+  padding: 8px 12px; /* Espaciado interno */
+  border: 1px solid #ccc; /* Borde */
+  border-radius: 5px; /* Bordes redondeados */
+  font-size: 16px; /* Tamaño del texto */
+  margin-bottom: 10px; /* Margen inferior */
+}
+
+/* Estilos cuando el input de fecha está enfocado */
+.input-date:focus {
+  outline: none; /* Eliminar el contorno al enfocar */
+  border-color: dodgerblue; /* Cambiar color del borde al enfocar */
+}
+
+.filter-container {
+  display: flex;
+  align-items: center;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+}
+
+.input-date {
+  margin-right: 10px; /* Ajusta el margen si es necesario */
+}
+
+input[type="text"] {
+  width: 100%;
+}
+
+.mat-header-cell.sticky,
+.mat-cell.sticky {
+  position: sticky;
+  background-color: white; /* Cambia el color de fondo si es necesario */
+  z-index: 1; /* Ajusta el índice z si es necesario */
+}
+
+.search-container .search-ico {
+  position: absolute;
+  left: 10px; /* Ajusta la posición del ícono */
+  top: 60%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  margin-right: 200px;
+}
+
+/* Estilos para el select */
+select {
+  /* Cambiar el color de fondo y texto */
+  background-color: #f4f4f4;
+  color: #333;
+
+  /* Cambiar el borde y esquinas */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+
+  /* Ajustar tamaño y espaciado */
+  padding: 8px;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+/* Estilos para el select cuando está enfocado */
+select:focus {
+  /* Cambiar color de borde cuando se selecciona */
+  border-color: #66afe9;
+  outline: 0; /* Eliminar el contorno de enfoque predeterminado */
+}
+
+/* Estilos para las opciones del select */
+option {
+  /* Cambiar el color de fondo y texto */
+  background-color: #fff;
+  color: #333;
+}
+
+

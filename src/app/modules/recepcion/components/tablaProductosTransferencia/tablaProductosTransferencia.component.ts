@@ -12,6 +12,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 import { ToastrService } from 'ngx-toastr';
+import { AuthService } from 'src/app/service/auth.service';
 
 @Component({
   selector: 'tabla-productos-transferencia',
@@ -41,6 +42,7 @@ export class TablaProductosTransferenciaComponent implements OnInit {
   constructor(
     private productoService: ProductosService,
     private toastr: ToastrService,
+    private auth: AuthService,
     public dialogRef: MatDialogRef<TablaProductosTransferenciaComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
@@ -52,7 +54,7 @@ export class TablaProductosTransferenciaComponent implements OnInit {
     });
 
     //llenar la tabla de productos
-    this.productoService.obternerProductos().subscribe((respuesta) => {
+    this.productoService.obternerProductos(this.auth.getIdGym()).subscribe((respuesta) => {
       // console.log(respuesta);
       this.productData = respuesta;
       this.dataSource = new MatTableDataSource(this.productData);

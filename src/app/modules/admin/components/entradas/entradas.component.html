@@ -1,215 +1,197 @@
 <div class="container mt-4">
-  <div class="mi-div-con-borde responsive-div">
-     <h2 class="mb-3">
-        Registra la entrada de un producto para la sucursal: {{ ubicacion }}
-     </h2>
-     <div class="content_margin">
-        <div class="form_data">
-           <form [formGroup]="form" (ngSubmit)="registrar()" (keyup.enter)="agregarATabla()" >
-           <div class="row">
-             <!-- <div class="col-sm-6">
-                 <p>
-                    <label style="margin-right: 36px;">Gimnasio:</label>
-                    <mat-form-field appearance="outline">
-                       <mat-label>Clave gimnasio</mat-label>
-                       <input
-                          id="idGym"
-                          type="text"
-                          matInput
-                          value="{{ id }}"
-                          [disabled]="true"
-                          autocomplete="off"
-                          />
-                    </mat-form-field>
-                 </p>
-              </div>-->
-              <div class="col-sm-12">
-                 <p>
-                    <label style="margin-right: 46px;">Productos:</label>
-                    <mat-form-field appearance="outline" style="width: 80%;" >
-                       <mat-label>Productos</mat-label>
-                       <mat-select
-                       id="idProducto"
-                       name="idProducto"
-                       formControlName="idProducto"
-                       (ngModelChange)="infoProducto(showProduct.value)"
-                       #showProduct
-                       >
-                       <mat-option
-                       *ngFor="let item of listaProductos"
-                       [value]="item.idProducto"
-                       >{{ item.nombre }}</mat-option
-                          >
-                       </mat-select>
-                       <mat-error *ngIf="form.get('idProducto')?.hasError('required')"
-                          ><strong class="txt_msg">**Campo requerido</strong></mat-error
-                          >
-                    </mat-form-field>
-                 </p>
-              </div>
-           </div>
-           <!--<div class="row">
-            <div class="col-sm-6">
-                <p>
-                  <label style="margin-right: 15px;">Proveedores:</label>
-                  <mat-form-field appearance="outline" >
-                      <mat-label>Proveedores</mat-label>
-                      <mat-select 
-                      id="idProveedor"
-                      name="idProveedor"
-                      formControlName="idProveedor"
-                      (ngModelChange)="infoProveedor(showProveedor.value)"
-                      #showProveedor
+   <div class="mi-div-con-borde responsive-div">
+      <h2 class="mb-3">
+         Registra la entrada de un producto para la sucursal: {{ ubicacion }}
+      </h2>
+      <div class="content_margin">
+         <div class="form_data">
+            <form [formGroup]="form" (ngSubmit)="registrar()"  >
+            <div class="row">
+               <div class="col-sm-12">
+                  <p>
+                     <label style="margin-right: 46px;">Productos:</label>
+                     <mat-form-field appearance="outline" style="width: 80%;" >
+                        <mat-label>Productos</mat-label>
+                        <mat-select
+                        id="idProducto"
+                        name="idProducto"
+                        formControlName="idProducto"
+                        (ngModelChange)="infoProducto(showProduct.value)"
+                        #showProduct
+                        >
+                        <mat-option
+                        *ngFor="let item of listaProductos"
+                        [value]="item.idProducto"
+                        >{{ item.nombre }}</mat-option
+                           >
+                        </mat-select>
+                        <mat-error *ngIf="form.get('idProducto')?.hasError('required')"
+                           ><strong class="txt_msg">**Campo requerido</strong></mat-error
+                           >
+                     </mat-form-field>
+                  </p>
+               </div>
+            </div>
+            <div class="row">
+            <div class="col-sm-5">
+               <p>
+                  <label style="margin-right: 10px;">Fecha:</label>
+                  <mat-form-field appearance="outline">
+                   <mat-label>Fecha de ingreso del producto</mat-label>
+                   <input
+                   id="fechaEntrada"
+                   type="text"
+                   matInput
+                   [value]="fechaRegistro"
+                   [disabled]="true"
+                   autocomplete="off"
+                   />
+                </mat-form-field>
+               </p>
+            </div>
+            <div class="col-sm-5">
+               <p>
+                  <label style="margin-right: 10px;">Cantidad:</label>
+                  <mat-form-field appearance="outline">
+                   <mat-label>Cantidad de producto</mat-label>
+                   <input
+                      type="number"
+                      min="0"
+                      matInput
+                      placeholder="Cantidad de producto"
+                      autocomplete="off"
+                      formControlName="cantidad"
+                      id="cantidad"
+                      [errorStateMatcher]="matcher"
+                      
+                      />
+                   <mat-error
+                      *ngIf="
+                      form.get('cantidad')?.hasError('pattern') &&
+                      !form.get('cantidad')?.hasError('required')
+                      "
                       >
-                      <mat-option
-                      *ngFor="let item of listaProveedores"
-                      [value]="item.idProveedor"
-                      >{{ item.nombreEmpresa }}</mat-option
-                        >
-                      </mat-select>
-                      <mat-error *ngIf="form.get('idProveedor')?.hasError('required')"
-                        ><strong class="txt_msg">**Campo requerido</strong></mat-error
-                        >
-                  </mat-form-field>
-                </p>
+                      <strong class="txt_msg">**Solo se admiten numeros enteros</strong>
+                   </mat-error>
+                   <mat-error *ngIf="form.get('cantidad')?.hasError('required')"
+                      ><strong class="txt_msg">**Campo requerido</strong></mat-error
+                      >
+                </mat-form-field>
+               </p>
+             
             </div>
-           
-           <div class="col-sm-6">
-                 <p>
-                    <label style="margin-right: 15px;">Clave usuario:</label>
-                    <mat-form-field appearance="outline">
-                       <mat-label>Clave usuario autenticado</mat-label>
-                       <input
-                          id="idUsuario"
-                          type="text"
-                          matInput
-                          value="{{ idUsuario }}"
-                          [disabled]="true"
-                          autocomplete="off"
-                          />
-                    </mat-form-field>
-                 </p>
-            </div>
-           </div>-->
-
-           <div class="row">
-           <div class="col-sm-6">
-              <p>
-                 <label style="margin-right: 65px;">Fecha:</label>
-                 <mat-form-field appearance="outline">
-                  <mat-label>Fecha de ingreso del producto</mat-label>
-                  <input
-                  id="fechaEntrada"
-                  type="text"
-                  matInput
-                  [value]="fechaRegistro"
-                  [disabled]="true"
-                  autocomplete="off"
-                  />
-               </mat-form-field>
-              </p>
-           </div>
-           <div class="col-sm-6">
-              <p>
-                 <label style="margin-right: 55px;">Cantidad:</label>
-                 <mat-form-field appearance="outline">
-                  <mat-label>Cantidad de producto</mat-label>
-                  <input
-                     type="number"
-                     min="0"
-                     matInput
-                     placeholder="Cantidad de producto"
-                     autocomplete="off"
-                     formControlName="cantidad"
-                     id="cantidad"
-                     [errorStateMatcher]="matcher"
-                     />
-                  <mat-error
-                     *ngIf="
-                     form.get('cantidad')?.hasError('pattern') &&
-                     !form.get('cantidad')?.hasError('required')
-                     "
-                     >
-                     <strong class="txt_msg">**Solo se admiten numeros enteros</strong>
-                  </mat-error>
-                  <mat-error *ngIf="form.get('cantidad')?.hasError('required')"
-                     ><strong class="txt_msg">**Campo requerido</strong></mat-error
-                     >
-               </mat-form-field>
-              </p>
-           </div>
-          </div>
-
-           
-           
-          <!-- <mat-form-field appearance="outline" class="inputs_properties">
-              <mat-label>Precio de compra</mat-label>
-              <input
-                 matInput
-                 placeholder="$"
-                 type="number"
-                 min="0"
-                 step="0.01"
-                 autocomplete="off"
-                 formControlName="precioCompra"
-                 id="precioCompra"
-                 [errorStateMatcher]="matcher"
+<div class="row">
+         <div class="col-sm-6">
+            <p>
+               <label  style="margin-right: 10px;">Precio compra:</label>
+               <mat-form-field appearance="outline"  style="margin-right: 35px;width: 51%;" required>
+                 <mat-label>Precio de compra</mat-label>
+                 <input
+                   matInput
+                   placeholder="$"
+                   type="number"
+                   min="0"
+                   step="0.01"
+                   autocomplete="off"
+                   formControlName="precioCompra"
+                   id="precioCompra"
+                   [errorStateMatcher]="matcher"
                  />
-              <mat-error
-                 *ngIf="
-                 form.get('precioCompra')?.hasError('pattern') &&
-                 !form.get('precioCompra')?.hasError('required')
-                 "
+   
+                 <mat-error
+                   *ngIf="
+                     form.get('precioCompra')?.hasError('pattern') &&
+                     !form.get('precioCompra')?.hasError('required')
+                   "
                  >
-                 <strong class="txt_msg">**Solo se admiten dos decimales</strong>
-              </mat-error>
-              <mat-error *ngIf="form.get('precioCompra')?.hasError('required')"
-                 ><strong class="txt_msg">**Campo requerido</strong></mat-error
+                   <strong class="txt_msg">**Solo se admiten dos decimales</strong>
+                 </mat-error>
+                 <mat-error *ngIf="form.get('precioCompra')?.hasError('required')"
+                   ><strong class="txt_msg">**Campo requerido</strong></mat-error
                  >
-           </mat-form-field>-->
-           <br>
-
-           <div style="margin: auto; display: block; text-align: center;">
+               </mat-form-field>
+             </p>
+         </div>
+         <div class="col-sm-6">
+            <P>
+               <label style="margin-right: 10px;">Precio venta:</label>
+               <mat-form-field appearance="outline"  style="margin-right: 35px;width: 50%;" required>
+                 <mat-label >Precio de venta</mat-label>
+                 <input
+                   matInput
+                   placeholder="$"
+                   type="number"
+                   min="0"
+                   step="0.01"
+                   autocomplete="off"
+                   formControlName="precioVenta"
+                   id="precioVenta"
+                   [errorStateMatcher]="matcher"
+                 />
+   
+                 <mat-error
+                   *ngIf="
+                     form.get('precioVenta')?.hasError('pattern') &&
+                     !form.get('precioVenta')?.hasError('required')
+                   "
+                 >
+                   <strong class="txt_msg">**Solo se admiten dos decimales</strong>
+                 </mat-error>
+                 <mat-error *ngIf="form.get('precioCompra')?.hasError('required')"
+                   ><strong class="txt_msg">**Campo requerido</strong></mat-error
+                 >
+               </mat-form-field>
+             </P>
+         </div>
+      </div>
+            <div class="col-sm-2">
+             <button type="button" mat-raised-button (click)="agregarATabla()" style="margin-top: 10px;background-color: #fd9727; width: 100%;"><mat-icon>add</mat-icon>Agregar</button>
+           </div>
+           </div>
+ 
+            <br>
+            <table class="table" >
+             <thead>
+                <tr>
+                   <th>Producto</th>
+                   <th>Cantidad</th>
+                   <th>Fecha</th>
+                   <th>Precio compra</th>
+                   <th>Precio venta</th>
+                   <!-- Agrega más columnas según tus campos -->
+                </tr>
+             </thead>
+             <tbody>
+                <tr *ngFor="let dato of tablaDatos">
+                   <td>{{ dato.nombreProducto }}</td>
+                   <td>{{ dato.cantidad }}</td>
+                   <td>{{ dato.fechaEntrada }}</td>
+                   <td>{{dato.precioCompra}}</td>
+                   <td>{{dato.precioVenta}}</td>
+                   <!-- Agrega más columnas según tus campos -->
+                </tr>
+             </tbody>
+          </table>
+          <div style="margin: auto; display: block; text-align: center;">
+           
+             <button type="submit" mat-raised-button id="btn_guardar" style="background-color: #fd9727; font-size: 20px; margin-top: 50px; height: 40px; width: 100px; color: black">
+             Guardar
+             </button>
+             <button
+             style="background-color: #000000; font-size: 20px; margin-left: 30px; margin-top: 50px; height: 40px; width: 100px;color: rgb(255, 255, 255);"
+                mat-raised-button
+                id="btn_canelar"
+                routerLink="../home"
+                >
+             Cancelar
+             </button>
+            </div>
+             </form>
           
-           <!--<button type="submit" mat-raised-button id="btn_guardar" style="background-color: #fd9727; font-size: 20px; margin-top: 50px; height: 40px; width: 100px; color: black">
-           Guardar
-           </button>
-           <button
-           style="background-color: #000000; font-size: 20px; margin-left: 30px; margin-top: 50px; height: 40px; width: 100px;color: rgb(255, 255, 255);"
-              mat-raised-button
-              id="btn_canelar"
-              routerLink="../home"
-              >
-           Cancelar
-           </button>-->
-          </div>
-           </form>
-
-
-
-           <table class="table">
-            <thead>
-               <tr>
-                  <th>Producto</th>
-                  <th>Cantidad</th>
-                  <th>Fecha</th>
-                  <!-- Agrega más columnas según tus campos -->
-               </tr>
-            </thead>
-            <tbody>
-               <tr *ngFor="let dato of tablaDatos">
-                  <td>{{ dato.nombreProducto }}</td>
-                  <td>{{ dato.cantidad }}</td>
-                  <td>{{ dato.fechaEntrada }}</td>
-                  <!-- Agrega más columnas según tus campos -->
-               </tr>
-            </tbody>
-         </table>
-         
-         <!-- Botón para agregar datos a la tabla -->
-         <button type="button" mat-raised-button (click)="agregarATabla()">Agregar</button>
-         
-        </div>
-     </div>
-  </div>
-</div>
+          <!-- Botón para agregar datos a la tabla -->
+          
+          
+         </div>
+      </div>
+   </div>
+ </div>

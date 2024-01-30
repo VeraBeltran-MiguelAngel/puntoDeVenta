@@ -11,4 +11,5 @@ export class MensajeCargandoComponent {
     public dialogo: MatDialogRef<MensajeCargandoComponent>,
     @Inject(MAT_DIALOG_DATA) public mensaje: string
   ) {}
+  
 }
