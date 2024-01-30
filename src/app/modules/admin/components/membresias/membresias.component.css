@@ -58,5 +58,11 @@ table {
     background-color: #4CAF50; /* Color de fondo cuando está activo */
     left: 0; /* Mantiene la "bolita" a la izquierda cuando está activo */
   }
+
+  .button_eye {
+    width: 100%;
+    border: none;
+    background-color: #fff;
+  }
  
  

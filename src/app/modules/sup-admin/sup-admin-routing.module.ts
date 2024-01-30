@@ -24,7 +24,7 @@ import { EditarProductoComponent } from './components/editar-producto/editar-pro
 import { NotificacionesComponent } from './components/notificaciones/notificaciones.component';
 import { ProductManagementComponent } from './components/productManagement/productManagement.component';
 import { CrearProductoComponent } from './components/crearProducto/crearProducto.component';
-import { MapComponent } from './components/map/map.component';
+//import { MapComponent } from './components/map/map.component';
 
 const routes: Routes = [
   {
@@ -53,7 +53,7 @@ const routes: Routes = [
       { path: 'notificaciones', component: NotificacionesComponent },
       { path: 'gestion-productos', component: ProductManagementComponent },
       { path: 'crearProducto', component: CrearProductoComponent },
-      { path: 'Ubicacion', component: MapComponent},
+//{ path: 'Ubicacion', component: MapComponent},
       { path: '', redirectTo: '/sup-admin/home', pathMatch: 'full' },
     ],
   },

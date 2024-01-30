@@ -1,7 +1,7 @@
 <div class="container mt-4">
     <h2 class="mb-3">MEMBRESÍAS DISPONIBLES</h2>
   <div style="text-align: right;">
-      <button mat-raised-button routerLink="../agregarMembresias" style="background-color: #fd9727; font-size: 16px;"><mat-icon>add</mat-icon>AGREGAR MEMBRESÍAS</button>
+      <button mat-raised-button style="background-color: #fd9727; font-size: 16px;" (click)="openDialog()"><mat-icon>add</mat-icon>AGREGAR MEMBRESÍAS</button>
     </div>
     <br/>
     <div style="margin-left: 70px;color:red;font-size: 20px;">{{message}}</div>
@@ -31,10 +31,10 @@
           <th mat-header-cell *matHeaderCellDef>Detalles</th>
           <td mat-cell *matCellDef="let item">{{ item.detalles }}</td>
         </ng-container>
-        <ng-container matColumnDef="trainer">
+        <!--<ng-container matColumnDef="trainer">
           <th mat-header-cell *matHeaderCellDef>Entrenador</th>
           <td mat-cell *matCellDef="let item">{{ item.entrenador }}</td>
-        </ng-container>
+        </ng-container>-->
         <ng-container matColumnDef="price">
           <th mat-header-cell *matHeaderCellDef>Precio</th>
           <td mat-cell *matCellDef="let item">{{ item.precio }}</td>
@@ -43,21 +43,30 @@
           <th mat-header-cell *matHeaderCellDef>Duración</th>
           <td mat-cell *matCellDef="let item">{{ item.duracion}}</td>
         </ng-container>
-        <ng-container matColumnDef="cancha">
+        <!--<ng-container matColumnDef="cancha">
           <th mat-header-cell *matHeaderCellDef>Cancha</th>
           <td mat-cell *matCellDef="let item">{{ item.canchaAcc}}</td>
-        </ng-container>
-        <ng-container matColumnDef="alberca">
+        </ng-container>-->
+        <!--<ng-container matColumnDef="alberca">
           <th mat-header-cell *matHeaderCellDef>Alberca</th>
           <td mat-cell *matCellDef="let item">{{ item.albercaAcc}}</td>
-        </ng-container>
-        <ng-container matColumnDef="gimnasio">
+        </ng-container>-->
+        <!--<ng-container matColumnDef="gimnasio">
           <th mat-header-cell *matHeaderCellDef>Gimnasio</th>
           <td mat-cell *matCellDef="let item">{{ item.gymAcc}}</td>
-        </ng-container>
-        <ng-container matColumnDef="ofertas">
+        </ng-container>-->
+        <!--<ng-container matColumnDef="ofertas">
           <th mat-header-cell *matHeaderCellDef>Ofertas</th>
           <td mat-cell *matCellDef="let item">{{ item.ofertas}}</td>
+        </ng-container>-->
+        <ng-container matColumnDef="servicios">
+          <th mat-header-cell *matHeaderCellDef>servicios</th>
+          <td mat-cell *matCellDef="let item">
+            <!--<button class="button_eye" (click)="getServices(item.idMem)" (click)="openDialogService()">-->
+              <button class="button_eye" (click)="openDialogService(item.idMem, item.tipo_membresia)">
+              <mat-icon>visibility</mat-icon>
+            </button>
+          </td>
         </ng-container>
         <ng-container matColumnDef="status">
           <th mat-header-cell *matHeaderCellDef>Estatus</th>
@@ -69,7 +78,8 @@
         <ng-container matColumnDef="actions">
           <th mat-header-cell *matHeaderCellDef>Acciones</th>
           <td mat-cell *matCellDef="let item">
-            <button mat-icon-button color="primary" routerLink="../../admin/editarMembresias/{{item.idMem}}">
+            <!--<button mat-icon-button color="primary" routerLink="../../admin/editarMembresias/{{item.idMem}}">-->
+              <button mat-icon-button color="primary" (click)="openDialogEdit(item.idMem, item.tipo_membresia)">
               <mat-icon>edit</mat-icon>
             </button>
             

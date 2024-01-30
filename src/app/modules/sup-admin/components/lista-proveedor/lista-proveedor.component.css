@@ -1,0 +1,7 @@
+.example-full-width {
+    width: 100%;
+}
+.table-container {
+    overflow-x: auto; /* Permite desplazamiento horizontal */
+    max-width: 100%;  /* Evita que la tabla sea más ancha que el contenedor */
+  }

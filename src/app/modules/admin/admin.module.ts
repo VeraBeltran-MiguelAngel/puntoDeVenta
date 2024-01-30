@@ -55,6 +55,7 @@ import { EditarCategoriaComponent } from './components/editar-categoria/editar-c
 import { EditarProductoComponent } from './components/editar-producto/editar-producto.component';
 import { NotificacionesComponent } from './components/notificaciones/notificaciones.component';
 import { MensajeCargandoComponent } from './components/mensaje-cargando/mensaje-cargando.component';
+import { DialogSelectMembershipComponent } from './components/dialog-select-membership/dialog-select-membership.component';
 @NgModule({
   declarations: [
     AdminDashboardComponent,
@@ -84,7 +85,8 @@ import { MensajeCargandoComponent } from './components/mensaje-cargando/mensaje-
     EditarCategoriaComponent,
     EditarProductoComponent,
     NotificacionesComponent,
-    MensajeCargandoComponent
+    MensajeCargandoComponent,
+    DialogSelectMembershipComponent,
   ],
   imports: [
     CommonModule,

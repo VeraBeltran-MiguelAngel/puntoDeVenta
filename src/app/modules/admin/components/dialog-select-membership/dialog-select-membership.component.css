@@ -1,0 +1,70 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.title {
+    text-align: center;
+    padding-block: 20px;
+}
+
+.options {
+    display: flex;
+    width: 90%;
+    height: 300px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    background-color: #f4f4f4;
+    border-radius: 15px;
+}
+
+.standar_membership {
+    width: 45%;
+    /*background-color: red;*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.personalize_membership {
+    width: 45%;
+    /*background-color: green;*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.button_member {
+    width: 70%;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 15px;
+    box-shadow: 2px 2px 3px #ccc;
+    background-color: #fff;
+}
+
+/*.personalize_membership_content {
+    width: 70%;
+    height: 200px;;
+    display: flex;
+    flex-direction: column;
+    border-radius: 15px;
+    box-shadow: 2px 2px 3px #ccc;
+    background-color: #fff;
+}*/
+
+.icon_option {
+    font-size: 3em;
+    padding-block: 50px;
+    /*background-color: yellow;*/
+    width: 90%;
+    margin: 0 auto;
+}
+
+.services_table table th,td {
+    text-align: center;
+}
+
