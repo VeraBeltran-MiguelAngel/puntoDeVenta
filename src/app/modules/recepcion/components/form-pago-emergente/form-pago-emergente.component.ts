@@ -14,6 +14,7 @@ export class FormPagoEmergenteComponent implements OnInit{
   idSucursal: number;
   membresias: any[] = [];
   membresiaSeleccionada: any;
+  idMembresiaSelec: any;
   precio: any;
   duracion: any;
   moneyRecibido: number; // =0
@@ -26,6 +27,12 @@ export class FormPagoEmergenteComponent implements OnInit{
     // Llamar al servicio para obtener la lista de membresías
     this.precio = this.data.precio;
     this.duracion = this.data.duracion + ' ' + 'días';
+    //console.log('el detalle membresia del cliente es: ', this.data.detMemID )
+    if(this.data.action == 'Online' ){
+      this.idMembresiaSelec = this.data.idMem;
+      console.log('membresia seleccionada: ', this.idMembresiaSelec);
+    }
+    //console.log('membresia seleccionada2: ', this.membresiaSeleccionada);
 
     //console.log('ID del cliente:', this.data.idCliente);
 
@@ -55,37 +62,68 @@ export class FormPagoEmergenteComponent implements OnInit{
     this.dialogo.close(true);
     }
   
-  successDialog(): void {
-    if(this.membresiaSeleccionada != undefined){
-      if(this.moneyRecibido >= this.precio){
-        const PrecioCalcular = this.moneyRecibido - this.precio ;
-        console.log(PrecioCalcular);
-      
-        this.membresiaService.actualizacionMemebresia(this.data.idCliente, this.membresiaSeleccionada).subscribe((dataResponse: any)=> {
-        console.log(dataResponse.msg)
-
-        this.actualizarTablas.emit(true);
+    successDialog(): void {
+      if(this.membresiaSeleccionada != undefined){
+        if(this.moneyRecibido >= this.precio){
+          const PrecioCalcular = this.moneyRecibido - this.precio ;
+          console.log(PrecioCalcular);
         
-        this.dialogo.close(true);
-        
-        this.dialog.open(MensajeEmergenteComponent, {
-          data: `Pago exitoso, el cambio es de: $${PrecioCalcular}`,
-        })
-        .afterClosed()
-        .subscribe((cerrarDialogo: Boolean) => {
-          if (cerrarDialogo) {
-
-          } else {
-
-          }
+          this.membresiaService.actualizacionMemebresia(this.data.idCliente, this.membresiaSeleccionada, this.data.detMemID).subscribe((dataResponse: any)=> {
+          console.log(dataResponse.msg)
+  
+          this.actualizarTablas.emit(true);
+          
+          this.dialogo.close(true);
+          
+          this.dialog.open(MensajeEmergenteComponent, {
+            data: `Pago exitoso, el cambio es de: $${PrecioCalcular}`,
+          })
+          .afterClosed()
+          .subscribe((cerrarDialogo: Boolean) => {
+            if (cerrarDialogo) {
+  
+            } else {
+  
+            }
+          });
         });
-      });
-    
-      }else{
-        this.toastr.error('No alcanza para pagar esta membresia', 'Error!!!');
+      
+        }else{
+          this.toastr.error('No alcanza para pagar esta membresia', 'Error!!!');
+        }
+      } else if (this.idMembresiaSelec != undefined && this.membresiaSeleccionada == undefined){
+        this.membresiaSeleccionada = this.idMembresiaSelec;
+        console.log(this.membresiaSeleccionada );
+        if(this.moneyRecibido >= this.precio){
+          const PrecioCalcular = this.moneyRecibido - this.precio ;
+          console.log(PrecioCalcular);
+        
+          this.membresiaService.actualizacionMemebresia(this.data.idCliente, this.membresiaSeleccionada, this.data.detMemID).subscribe((dataResponse: any)=> {
+          console.log(dataResponse.msg)
+  
+          this.actualizarTablas.emit(true);
+          
+          this.dialogo.close(true);
+          
+          this.dialog.open(MensajeEmergenteComponent, {
+            data: `Pago exitoso, el cambio es de: $${PrecioCalcular}`,
+          })
+          .afterClosed()
+          .subscribe((cerrarDialogo: Boolean) => {
+            if (cerrarDialogo) {
+  
+            } else {
+  
+            }
+          });
+        });
+      
+        }else{
+          this.toastr.error('No alcanza para pagar esta membresia', 'Error!!!');
+        }
       }
-    } else {
-      this.toastr.warning('Selecciona una membresía', 'Alerta!!!');
+      else {
+        this.toastr.warning('Selecciona una membresía', 'Alerta!!!');
+      }
     }
-  }
 }

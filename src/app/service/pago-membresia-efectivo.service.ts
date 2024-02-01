@@ -46,9 +46,13 @@ export class PagoMembresiaEfectivoService {
     return this.clienteHttp.get(this.URLServices+"?infoMembre="+idMemb);
   }
 
-  actualizacionMemebresia(idCli:any,idMem:any):Observable<any>{
-    const params = new HttpParams().set('consultClienteId', idCli).set('consultMemId', idMem);
+  actualizacionMemebresia(idCli:any,idMem:any, idDetalleMem: any):Observable<any>{
+    const params = new HttpParams().set('consultClienteId', idCli).set('consultMemId', idMem).set('detalleMemId',idDetalleMem);
 
     return this.clienteHttp.get(this.URLServices, { params });
   }
+
+  histoClienteMemb(id:any):Observable<any>{
+    return this.clienteHttp.get(this.URLServices+"?histoCliente="+id);
+  } 
 }

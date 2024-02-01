@@ -84,16 +84,16 @@
                           {{ prod.Status === 'Activo' ? 'toggle_on' : 'toggle_off' }}
                         </mat-icon>
                       </ng-container>
-                      <ng-container *ngIf="column === 'Dinero Recibido'">
+                      <!--<ng-container *ngIf="column === 'Dinero Recibido'">
                         <mat-form-field>
-                          <input matInput [(ngModel)]="prod.cash" [disabled]="prod.Status === 'Activo'" type="number" min="0" placeholder="0"/> <!--[(ngModel)]="updMem.moneyRecibido"-->
+                          <input matInput [(ngModel)]="prod.cash" [disabled]="prod.Status === 'Activo'" type="number" min="0" placeholder="0"/> ///[(ngModel)]="updMem.moneyRecibido"
                         </mat-form-field>
                       </ng-container>
                       <ng-container *ngIf="column === 'Pagar'">
-                        <button mat-raised-button (click)="pagarMismaMembresia(prod)" [disabled]="prod.Status === 'Activo'" style="background-color: #F9A640; color: #000000;">Pagar<mat-icon>attach_money</mat-icon></button>   <!---(click)="pagarMismaMembresia(prod)"-->
-                      </ng-container>
-                      <ng-container *ngIf="column === 'Actualizar'">
-                        <button mat-icon-button (click)="abrirEmergente(prod)" [disabled]="prod.Status === 'Activo'" color="primary">  <!--(click)="abrirEmergente(updMem)"-->
+                        <button mat-raised-button (click)="pagarMismaMembresia(prod)" [disabled]="prod.Status === 'Activo'" style="background-color: #F9A640; color: #000000;">Pagar<mat-icon>attach_money</mat-icon></button>  /// (click)="pagarMismaMembresia(prod)"
+                      </ng-container>-->
+                      <ng-container *ngIf="column === 'Reenovación'">
+                        <button mat-icon-button (click)="abrirEmergente(prod)" color="primary">  <!--(click)="abrirEmergente(updMem)"-->
                           <mat-icon class="icon-size">edit</mat-icon>
                         </button>
                       </ng-container>

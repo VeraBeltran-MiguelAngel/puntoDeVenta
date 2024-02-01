@@ -20,7 +20,11 @@
             <div class="column">
                 <mat-form-field appearance="outline">
                     <mat-label for="membresiaSelect">Membresía</mat-label>
-                    <mat-select id="membresiaSelect" name="membresiaSelect" [(ngModel)]="membresiaSeleccionada" (ngModelChange)="onMembresiaChange()"> <!---id="membresiaSelect"-->
+                    <!-- Si this.data.action es 'Online', mostrar un input -->
+                    <input matInput *ngIf="this.data.action === 'Online'" type="text" [value]="this.data.membresia" [disabled]='true'>
+
+                    <!-- Si this.data.action no es 'Online', mostrar el mat-select -->
+                    <mat-select *ngIf="this.data.action !== 'Online'" id="membresiaSelect" name="membresiaSelect" [(ngModel)]="membresiaSeleccionada" (ngModelChange)="onMembresiaChange()"> <!---id="membresiaSelect"-->
                         <mat-option *ngFor="let membresia of membresias" [value]="membresia.IDmembresia">
                         {{ membresia.Membresia }}
                         </mat-option>

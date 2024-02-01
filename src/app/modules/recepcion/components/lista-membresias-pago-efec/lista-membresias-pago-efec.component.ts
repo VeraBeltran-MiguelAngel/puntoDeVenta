@@ -88,9 +88,9 @@ export class ListaMembresiasPagoEfecComponent implements OnInit {
     'Fecha Inicio',
     'Fecha Fin',
     'Status',
-    'Dinero Recibido',
-    'Pagar',
-    'Actualizar',
+    //'Dinero Recibido',
+    //'Pagar',
+    'Reenovación',
     'Info Cliente'
   ];
 
@@ -398,6 +398,9 @@ export class ListaMembresiasPagoEfecComponent implements OnInit {
         precio: `${prod.Precio}`,
         duracion: `${prod.Duracion}`,
         idSucursal: `${prod.Gimnasio_idGimnasio}`,
+        action: `${prod.accion}`,
+        idMem: `${prod.Membresia_idMem}`,
+        detMemID: `${prod.idDetMem}`
       },
     });
 
